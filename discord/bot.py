@@ -26,11 +26,11 @@ async def ip(ctx):
     Args:
         ctx: Discord context
     """
-    # The following method might not work depending on how hostsfile is
-    # configured. It's quick and dirty solution.
-    hostname = socket.gethostname()
-    ip = socket.gethostbyname(hostname)
-    await ctx.send(f"hostname: {hostname}\nip: {ip}")
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        s.connect(('10.0.0.0', 0))
+        ip = s.getsockname()[0]
+
+    await ctx.send(f"ip: {ip}")
 
 
 # Run
