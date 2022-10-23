@@ -49,7 +49,7 @@ async def pwd(ctx):
 
 
 @bot.command()
-async def who(ctx):
+async def whoami(ctx):
     """
     Print the user running the bot process.
 
