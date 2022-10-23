@@ -2,6 +2,7 @@
 Discord bot to report IP address of Rasp Pi.
 """
 
+import os
 import socket
 
 import discord
@@ -31,6 +32,20 @@ async def ip(ctx):
         ip = s.getsockname()[0]
 
     await ctx.send(f"ip: `{ip}`")
+
+
+@bot.command()
+async def pwd(ctx):
+    """
+    Print the working directory of the program.
+
+    This is for debugging purposes.
+
+    Args:
+        ctx: Discord context
+    """
+    path = os.getcwd()
+    await ctx.send("f:path: {path}")
 
 
 # Run
