@@ -45,7 +45,7 @@ async def pwd(ctx):
         ctx: Discord context
     """
     path = os.getcwd()
-    await ctx.send("f:path: {path}")
+    await ctx.send(f"path: {path}")
 
 
 # Run
