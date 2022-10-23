@@ -3,6 +3,7 @@ Discord bot to report IP address of Rasp Pi.
 """
 
 import os
+from getpass import getuser
 import socket
 
 import discord
@@ -58,7 +59,7 @@ async def whoami(ctx):
     Args:
         ctx: Discord context
     """
-    user = os.getlogin()
+    user = getuser()
     await ctx.send(f"username: {user}")
 
 
