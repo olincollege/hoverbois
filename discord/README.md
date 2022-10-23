@@ -4,11 +4,13 @@ This bot is used to find the ip address of the pi.
 
 It may further be extended into an easy to use console.
 
-# TODOs (would be nice but not needed)
+# Backlog (would be nice but not needed)
 
 - Smarter way of handling API keys such as environment variables or CLI flags
 - Make it a full fledged CLI interface to the hovercraft (we need a hovercraft
   first).
+- Package this like a proper Python package (could run with `python -m
+  hoverbot`).
 
 # Setup
 
