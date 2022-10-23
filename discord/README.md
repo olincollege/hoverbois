@@ -17,10 +17,11 @@ It may further be extended into an easy to use console.
 Requires Python 3.8 or later.
 
 Install all dependencies in `requirements.txt`. It is recommended you create a
-virtualenv.
+virtualenv. In fact, there is a handy script called `setup-env.sh` that will
+create a virtual env for you and install dependencies.
 
 ```
-pip install -r requirements.txt
+./setup-env.sh
 ```
 
 ## Bot Token
@@ -38,9 +39,19 @@ KEY. Modify `botkey.py` to put your token in.
 
 # Run
 
+## Manually
+
 Invite the bot to your server. This can be done through the development portal
 in `my_app->OAuth2->URL_Generator`. It needs permission to read and send
 messages.
 
 Run the bot with `python bot.py`. It is recommended you put this in a tmux or
 screen session.
+
+## Automatically via SystemD
+
+I'm pretty sure this is NOT how you're supposed to go about writing SystemD
+units, but this is a Raspberry Pi project so it's fine enough.
+
+There is a template file called `./hoverbot@.service`. Copy that to
+`/etc/systemd/system/`. Modify the template as instructed by the comments.
