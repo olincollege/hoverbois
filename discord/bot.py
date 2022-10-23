@@ -48,5 +48,19 @@ async def pwd(ctx):
     await ctx.send(f"path: {path}")
 
 
+@bot.command()
+async def who(ctx):
+    """
+    Print the user running the bot process.
+
+    This is for debugging purposes.
+
+    Args:
+        ctx: Discord context
+    """
+    user = os.getlogin()
+    await ctx.send(f"username: {user}")
+
+
 # Run
 bot.run(botkey)
