@@ -1,0 +1,58 @@
+<button id="hover" type="button">start hovering</button>
+
+<button id="Estop" type="button">EMERGENCY STOP</button>
+
+<button id="forward" type="button">go forward</button>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+    $("#hover").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: "/hover/"
+        });
+    });
+    $("#Estop").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: "/estop/"
+        });
+    });
+    $("#forward").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: "/forward/"
+        });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
+
+        document.addEventListener('keydown', event => {
+            const charList = 'wash';
+            const key = event.key.toLowerCase();
+
+            // we are only interested in alphanumeric keys
+            if (charList.indexOf(key) === -1) return;
+
+            ajax({
+                type: 'GET',
+                url: "/{"+key+"_down}/"
+            });
+
+        document.addEventListener('keyup', event => {
+            const charList = 'wash';
+            const key = event.key.toLowerCase();
+
+            // we are only interested in alphanumeric keys
+            if (charList.indexOf(key) === -1) return;
+
+            $("#forward").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/{"+key+"_up}/"
+            });
+        });
+    });
+    
+});
+
+</script>
