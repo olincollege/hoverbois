@@ -35,9 +35,9 @@
 
             ajax({
                 type: 'GET',
-                url: "/{"+key+"_down}/"
+                url: "/"+key+"_down/"
             });
-
+        }
         document.addEventListener('keyup', event => {
             const charList = 'wash';
             const key = event.key.toLowerCase();
@@ -45,12 +45,10 @@
             // we are only interested in alphanumeric keys
             if (charList.indexOf(key) === -1) return;
 
-            $("#forward").click(function () {
-            $.ajax({
+            ajax({
                 type: 'GET',
-                url: "/{"+key+"_up}/"
+                url: "/"+key+"_up/"
             });
-        });
     });
     
 });
