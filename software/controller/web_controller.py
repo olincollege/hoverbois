@@ -1,41 +1,31 @@
-#from flask import Flask
-
-#app = Flask(__name__)
-
-#@app.route("/flask")
-#def hello_world():
-#    return "<p>Hello, World!</p>"
-
+from distutils.log import debug
+import os
 import asyncio
 
 import tornado.web
 
 
-class hover(tornado.web.RequestHandler):
+class Hover(tornado.web.RequestHandler):
     def get(self):
         print("hover click")
 
 
-class estop(tornado.web.RequestHandler):
+class Estop(tornado.web.RequestHandler):
     def get(self):
         print("ESTOP ESTOP ESTOP")
 
 
-class forward(tornado.web.RequestHandler):
+class Forward(tornado.web.RequestHandler):
     def get(self):
         print("forward click")
 
-class not_forward(tornado.web.RequestHandler):
+class Right(tornado.web.RequestHandler):
     def get(self):
-        print("forward un click")
+        print("right click")
 
-class left(tornado.web.RequestHandler):
+class Left(tornado.web.RequestHandler):
     def get(self):
         print("left click")
-
-class not_left(tornado.web.RequestHandler):
-    def get(self):
-        print("left un click")
 
 class Index(tornado.web.RequestHandler):
     def get(self):
@@ -44,20 +34,33 @@ class Index(tornado.web.RequestHandler):
 
 def make_app():
     return tornado.web.Application([
+            (r"/darkmode.css",tornado.web.StaticFileHandler, {"path": "darkmode.css"},),
             (r"/", Index),
-            (r"/hover/", hover),
-            (r"/estop/", estop),
-            (r"/forward/", forward),
-            (r"/w_down/", forward),
-            (r"/w_up/", not_forward),
-            (r"/a_down/", left),
-            (r"/a_up/", not_left),
-    ])
+            (r"/hover/", Hover),
+            (r"/0_pressed/", Estop),
+            (r"/estop/", Estop),
+            (r"/forward/", Forward),
+            (r"/w_pressed/", Forward),
+            (r"/a_pressed/", Left),# there will be no half a pressed with this code
+            (r"/d_pressed/", Right),
+            #(r"/h_pressed/", HoverToggle),
+    ], debug=True)
 
-async def main():
+#async def 
+
+async def app_start():
     app = make_app()
     app.listen(8888)
-    await asyncio.Event().wait()
+    while 1:
+        print(asyncio.Event().is_set())
+        print("fml")
+
+def main():
+    while 1:
+        while asyncio.Event().is_set():
+            None
+        print("fml")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(app_start())
+    #main()

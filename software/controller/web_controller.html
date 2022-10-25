@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    body {
+      padding: 25px;
+      background-color: black;
+      color: white;
+      font-size: 25px;
+    }
+</style>
 <button id="hover" type="button">start hovering</button>
 
 <button id="Estop" type="button">EMERGENCY STOP</button>
@@ -27,30 +38,18 @@
     'use strict';
 
         document.addEventListener('keydown', event => {
-            const charList = 'wash';
+            const charList = '0wash';
             const key = event.key.toLowerCase();
 
             // we are only interested in alphanumeric keys
             if (charList.indexOf(key) === -1) return;
 
-            ajax({
+            $.ajax({
                 type: 'GET',
-                url: "/"+key+"_down/"
+                url: "/"+key+"_pressed/"
             });
-        }
-        document.addEventListener('keyup', event => {
-            const charList = 'wash';
-            const key = event.key.toLowerCase();
-
-            // we are only interested in alphanumeric keys
-            if (charList.indexOf(key) === -1) return;
-
-            ajax({
-                type: 'GET',
-                url: "/"+key+"_up/"
-            });
+        });
     });
-    
-});
 
 </script>
+</html>
