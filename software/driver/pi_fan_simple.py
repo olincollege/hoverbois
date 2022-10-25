@@ -5,7 +5,7 @@ from time import sleep
 import RPi.GPIO as gp
 import lgpio as sbc
 
-PWM_FREQ = 10000
+PWM_FREQ = 25000
 
 class SimpleFan(HovercraftDriver):
     ''''''
