@@ -2,8 +2,7 @@ from driver_abc import HovercraftDriver
 from pin_defs import *
 from gpiozero import Servo
 from time import sleep
-import RPi.GPIO as gp
-import lgpio as sbc
+import serial
 
 PWM_FREQ = 15000
 
@@ -11,13 +10,11 @@ class SimpleFan(HovercraftDriver):
     ''''''
 
     def __init__(self):
-        if min( FORWARDPIN, SERVOPIN) < 2 or \
-           max(FORWARDPIN, SERVOPIN) > 27:
+        if min(SERVOPIN) < 2 or \
+           max(SERVOPIN) > 27:
             raise Exception(
                 "All pin definitions must match pins on the raspberry pi")
-        
-        self.forward_motor = sbc.gpiochip_open(0)
-        sbc.gpio_claim_output(self.forward_motor,FORWARDPIN)
+        self.pico = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
         self.steer_motor = Servo(SERVOPIN)
         #self.hover = 0
         self.forward = 0
@@ -47,7 +44,8 @@ class SimpleFan(HovercraftDriver):
         args: 
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = (speed/50)-1
-        sbc.tx_pwm(self.forward_motor,FORWARDPIN,PWM_FREQ,speed, pulse_offset=0, pulse_cycles=0)
+        self.pico.write(bytes(speed, 'utf-8'))
+        
         pass
 
     def set_steering_angle(self, angle):
