@@ -6,7 +6,7 @@ import RPi.GPIO as gp
 
 
 
-class SimplePWM(HovercraftDriver):
+class SimpleFan(HovercraftDriver):
     ''''''
 
     def __init__(self):
@@ -64,8 +64,9 @@ class SimplePWM(HovercraftDriver):
         #self.forward_motor.detach()
         #self.hover_motor.detach()
         self.steer_motor.mid()
+        self.forward_motor.start(0)
         #self.hover = 0
         self.forward = 0
         self.steering = 0
-        gp.cleanup()
+        #gp.cleanup()
         pass
