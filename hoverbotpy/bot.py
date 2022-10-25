@@ -63,5 +63,24 @@ async def whoami(ctx):
     await ctx.send(f"username: {user}")
 
 
-# Run
-bot.run(botkey)
+def main():
+    """
+    Main loop if run directly.
+    """
+    from driver_dummy import DummyHovercraftDriver
+
+    driver = DummyHovercraftDriver()
+
+    @bot.command()
+    async def motor_speeds(ctx):
+        message = "\n".join((f"`hover: {driver.hover}`",
+                             f"`forward: {driver.forward}`",
+                             f"`steering angle: {driver.steering}`"))
+        await ctx.send(message)
+
+    # Run
+    bot.run(botkey)
+
+
+if __name__ == "__main__":
+    main()
