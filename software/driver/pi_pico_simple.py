@@ -44,7 +44,7 @@ class SimpleFan(HovercraftDriver):
         args: 
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = (speed/50)-1
-        self.pico.write(bytes(speed, 'utf-8'))
+        self.pico.write(bytes(str(speed), 'utf-8'))
         
         pass
 
