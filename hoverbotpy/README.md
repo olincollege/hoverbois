@@ -2,9 +2,10 @@
 
 Here lies all the software for running on the Raspberry Pi.
 
-This is not packagable as a module yet, although perhaps it might be helpful to
-make it one in the future (would need to change how we manage API keys). It is
-just easier to develop it like this for now.
+This is not packagable as a module yet, although it would probably make things
+easier. That is for sprint 2.
+
+For sprint 1, see the sprint1 branch.
 
 # Dependencies
 
