@@ -10,8 +10,8 @@ class SimpleFan(HovercraftDriver):
     ''''''
 
     def __init__(self):
-        if min(SERVOPIN) < 2 or \
-           max(SERVOPIN) > 27:
+        if SERVOPIN < 2 or \
+           SERVOPIN > 27:
             raise Exception(
                 "All pin definitions must match pins on the raspberry pi")
         self.pico = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
