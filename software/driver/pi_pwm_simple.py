@@ -14,8 +14,8 @@ class SimplePWM(HovercraftDriver):
             raise Exception(
                 "All pin definitions must match pins on the raspberry pi")
         if is_fan:
-            self.hover_motor = Servo(HOVERPIN,min_pulse_width = 0,max_pulse_width = self.pwm_freq,frame_width=self.pwm_freq)
-            self.forward_motor = Servo(FORWARDPIN,min_pulse_width = 0,max_pulse_width = self.pwm_freq,frame_width=self.pwm_freq)
+            self.hover_motor = Servo(HOVERPIN,min_pulse_width = 0,max_pulse_width = .5*self.pwm_freq,frame_width=self.pwm_freq)
+            self.forward_motor = Servo(FORWARDPIN,min_pulse_width = 0,max_pulse_width = .5*self.pwm_freq,frame_width=self.pwm_freq)
         else:
             self.hover_motor = Servo(HOVERPIN)
             self.forward_motor = Servo(FORWARDPIN)
