@@ -130,3 +130,4 @@ dmypy.json
 
 # Manually added files
 /software/discord/botkey.py
+/hoverbotpy/discord/botkey.py

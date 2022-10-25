@@ -8,5 +8,5 @@ then
     python3 -m pip install -r requirements.txt
 fi
 
-echo "Activate environment with source ./venv/bin/activate"
+echo "Activating environment with source ./venv/bin/activate"
 source ./venv/bin/activate

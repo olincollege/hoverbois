@@ -1,8 +1,9 @@
 #scripts to run and stuff
 
-.PHONY: install
+.PHONY: dependencies_system venv
 
-install: 
-	sudo apt-get install rpi.gpio\
-	sudo apt-get install python3-rpi.gpio\
-	sudo pip3 install gpiozero\
+venv:
+	bash ./setup-env.sh
+
+dependencies_system: 
+	apt-get install rpi.gpio python3-rpi.gpio python3-gpiozero
