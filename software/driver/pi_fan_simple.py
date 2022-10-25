@@ -10,8 +10,8 @@ class SimplePWM(HovercraftDriver):
     ''''''
 
     def __init__(self):
-        if min(HOVERPIN, FORWARDPIN, SERVOPIN) < 2 or \
-           max(HOVERPIN, FORWARDPIN, SERVOPIN) > 27:
+        if min( FORWARDPIN, SERVOPIN) < 2 or \
+           max(FORWARDPIN, SERVOPIN) > 27:
             raise Exception(
                 "All pin definitions must match pins on the raspberry pi")
         
@@ -20,7 +20,7 @@ class SimplePWM(HovercraftDriver):
         gp.setup(FORWARDPIN, gp.OUT, initial=gp.LOW)
         self.forward_motor = gp.PWM(FORWARDPIN, 25000)
         self.steer_motor = Servo(SERVOPIN)
-        self.hover = 0
+        #self.hover = 0
         self.forward = 0
         self.steering = 0
         sleep(0.1)
@@ -64,7 +64,7 @@ class SimplePWM(HovercraftDriver):
         #self.forward_motor.detach()
         #self.hover_motor.detach()
         self.steer_motor.mid()
-        self.hover = 0
+        #self.hover = 0
         self.forward = 0
         self.steering = 0
         gp.cleanup()
