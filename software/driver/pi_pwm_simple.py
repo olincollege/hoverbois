@@ -7,7 +7,8 @@ from time import sleep
 class SimplePWM(HovercraftDriver):
     ''''''
 
-    def __init__(self):
+    def __init__(self,is_fan = False):
+        self.pwm_freq = 1/25000
         if min(HOVERPIN, FORWARDPIN, SERVOPIN) < 2 or \
            max(HOVERPIN, FORWARDPIN, SERVOPIN) > 27:
             raise Exception(
@@ -15,6 +16,9 @@ class SimplePWM(HovercraftDriver):
         self.hover_motor = Servo(HOVERPIN)
         self.forward_motor = Servo(FORWARDPIN)
         self.steer_motor = Servo(SERVOPIN)
+        if is_fan:
+            self.hover_motor.frame_width = self.pwm_freq
+            self.forward_motor.frame_width = self.pwm_freq
         self.hover = 0
         self.forward = 0
         self.steering = 0
@@ -35,7 +39,7 @@ class SimplePWM(HovercraftDriver):
         args: 
             speed: a number of the speed of the motor(0 to 100)'''
         self.hover = (speed/50)-1  # this takes a 1 to -1
-        self.hover_motor.value(self.hover)
+        self.hover_motor.value = self.hover
         pass
 
     def set_forward_speed(self, speed):
@@ -43,7 +47,7 @@ class SimplePWM(HovercraftDriver):
         args: 
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = (speed/50)-1
-        self.forward_motor.value(speed)
+        self.forward_motor.value =self.forward
         pass
 
     def set_steering_angle(self, angle):
@@ -51,7 +55,7 @@ class SimplePWM(HovercraftDriver):
         args: 
             speed: a number of the angle to (-1 to 1)'''
         self.steering = angle
-        self.steer_motor.value(angle)
+        self.steer_motor.value = self.steering
         pass
 
     def stop(self):
