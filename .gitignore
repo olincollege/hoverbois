@@ -127,4 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/discord/botkey.py
+
+# Manually added files
+/software/discord/botkey.py
