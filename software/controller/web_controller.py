@@ -1,13 +1,22 @@
 from distutils.log import debug
-import os
+from time import time
+from time import sleep
 import asyncio
 
 import tornado.web
+import tracemalloc
+tracemalloc.start()
 
+last_hover =    0
+last_forward =  0
+last_right =    0
+last_left =     0
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
+        global last_hover
         print("hover click")
+        last_hover = time()
 
 
 class Estop(tornado.web.RequestHandler):
@@ -17,15 +26,22 @@ class Estop(tornado.web.RequestHandler):
 
 class Forward(tornado.web.RequestHandler):
     def get(self):
+        global last_forward
         print("forward click")
+        last_forward = time()
 
 class Right(tornado.web.RequestHandler):
     def get(self):
+        global last_right
         print("right click")
+        last_right = time()
 
 class Left(tornado.web.RequestHandler):
     def get(self):
+        global last_left
         print("left click")
+        last_left = time()
+
 
 class Index(tornado.web.RequestHandler):
     def get(self):
@@ -51,16 +67,20 @@ def make_app():
 async def app_start():
     app = make_app()
     app.listen(8888)
-    while 1:
-        print(asyncio.Event().is_set())
-        print("fml")
+    await asyncio.Event().wait()
 
-def main():
-    while 1:
-        while asyncio.Event().is_set():
-            None
-        print("fml")
+async def web_app():
+    print("web server start")
+    app = make_app()
+    app.listen(8888)
+    
+async def main():
+    #await app_start()
+    asyncio.create_task(app_start())
+    while(1):
+        print(last_forward)
 
 if __name__ == "__main__":
-    asyncio.run(app_start())
+    
+    asyncio.run(main())
     #main()

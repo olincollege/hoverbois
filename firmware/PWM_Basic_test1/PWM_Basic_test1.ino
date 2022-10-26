@@ -13,7 +13,7 @@
   by the PWM block
 *****************************************************************************************************************************/
 
-#define _PWM_LOGLEVEL_        3
+//#define _PWM_LOGLEVEL_        0
 #include "RP2040_PWM.h"
 
 //creates pwm instance
@@ -28,18 +28,21 @@ void setup()
 {
   //assigns pin 25 (built in LED), with frequency of 20 KHz and a duty cycle of 0%
   PWM_Instance = new RP2040_PWM(pinToUse, 25000, 0);
+  Serial.begin(115200);
+  PWM_Instance->setPWM(pinToUse, 25000, 0);
 }
-
+int speed=0;
 void loop()
 {
-  delay(1000);
-  frequency = 25000;
-  dutyCycle = 10;
-
-  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
-  dutyCycle += 10;
-  if(dutyCycle >= 50){
-    dutyCycle = 10;
+  int raw = 0;
+  while(Serial.available()==0){}
+  while(Serial.available()>0){
+   raw = max(Serial.parseInt(),raw);
   }
+  //Serial.println(raw);
+  speed = raw;
+  frequency = 25000;
+
+  PWM_Instance->setPWM(pinToUse, frequency, speed);
 
 }
