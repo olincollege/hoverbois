@@ -5,7 +5,8 @@ from time import sleep
 import serial
 
 PWM_FREQ = 15000
-
+SERVO_DIST = 85
+SERVO_MID=125
 class SimpleFan(HovercraftDriver):
     ''''''
 
@@ -54,8 +55,8 @@ class SimpleFan(HovercraftDriver):
             speed: a number of the angle to (-1 to 1)'''
         #self.steering = angle
         #self.steer_motor.value=angle
-        self.forward = (angle/50)-1
-        self.pico.write(bytes("s"+str(angle), 'utf-8'))
+        self.steering = angle
+        self.pico.write(bytes("s"+str(angle*SERVO_DIST+SERVO_MID), 'utf-8'))
         pass
 
     def stop(self):
