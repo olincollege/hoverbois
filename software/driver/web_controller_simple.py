@@ -6,7 +6,7 @@ import asyncio
 import tornado.web
 import tracemalloc
 tracemalloc.start()
-from driver.pi_pico_simple import SimpleFan
+from pi_pico_simple import SimpleFan
 last_hover =    0
 last_forward =  0
 last_right =    0
