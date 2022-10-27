@@ -63,7 +63,7 @@ class SimpleFan(HovercraftDriver):
         '''turn off all motors and return steer to mid'''
         #self.forward_motor.detach()
         #self.hover_motor.detach()
-        self.pico.write(bytes("s"+str(0), 'utf-8'))
+        self.pico.write(bytes("s"+str(SERVO_MID), 'utf-8'))
         self.pico.write(bytes("f"+str(0), 'utf-8'))
         #self.hover = 0
         self.forward = 0
