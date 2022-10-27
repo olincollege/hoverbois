@@ -42,6 +42,7 @@ class Forward(tornado.web.RequestHandler):
             forward_speed+=10
         driver.set_forward_speed(forward_speed)
         print("forward click")
+        print(forward_speed)
         last_forward = time()
 
 class Reverse(tornado.web.RequestHandler):
@@ -53,6 +54,7 @@ class Reverse(tornado.web.RequestHandler):
             forward_speed-=10
         driver.set_forward_speed(forward_speed)
         print("rev click")
+        print(forward_speed)
         last_forward = time()
 
 class Right(tornado.web.RequestHandler):
@@ -64,6 +66,7 @@ class Right(tornado.web.RequestHandler):
             steer+=.5
         driver.set_steering_angle(steer)
         print("right click")
+        print(steer)
         last_right = time()
 
 class Left(tornado.web.RequestHandler):
@@ -74,6 +77,7 @@ class Left(tornado.web.RequestHandler):
             steer-=.5
         driver.set_steering_angle(steer)
         print("left click")
+        print(steer)
         last_left = time()
 
 
