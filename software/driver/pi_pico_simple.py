@@ -44,7 +44,7 @@ class SimpleFan(HovercraftDriver):
         args: 
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = (speed/50)-1
-        self.pico.write(bytes(str(speed), 'utf-8'))
+        self.pico.write(bytes("f"+str(speed), 'utf-8'))
         
         pass
 
@@ -52,16 +52,18 @@ class SimpleFan(HovercraftDriver):
         '''sets the angle of the steering servo motor
         args: 
             speed: a number of the angle to (-1 to 1)'''
-        self.steering = angle
-        self.steer_motor.value=angle
+        #self.steering = angle
+        #self.steer_motor.value=angle
+        self.forward = (angle/50)-1
+        self.pico.write(bytes("s"+str(angle), 'utf-8'))
         pass
 
     def stop(self):
         '''turn off all motors and return steer to mid'''
         #self.forward_motor.detach()
         #self.hover_motor.detach()
-        self.steer_motor.mid()
-        self.forward_motor.start(0)
+        self.pico.write(bytes("s"+str(0), 'utf-8'))
+        self.pico.write(bytes("f"+str(0), 'utf-8'))
         #self.hover = 0
         self.forward = 0
         self.steering = 0
