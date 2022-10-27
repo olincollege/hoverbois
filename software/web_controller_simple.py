@@ -1,16 +1,18 @@
-from distutils.log import debug
+
+from ctypes import set_errno
 from time import time
-from time import sleep
 import asyncio
 
 import tornado.web
 import tracemalloc
 tracemalloc.start()
-
+from driver.pi_pico_simple import SimpleFan
 last_hover =    0
 last_forward =  0
 last_right =    0
 last_left =     0
+forward_speed = 0
+steer =         0
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
@@ -21,24 +23,56 @@ class Hover(tornado.web.RequestHandler):
 
 class Estop(tornado.web.RequestHandler):
     def get(self):
+        global driver
+        global steer
+        global forward_speed
+        steer = 0
+        forward_speed =0 
+        driver.stop()
         print("ESTOP ESTOP ESTOP")
 
 
 class Forward(tornado.web.RequestHandler):
     def get(self):
         global last_forward
+
+        global driver
+        global forward_speed
+        if forward_speed <=90:
+            forward_speed+=10
+        driver.set_forward_speed(forward_speed)
         print("forward click")
+        last_forward = time()
+
+class Reverse(tornado.web.RequestHandler):
+    def get(self):
+        global last_forward
+        global driver
+        global forward_speed
+        if forward_speed >=10:
+            forward_speed-=10
+        driver.set_forward_speed(forward_speed)
+        print("rev click")
         last_forward = time()
 
 class Right(tornado.web.RequestHandler):
     def get(self):
         global last_right
+        global driver
+        global steer
+        if steer >=.5:
+            steer+=.5
+        driver.set_steering_angle(steer)
         print("right click")
         last_right = time()
 
 class Left(tornado.web.RequestHandler):
     def get(self):
         global last_left
+        global steer
+        if steer <=-.5:
+            steer-=.5
+        driver.set_steering_angle(steer)
         print("left click")
         last_left = time()
 
@@ -57,6 +91,7 @@ def make_app():
             (r"/estop/", Estop),
             (r"/forward/", Forward),
             (r"/w_pressed/", Forward),
+            (r"/s_pressed/", Reverse),
             (r"/a_pressed/", Left),# there will be no half a pressed with this code
             (r"/d_pressed/", Right),
             #(r"/h_pressed/", HoverToggle),
@@ -81,6 +116,6 @@ async def main():
         print(last_forward)
 
 if __name__ == "__main__":
-    
+    driver = SimpleFan()
     asyncio.run(main())
     #main()
