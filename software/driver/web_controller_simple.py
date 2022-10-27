@@ -62,7 +62,7 @@ class Right(tornado.web.RequestHandler):
         global last_right
         global driver
         global steer
-        if steer >.5:
+        if steer <= .5:
             steer +=.5
         driver.set_steering_angle(steer)
         print("right click")
@@ -73,7 +73,7 @@ class Left(tornado.web.RequestHandler):
     def get(self):
         global last_left
         global steer
-        if steer <-.5:
+        if steer >= -.5:
             steer -=.5
         driver.set_steering_angle(steer)
         print("left click")
