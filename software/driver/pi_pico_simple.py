@@ -6,7 +6,7 @@ import serial
 
 PWM_FREQ = 15000
 SERVO_DIST = 85
-SERVO_MID=125
+SERVO_MID=90
 class SimpleFan(HovercraftDriver):
     ''''''
 
