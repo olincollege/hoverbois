@@ -53,7 +53,7 @@ class SimpleFan(HovercraftDriver):
         args: 
             speed: a number of the angle to (-1 to 1)'''
         self.steering = angle
-        self.steer_motor.value(angle)
+        self.steer_motor.value=angle
         pass
 
     def stop(self):
