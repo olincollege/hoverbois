@@ -32,7 +32,7 @@ async def ip(ctx):
         s.connect(('10.0.0.0', 0))
         ip = s.getsockname()[0]
 
-    await ctx.send(f"ip: `{ip}`")
+    await ctx.send(f"ip: `{ip}` link: http://{ip}:8888")
 
 
 @bot.command()

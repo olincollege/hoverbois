@@ -1,3 +1,5 @@
+#include <Servo.h>
+
 /****************************************************************************************************************************
   basic_pwm.ino
   For RP2040 boards
@@ -17,32 +19,51 @@
 #include "RP2040_PWM.h"
 
 //creates pwm instance
-RP2040_PWM* PWM_Instance;
-
+RP2040_PWM* PWMf;
+Servo steer_motor;
 float frequency;
 float dutyCycle;
 
-#define pinToUse      1
+#define fpin      1
+#define spin      0
 
 void setup()
 {
   //assigns pin 25 (built in LED), with frequency of 20 KHz and a duty cycle of 0%
-  PWM_Instance = new RP2040_PWM(pinToUse, 25000, 0);
+  PWMf = new RP2040_PWM(fpin, 25000, 0);
+  //PWMs = new RP2040_PWM(spin, 50, 0);
   Serial.begin(115200);
-  PWM_Instance->setPWM(pinToUse, 25000, 0);
+  steer_motor.attach(spin);
+  //PWMs->setPWM(spin, 50, 0);
+  PWMf->setPWM(fpin, 25000, 0);
 }
-int speed=0;
+int speedf=0;
+int steer=0;
 void loop()
 {
-  int raw = 0;
+  int rawf = 0;
+  int raws = 0;
   while(Serial.available()==0){}
   while(Serial.available()>0){
-   raw = max(Serial.parseInt(),raw);
+   char a = Serial.read();
+   if(a=='f'){
+    rawf = max(Serial.parseInt(),rawf);
+  speedf = rawf;
+   }
+   if(a=='s'){
+    raws = max(Serial.parseInt(),raws);
+  steer = raws;
+   }
   }
   //Serial.println(raw);
-  speed = raw;
+  //speedf = rawf;
+  //steer = raws;
   frequency = 25000;
-
-  PWM_Instance->setPWM(pinToUse, frequency, speed);
+  Serial.print(steer);
+  Serial.print(",");
+  Serial.println(speedf);
+  PWMf->setPWM(fpin, frequency, speedf);
+  //PWMs->setPWM(spin, 50, steer);
+  steer_motor.write(steer);
 
 }

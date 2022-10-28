@@ -45,7 +45,7 @@
     'use strict';
 
         document.addEventListener('keydown', event => {
-            const charList = '0wadh';
+            const charList = '0wasdh';
             const key = event.key.toLowerCase();
 
             // we are only interested in alphanumeric keys
@@ -54,6 +54,19 @@
             $.ajax({
                 type: 'GET',
                 url: "/"+key+"_pressed/"
+            });
+        });
+        
+        document.addEventListener('keyup', event => {
+            const charList = '0wasdh';
+            const key = event.key.toLowerCase();
+
+            // we are only interested in alphanumeric keys
+            if (charList.indexOf(key) === -1) return;
+
+            $.ajax({
+                type: 'GET',
+                url: "/"+key+"_released/"
             });
         });
     });
