@@ -1,9 +1,7 @@
-from time import sleep
-
-from gpiozero import Servo
-
 from hoverbotpy.drivers.driver_abc import HovercraftDriver
 from hoverbotpy.drivers.pin_defs import *
+from gpiozero import Servo
+from time import sleep
 
 
 class SimplePWM(HovercraftDriver):
@@ -17,9 +15,13 @@ class SimplePWM(HovercraftDriver):
                 "All pin definitions must match pins on the raspberry pi")
         if is_fan:
             self.hover_motor = Servo(
-                HOVERPIN, min_pulse_width=0, max_pulse_width=.5*self.pwm_freq, frame_width=self.pwm_freq)
+                HOVERPIN,
+                min_pulse_width=0, max_pulse_width=.5*self.pwm_freq,
+                frame_width=self.pwm_freq)
             self.forward_motor = Servo(
-                FORWARDPIN, min_pulse_width=0, max_pulse_width=.5*self.pwm_freq, frame_width=self.pwm_freq)
+                FORWARDPIN,
+                min_pulse_width=0, max_pulse_width=.5*self.pwm_freq,
+                frame_width=self.pwm_freq)
         else:
             self.hover_motor = Servo(HOVERPIN)
             self.forward_motor = Servo(FORWARDPIN)

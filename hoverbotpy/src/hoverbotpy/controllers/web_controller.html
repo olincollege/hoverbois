@@ -14,6 +14,13 @@
 <button id="Estop" type="button">EMERGENCY STOP</button>
 
 <button id="forward" type="button">go forward</button>
+
+<br>
+<br>
+<br>
+
+<img src="https://media.discordapp.net/attachments/1018684030360748072/1034608459766845511/BFFC3057-7E90-4503-9270-89ABE97DB676.gif">
+
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script>
     $("#hover").click(function () {
@@ -38,7 +45,7 @@
     'use strict';
 
         document.addEventListener('keydown', event => {
-            const charList = '0wash';
+            const charList = '0wasdh';
             const key = event.key.toLowerCase();
 
             // we are only interested in alphanumeric keys
@@ -47,6 +54,19 @@
             $.ajax({
                 type: 'GET',
                 url: "/"+key+"_pressed/"
+            });
+        });
+        
+        document.addEventListener('keyup', event => {
+            const charList = '0wasdh';
+            const key = event.key.toLowerCase();
+
+            // we are only interested in alphanumeric keys
+            if (charList.indexOf(key) === -1) return;
+
+            $.ajax({
+                type: 'GET',
+                url: "/"+key+"_released/"
             });
         });
     });

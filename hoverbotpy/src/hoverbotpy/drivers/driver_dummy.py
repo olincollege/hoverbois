@@ -18,7 +18,6 @@ class DummyHovercraftDriver(HovercraftDriver):
         self.hover = speed
         print(f"Set hover to {speed}")
 
-
     def set_forward_speed(self, speed):
         """
         Set the speed of forward motor.
