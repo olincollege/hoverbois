@@ -1,4 +1,4 @@
-from driver_abc import HovercraftDriver
+from hoverbotpy.drivers.driver_abc import HovercraftDriver
 
 
 class DummyHovercraftDriver(HovercraftDriver):
@@ -17,7 +17,6 @@ class DummyHovercraftDriver(HovercraftDriver):
         """
         self.hover = speed
         print(f"Set hover to {speed}")
-
 
     def set_forward_speed(self, speed):
         """

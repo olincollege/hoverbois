@@ -9,14 +9,12 @@ import socket
 import discord
 from discord.ext import commands
 
+# from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
+
 # Setup bot instance
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
-
-# Load Discord API bot key.
-# Probably better to use environment variables or CLI flags but whatever
-from botkey import botkey
 
 # Setup commands
 
@@ -63,5 +61,15 @@ async def whoami(ctx):
     await ctx.send(f"username: {user}")
 
 
-# Run
-bot.run(botkey)
+def main():
+    """
+    Main loop
+    """
+    # Get botkey from CLI arg (argparse is better but this works)
+    import sys
+    botkey = sys.argv[1]
+    bot.run(botkey)
+
+
+if __name__ == "__main__":
+    main()
