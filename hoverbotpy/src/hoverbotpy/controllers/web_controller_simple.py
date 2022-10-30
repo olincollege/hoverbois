@@ -1,3 +1,4 @@
+# from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
 from hoverbotpy.drivers.pi_pico_simple import SimpleFan
 from ctypes import set_errno
 from time import time
@@ -131,6 +132,7 @@ async def main():
         print(last_forward)
 
 if __name__ == "__main__":
+    # driver = DummyHovercraftDriver()
     driver = SimpleFan()
     asyncio.run(main())
     # main()

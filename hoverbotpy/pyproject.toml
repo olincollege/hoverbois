@@ -12,6 +12,7 @@ gpiozero = "^1.6.2"
 rpi-gpio = "^0.7.1"
 lgpio = "^0.0.0.2"
 tornado = "^6.2"
+serial = "^0.0.97"
 
 
 [build-system]
