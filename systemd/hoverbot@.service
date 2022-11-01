@@ -1,19 +1,25 @@
 [Unit]
-Description=Run the hoverbot discord bot as user %I
+Description=Run the hoverbot discord bot as user %i
 After=multi-user.target
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-# Replace PYTHONPATH with python executible from virtualenv
-# Replace PATH with path to the file (TODO, make it a module so it's not this jank)
-# Replace USER with username on Pi
-ExecStart=PYTHONPATH -O PATH
-User=USER
-Group=USER
+# Replace the placeholders
+
+# HOVERBOTPY: Path to Python project (/home/frank/hoverbois/hoverbotpy)
+WorkingDirectory=HOVERBOTPY
+
+# POETRYPATH: Path to Poetry executable (/home/frank/.local/bin/poetry)
+# APIKEY: Discord bot key
+ExecStart=POETRYPATH run hoverbot-discord APIKEY
+
+User=%i
+Group=%i
 Type=idle
+
 Restart=always
-RestartSec=15
+RestartSec=10
 RestartPreventExitStatus=0
 TimeoutStopSec=10
 
