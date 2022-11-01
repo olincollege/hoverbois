@@ -134,13 +134,6 @@ async def web_app():
     app.listen(8888)
 
 
-async def main():
-    await app_start()
-    # asyncio.create_task(app_start())
-    while (1):
-        print(last_forward)
-
-
 class WatchdogThread(threading.Thread):
     def __init__(self, threadID, name, counter):
         threading.Thread.__init__(self)
@@ -160,9 +153,13 @@ class WatchdogThread(threading.Thread):
                 print("turn timeout")
 
 
+
+from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
+
+
 if __name__ == "__main__":
+    driver = DummyHovercraftDriver()
     motor_watchdog_thread = WatchdogThread(1, "watchdog_1", 1)
     motor_watchdog_thread.setDaemon(True)
     motor_watchdog_thread.start()
     asyncio.run(app_start())
-    # main()
