@@ -16,8 +16,8 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Setup commands
 
+# Setup commands
 @bot.command()
 async def ip(ctx):
     """
@@ -30,7 +30,7 @@ async def ip(ctx):
         s.connect(('10.0.0.0', 0))
         ip = s.getsockname()[0]
 
-    await ctx.send(f"ip: `{ip}` link: http://{ip}:8888")
+    await ctx.send(f"ip: `{ip}`\nlink: http://{ip}:8888")
 
 
 @bot.command()
