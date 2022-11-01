@@ -61,6 +61,12 @@ From the directory of this readme:
 poetry install
 ```
 
+This will create a virtual environment, install all dependencies in the virtual
+environment, and install the package `hoverbotpy` into the virtual environment.
+
+To run Python from the virtual environment, make sure the working directory is
+in this project and use `poetry run python ARGS`.
+
 ## Adding to the dependency list
 
 You can add to the dependency list with
@@ -69,9 +75,11 @@ You can add to the dependency list with
 poetry add DEPENDENCY
 ```
 
-This will add it to `pyproject.toml` as well as install it in your virtual
-environment with `pip`. PLEASE PLEASE PLEASE add dependencies with this instead
-of just installing them without adding them anywhere.
+This will add it to `pyproject.toml`, install it in your virtual environment
+with `pip`, and add the specific version of the dependency to `poetry.lock`
+(this ensures that all developers have the exact same virtual environment).
+PLEASE PLEASE PLEASE add dependencies with this instead of just installing them
+without adding them anywhere.
 
 ## Running Things
 
@@ -84,12 +92,25 @@ poetry run python -m mymodule # Example
 poetry run python -m hoverbotpy.hoverbot_discord.bot APIKEY # Start the discord bot.
 ```
 
+### Creating Shorthands
+
 You can also configure specific shorthands in `pyproject.toml` in the
 `[tool.poetry.scripts]` section. For example, to run the Discord bot:
 
 ```
 poetry run hoverbot-discord APIKEY
 ```
+
+In `pyproject.toml`, the shortcut looks like this
+
+```
+[tool.poetry.scripts]
+hoverbot-discord = "hoverbotpy.hoverbot_discord.bot:main"
+# shorthand-name = "package.subpackage.module:function_name"
+```
+
+Because these shorthands run a particular function, **please make sure there is
+a single function that can be called to run the whole thing**.
 
 ## Referencing Other Modules Within a Module
 
