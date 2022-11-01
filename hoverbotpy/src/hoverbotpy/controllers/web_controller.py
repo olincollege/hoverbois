@@ -6,12 +6,17 @@ import asyncio
 
 import tornado.web
 import tracemalloc
+
+from hoverbotpy.drivers.pi_pico_simple import SimpleFan
+
 tracemalloc.start()
 
 last_hover = 0
 last_forward = 0
 last_right = 0
 last_left = 0
+forward_speed = 0
+steer = 0
 TIMEOUT_TIME = .5  # IDK UNITS
 
 
@@ -24,48 +29,64 @@ class Hover(tornado.web.RequestHandler):
 
 class Estop(tornado.web.RequestHandler):
     def get(self):
+        global driver
+        global steer
+        global forward_speed
+        steer = 0
+        forward_speed = 0
+        driver.stop()
         print("ESTOP ESTOP ESTOP")
-
-
-class NotForward(tornado.web.RequestHandler):
-    def get(self):
-        global last_forward
-        print("forward click release")
-        last_forward = time()
-
-
-class NotRight(tornado.web.RequestHandler):
-    def get(self):
-        global last_right
-        print("right click release")
-        last_right = time()
-
-
-class NotLeft(tornado.web.RequestHandler):
-    def get(self):
-        global last_left
-        print("left click release")
-        last_left = time()
 
 
 class Forward(tornado.web.RequestHandler):
     def get(self):
         global last_forward
+
+        global driver
+        global forward_speed
+        if forward_speed <= 90:
+            forward_speed += 10
+        driver.set_forward_speed(forward_speed)
         print("forward click")
+        print(forward_speed)
+        last_forward = time()
+
+
+class Reverse(tornado.web.RequestHandler):
+    def get(self):
+        global last_forward
+        global driver
+        global forward_speed
+        if forward_speed >= 10:
+            forward_speed -= 10
+        driver.set_forward_speed(forward_speed)
+        print("rev click")
+        print(forward_speed)
         last_forward = time()
 
 
 class Right(tornado.web.RequestHandler):
     def get(self):
         global last_right
+        global driver
+        global steer
+        if steer >= -.5:
+            steer -= .5
+        driver.set_steering_angle(steer)
         print("right click")
+        print(steer)
         last_right = time()
 
 
 class Left(tornado.web.RequestHandler):
     def get(self):
         global last_left
+        global steer
+        if steer <= .5:
+            steer += .5
+        driver.set_steering_angle(steer)
         print("left click")
+        print(steer)
         last_left = time()
 
 
