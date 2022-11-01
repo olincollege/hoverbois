@@ -39,14 +39,17 @@ __init__.py` will work.
 Install Poetry (for more details refer to the [documentation](https://python-poetry.org/docs/).
 
 ```
-curl -sSL https://install.python-poetry.org | python3-
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
 This will install poetry to `$XDG_DATA_HOME/pypoetry` (`XDG_DATA_HOME` is
 `~/.local/share/`) if you do not explicitly set it.
 
 Poetry also by default installs its run script to `~/.local/bin/`, so you will
-need to make sure that is part of your `$PATH` after you install.
+need to make sure that is part of your `$PATH` after you install. If you are on
+Ubuntu or Debian, this should be in your path by default (you may need to
+re-`source` your `.bash_profile` or `.profile`, log out and back in (same thing
+but easier), or reboot (probably way overkill)).
 
 ## Setup Virtual Environment
 
