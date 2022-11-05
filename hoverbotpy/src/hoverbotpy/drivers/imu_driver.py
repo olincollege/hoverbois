@@ -9,6 +9,7 @@ DEFAULT_REQUESTS = [
             "X_DPS","Y_DPS","Z_DPS",
             "X_MAG","Y_MAG","Z_MAG"
             ]
+_2BYTE_MAX  = 2^16
 
 class correctedIMU():
     ''' this is the position corrected imu for com of object'''
@@ -70,6 +71,13 @@ class correctedIMU():
         data = self.pi.i2c_read_byte_data(handle,register)
         self.pi.i2c_close(handle)
         return data
+
+if __name__ == "__main__":
+    from time import sleep
+    d = correctedIMU()
+    while 1:
+        print(d.get_data())
+        sleep(.1)
 
 
 
