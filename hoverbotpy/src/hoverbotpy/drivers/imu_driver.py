@@ -26,6 +26,9 @@ class correctedIMU():
             #"X_VEL":
             #"Y_VEL":
             #"Z_VEL":
+            #"X_ACC":
+            #"Y_ACC":
+            #"Z_ACC":
             "X_ACC_RAW":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":imu_address}],
             "Y_ACC_RAW":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":imu_address}],
             "Z_ACC_RAW":[self._req_N_from_dev,{"registers":[0x2D,0x2C],"addr":imu_address}],
@@ -49,13 +52,18 @@ class correctedIMU():
 
     def _req_N_from_dev(self,registers,addr,channel=None,*args):
         data = 0
-        for reg in registers:
+        for i, reg in enumerate(registers):
             data *= 256
             data = self._req8_from_dev(reg,addr,channel)
+            if i is 0 and data > 127:
+                data -= 256
+            #end if
+        #end for
         return data
 
     def _req8_from_dev(self,register,addr,channel=None,*args):
-        '''requests the packet from the device'''
+        '''requests the packet from the device SHOULD NOT BE CALLED
+            except through _req_N_from_dev'''
         if channel is None:
             channel=self._CHANNEL
         handle = self.pi.i2c_open(channel,addr)
