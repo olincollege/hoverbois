@@ -55,7 +55,7 @@ class correctedIMU():
         data = 0
         for reg in registers:
             data *= 256
-            data = self._req8_from_dev(self,reg,addr)
+            data = self._req8_from_dev(reg,addr,channel)
         return data
 
     def _req8_from_dev(self,register,addr,channel=None,*args):
