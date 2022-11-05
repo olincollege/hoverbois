@@ -4,7 +4,7 @@ from threading import Thread, Lock
 DEFAULT_REQUESTS = [
             #"X_POS","Y_POS","Z_POS",
             #"X_VEL","Y_VEL","Z_VEL",
-            "X_ACC_RAW",#"Y_ACC_RAW","Z_ACC_RAW",
+            "X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW",
             #"X_DEG","Y_DEG","Z_DEG",
             "X_DPS","Y_DPS","Z_DPS",
             "X_MAG","Y_MAG","Z_MAG"
@@ -27,8 +27,8 @@ class correctedIMU():
             #"Y_VEL":
             #"Z_VEL":
             "X_ACC_RAW":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":imu_address}],
-            #"Y_ACC_RAW":
-            #"Z_ACC_RAW":
+            "Y_ACC_RAW":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":imu_address}],
+            "Z_ACC_RAW":[self._req_N_from_dev,{"registers":[0x2D,0x2C],"addr":imu_address}],
             #"X_DEG":
             #"Y_DEG":
             #"Z_DEG":
