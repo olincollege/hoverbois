@@ -10,7 +10,7 @@ DEFAULT_REQUESTS = [
             "X_MAG","Y_MAG","Z_MAG"
             ]
 
-class corrected_imu():
+class correctedIMU():
     ''' this is the position corrected imu for com of object'''
     
     def __init__(self, imu_address=0x1c, mag_address=0x6a):
