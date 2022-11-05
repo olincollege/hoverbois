@@ -59,6 +59,9 @@ class correctedIMU():
 
     def _req8_from_dev(self,register,addr,channel=None):
         '''requests the packet from the device'''
+        print(register)
+        print(addr)
+        print(channel)
         if channel is None:
             channel=self._CHANNEL
         handle = self.pi.i2c_open(channel,addr)
