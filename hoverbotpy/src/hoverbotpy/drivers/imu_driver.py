@@ -48,6 +48,9 @@ class correctedIMU():
         return out
 
     def _req_N_from_dev(self,registers,addr,channel=None):
+        print(registers)
+        print(addr)
+        print(channel)
         data = 0
         for reg in registers:
             data *= 256

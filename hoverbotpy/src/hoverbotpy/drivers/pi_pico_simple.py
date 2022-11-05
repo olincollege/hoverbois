@@ -1,6 +1,5 @@
 from hoverbotpy.drivers.driver_abc import HovercraftDriver
 from hoverbotpy.drivers.pin_defs import *
-from gpiozero import Servo
 from time import sleep
 import serial
 
