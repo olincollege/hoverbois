@@ -48,10 +48,6 @@ class correctedIMU():
         return out
 
     def _req_N_from_dev(self,registers,addr,channel=None,*args):
-        print(args)
-        print(registers)
-        print(addr)
-        print(channel)
         data = 0
         for reg in registers:
             data *= 256
@@ -60,10 +56,6 @@ class correctedIMU():
 
     def _req8_from_dev(self,register,addr,channel=None,*args):
         '''requests the packet from the device'''
-        print(args)
-        print(register)
-        print(addr)
-        print(channel)
         if channel is None:
             channel=self._CHANNEL
         handle = self.pi.i2c_open(channel,addr)
