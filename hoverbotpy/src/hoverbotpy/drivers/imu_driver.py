@@ -26,9 +26,9 @@ class correctedIMU():
             #"X_VEL":
             #"Y_VEL":
             #"Z_VEL":
-            "X_ACC":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":imu_address}],
-            #"Y_ACC":
-            #"Z_ACC":
+            "X_ACC_RAW":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":imu_address}],
+            #"Y_ACC_RAW":
+            #"Z_ACC_RAW":
             #"X_DEG":
             #"Y_DEG":
             #"Z_DEG":
@@ -47,18 +47,20 @@ class correctedIMU():
             **(self.REQUESTS_REG[req][1]))) for req in data_req)
         return out
 
-    def _req_N_from_dev(self,registers,addr,channel=None):
+    def _req_N_from_dev(self,registers,addr,channel=None,*args):
+        print(args)
         print(registers)
         print(addr)
         print(channel)
         data = 0
         for reg in registers:
             data *= 256
-            data = self._req8_from_dev(self,reg,addr,channel)
+            data = self._req8_from_dev(self,reg,addr)
         return data
 
-    def _req8_from_dev(self,register,addr,channel=None):
+    def _req8_from_dev(self,register,addr,channel=None,*args):
         '''requests the packet from the device'''
+        print(args)
         print(register)
         print(addr)
         print(channel)
