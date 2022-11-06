@@ -166,7 +166,7 @@ if __name__ == "__main__":
     from time import sleep
     d = correctedIMU()
     while 1:
-        print(d.get_data(["X_ACC_RAW"]))
+        print(d.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"]))
         sleep(1)
 
 
