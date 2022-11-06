@@ -130,7 +130,7 @@ class correctedIMU():
         for i, reg in enumerate(registers):
             print(i)
             data = data * 256
-            data = self._req8_from_dev(reg,addr,channel)
+            data = data + self._req8_from_dev(reg,addr,channel)
             print(data)
             if i == 0 and data > 127:
                 data = data - 256
