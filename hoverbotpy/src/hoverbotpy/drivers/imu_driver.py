@@ -9,7 +9,7 @@ DEFAULT_REQUESTS = [
             "X_DPS","Y_DPS","Z_DPS",
             "X_MAG","Y_MAG","Z_MAG"
             ]
-_2BYTE_MAX  = 2^16
+_2BYTE_MAX  = 2**16
 
 _DEFAULT_GYRO_ODR = 104
 _DEFAULT_GYRO_RANGE = 1000
@@ -122,7 +122,8 @@ class correctedIMU():
 
     def acc_bin2real(self,req):
         raw = self.REQUESTS_REG[req][0](**(self.REQUESTS_REG[req][1]))
-        out = raw * self._acc_range/_2BYTE_MAX
+        out = (raw/_2BYTE_MAX)*self._acc_range
+        #print(self.)
         return(out)
 
     def _req_N_from_dev(self,registers,addr,channel=None,*args):
