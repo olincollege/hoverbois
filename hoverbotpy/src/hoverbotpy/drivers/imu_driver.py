@@ -134,8 +134,8 @@ class correctedIMU():
             data = data + self._req8_from_dev(reg,addr,channel)
             print(data)
         #end for
-        if data > 2**(count-1)-1:
-            data = data - 2**count
+        if data > 2**((count*8)-1)-1:
+            data = data - 2**(count*8)
             print(data)
         #end if
         return data
