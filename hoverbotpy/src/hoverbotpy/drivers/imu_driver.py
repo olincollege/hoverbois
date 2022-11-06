@@ -61,8 +61,8 @@ class correctedIMU():
             #"Y_ACC":
             #"Z_ACC":
             "X_ACC_RAW":[self.acc_bin2real,{"req":"X_ACC_BIN"}],
-            "Y_ACC_RAW":[self.acc_bin2real,{"req":"Y_ACC_RAW"}],
-            "Z_ACC_RAW":[self.acc_bin2real,{"req":"Z_ACC_RAW"}],
+            "Y_ACC_RAW":[self.acc_bin2real,{"req":"Y_ACC_BIN"}],
+            "Z_ACC_RAW":[self.acc_bin2real,{"req":"Z_ACC_BIN"}],
             "X_ACC_BIN":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":imu_address}],
             "Y_ACC_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":imu_address}],
             "Z_ACC_BIN":[self._req_N_from_dev,{"registers":[0x2D,0x2C],"addr":imu_address}],
