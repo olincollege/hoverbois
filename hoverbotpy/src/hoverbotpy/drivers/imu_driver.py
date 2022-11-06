@@ -47,6 +47,8 @@ class correctedIMU():
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
         self._CHANNEL = 1
+        self.set_acc_config()
+        self.set_gyro_config()
 
         self.REQUESTS_REG = {
             #"X_POS":
@@ -89,7 +91,7 @@ class correctedIMU():
         if range in LSM6_ACC_RANGE.keys():
             self._acc_range = range
         self._send8_to_dev(odr_bits*16+range_bits*4+reg_LPF_BW_SEL*2+reg_BW0_XL,0x10)#CTRL1_XL
-        self._send8_to_dev(0x09,0x10)#CTRL8_XL
+        self._send8_to_dev(0x09,0x17)#CTRL8_XL
         pass
 
 
@@ -107,8 +109,8 @@ class correctedIMU():
             self._acc_odr = output_data_rate
         if range in LSM6_ACC_RANGE.keys():
             self._acc_range = range
-        self._send8_to_dev(odr_bits*16+range_bits*4+reg_125*2,0x10)#CTRL2_G
-        self._send8_to_dev(0x00,0x10)#CTRL7_G
+        self._send8_to_dev(odr_bits*16+range_bits*4+reg_125*2,0x11)#CTRL2_G
+        self._send8_to_dev(0x00,0x16)#CTRL7_G
         pass
     
     def get_data(self,data_req = DEFAULT_REQUESTS):
