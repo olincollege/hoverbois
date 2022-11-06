@@ -9,7 +9,7 @@ DEFAULT_REQUESTS = [
             "X_DPS","Y_DPS","Z_DPS",
             "X_MAG","Y_MAG","Z_MAG"
             ]
-_2BYTE_MAX  = 2**16
+_2BYTE_MAX  = 2**15
 
 _DEFAULT_GYRO_ODR = 104
 _DEFAULT_GYRO_RANGE = 1000
