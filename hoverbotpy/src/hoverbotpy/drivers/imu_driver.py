@@ -128,6 +128,7 @@ class correctedIMU():
     def _req_N_from_dev(self,registers,addr,channel=None,*args):
         data = 0
         for i, reg in enumerate(registers):
+            print(i)
             data *= 256
             data = self._req8_from_dev(reg,addr,channel)
             if i is 0 and data > 127:
@@ -161,8 +162,8 @@ if __name__ == "__main__":
     from time import sleep
     d = correctedIMU()
     while 1:
-        print(d.get_data())
-        sleep(.1)
+        print(d.get_data(["X_ACC_RAW"]))
+        sleep(1)
 
 
 
