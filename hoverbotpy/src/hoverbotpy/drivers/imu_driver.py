@@ -131,6 +131,7 @@ class correctedIMU():
             print(i)
             data *= 256
             data = self._req8_from_dev(reg,addr,channel)
+            print(data)
             if i is 0 and data > 127:
                 data -= 256
             #end if
