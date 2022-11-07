@@ -42,7 +42,8 @@ LSM6_ODR_TABLE ={
 class correctedIMU():
     ''' this is the position corrected imu for com of object'''
     
-    def __init__(self, imu_address=0x6A, mag_address=0x1C):
+    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets = {}):
+        self.offsets = offsets
         self.imu_adr = imu_address
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
@@ -83,12 +84,12 @@ class correctedIMU():
             "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
         }
     def auto_cal_gyro(self):
-        '''auto cals the gyro part of the '''
+        '''auto cals the gyro part of the imu
+            returns 0 if failed 1 if success'''
         count = 0
         x_data = []
         y_data = []
         z_data = []
-        offset={}
         while(count<=5000):
             aqudata = self.get_data(["X_DPS_BIN","Y_DPS_BIN","Z_DPS_BIN"])
             x_data.append(aqudata["X_DPS_BIN"])
@@ -100,12 +101,12 @@ class correctedIMU():
                 ysample = y_data[-50:-1]
                 zsample = z_data[-50:-1]
                 if (abs(max(xsample)-min(xsample))<=15) and (abs(max(ysample)-min(ysample))<=15) and (abs(max(zsample)-min(zsample))<=15):
-                    offset["X_DPS_BIN"] = -sum(xsample)/len(xsample)
-                    offset["Y_DPS_BIN"] = -sum(ysample)/len(ysample)
-                    offset["Z_DPS_BIN"] = -sum(zsample)/len(zsample)
-                    break
+                    self.offsets["X_DPS_BIN"] = round(-sum(xsample)/len(xsample))
+                    self.offsets["Y_DPS_BIN"] = round(-sum(ysample)/len(ysample))
+                    self.offsets["Z_DPS_BIN"] = round(-sum(zsample)/len(zsample))
+                    return 1
             sleep(.02)
-        return offset
+        return 0
 
 
 
