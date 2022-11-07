@@ -91,9 +91,9 @@ class correctedIMU():
         offset={}
         while(count<=500):
             aqudata = self.get_data(["X_DPS_BIN","Y_DPS_BIN","Z_DPS_BIN"])
-            x_data[count] = aqudata["X_DPS_BIN"]
-            y_data[count] = aqudata["Y_DPS_BIN"]
-            z_data[count] = aqudata["Z_DPS_BIN"]
+            x_data.append(aqudata["X_DPS_BIN"])
+            y_data.append(aqudata["Y_DPS_BIN"])
+            z_data.append(aqudata["Z_DPS_BIN"])
             count += 1
             if count>50:
                 xsample = x_data[-50:-1]
