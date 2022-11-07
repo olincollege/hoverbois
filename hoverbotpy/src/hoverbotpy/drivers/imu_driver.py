@@ -46,7 +46,7 @@ class correctedIMU():
         #if offsets is None:
         #    self.offsets = {}
         #else:
-        self.offsets = offsets
+        self._offsets = offsets
         self.imu_adr = imu_address
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
@@ -104,9 +104,9 @@ class correctedIMU():
                 ysample = y_data[-50:-1]
                 zsample = z_data[-50:-1]
                 if (abs(max(xsample)-min(xsample))<=15) and (abs(max(ysample)-min(ysample))<=15) and (abs(max(zsample)-min(zsample))<=15):
-                    self.offsets["X_DPS_BIN"] = round(sum(xsample)/len(xsample))
-                    self.offsets["Y_DPS_BIN"] = round(sum(ysample)/len(ysample))
-                    self.offsets["Z_DPS_BIN"] = round(sum(zsample)/len(zsample))
+                    self._offsets["X_DPS_BIN"] = round(sum(xsample)/len(xsample))
+                    self._offsets["Y_DPS_BIN"] = round(sum(ysample)/len(ysample))
+                    self._offsets["Z_DPS_BIN"] = round(sum(zsample)/len(zsample))
                     return 1
             sleep(.02)
         return 0
@@ -204,8 +204,9 @@ if __name__ == "__main__":
     from time import sleep
     d = correctedIMU()
     print(d.auto_cal_gyro())
+    print(d._offsets)
     sleep(10)
-    last  = d.get_data()
+    #last  = d.get_data()
     while 1:
         print(d.get_data())
         sleep(.25)
