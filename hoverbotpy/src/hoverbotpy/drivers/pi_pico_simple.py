@@ -18,28 +18,28 @@ class SimpleFan(HovercraftDriver):
                 "All pin definitions must match pins on the raspberry pi")
         self.pico = serial.Serial(
             port='/dev/ttyACM0', baudrate=115200, timeout=.1)
-        self.steer_motor = Servo(SERVOPIN)
+        #self.steer_motor = Servo(SERVOPIN)
         #self.hover = 0
         self.forward = 0
         self.steering = 0
         sleep(0.1)
-        self.steer_motor.min()  # wig wag the servo to show its been started up
-        sleep(0.2)
-        self.steer_motor.max()
-        sleep(0.2)
-        self.steer_motor.min()
-        sleep(0.2)
-        self.steer_motor.max()
-        sleep(0.2)
-        self.steer_motor.mid()
+        self.set_steering_angle(-1)  # wig wag the servo to show its been started up
+        sleep(0.3)
+        self.set_steering_angle(1)
+        sleep(0.3)
+        self.set_steering_angle(-1)
+        sleep(0.3)
+        self.set_steering_angle(1)
+        sleep(0.3)
+        self.set_steering_angle(0)
         pass
 
     def set_hover_speed(self, speed):
         '''sets the speed of the hover motor
         args:
             speed: a number of the speed of the motor(0 to 100)'''
-        # self.hover = (speed/50)-1  # this takes a 1 to -1
-        # self.hover_motor.value(self.hover)
+        self.hover = (speed/50)-1
+        self.pico.write(bytes("h"+str(speed), 'utf-8'))
         pass
 
     def set_forward_speed(self, speed):
@@ -48,7 +48,6 @@ class SimpleFan(HovercraftDriver):
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = (speed/50)-1
         self.pico.write(bytes("f"+str(speed), 'utf-8'))
-
         pass
 
     def set_steering_angle(self, angle):
