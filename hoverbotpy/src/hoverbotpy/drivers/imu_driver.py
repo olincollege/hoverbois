@@ -7,7 +7,7 @@ DEFAULT_REQUESTS = [
             "X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW",
             #"X_DEG","Y_DEG","Z_DEG",
             "X_DPS","Y_DPS","Z_DPS",
-            "X_MAG","Y_MAG","Z_MAG"
+            #"X_MAG","Y_MAG","Z_MAG"
             ]
 _2BYTE_MAX  = 2**15
 
@@ -60,21 +60,27 @@ class correctedIMU():
             #"X_ACC":
             #"Y_ACC":
             #"Z_ACC":
-            "X_ACC_RAW":[self.acc_bin2real,{"req":"X_ACC_BIN"}],
-            "Y_ACC_RAW":[self.acc_bin2real,{"req":"Y_ACC_BIN"}],
-            "Z_ACC_RAW":[self.acc_bin2real,{"req":"Z_ACC_BIN"}],
+            "X_ACC_RAW":[self._bin2real,{"range":self._acc_range,"req":"X_ACC_BIN"}],
+            "Y_ACC_RAW":[self._bin2real,{"range":self._acc_range,"req":"Y_ACC_BIN"}],
+            "Z_ACC_RAW":[self._bin2real,{"range":self._acc_range,"req":"Z_ACC_BIN"}],
             "X_ACC_BIN":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":imu_address}],
             "Y_ACC_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":imu_address}],
             "Z_ACC_BIN":[self._req_N_from_dev,{"registers":[0x2D,0x2C],"addr":imu_address}],
             #"X_DEG":
             #"Y_DEG":
             #"Z_DEG":
-            "X_DPS":[self._req_N_from_dev,{"registers":[0x23,0x22],"addr":imu_address}],
-            "Y_DPS":[self._req_N_from_dev,{"registers":[0x25,0x24],"addr":imu_address}],
-            "Z_DPS":[self._req_N_from_dev,{"registers":[0x27,0x26],"addr":imu_address}],
-            "X_MAG":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":mag_address}],
-            "Y_MAG":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":mag_address}],
-            "Z_MAG":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
+            "X_DPS":[self._bin2real,{"range":self._dps_range,"req":"X_DPS_BIN"}],
+            "Y_DPS":[self._bin2real,{"range":self._dps_range,"req":"Y_DPS_BIN"}],
+            "Z_DPS":[self._bin2real,{"range":self._dps_range,"req":"Z_DPS_BIN"}],
+            "X_DPS_BIN":[self._req_N_from_dev,{"registers":[0x23,0x22],"addr":imu_address}],
+            "Y_DPS_BIN":[self._req_N_from_dev,{"registers":[0x25,0x24],"addr":imu_address}],
+            "Z_DPS_BIN":[self._req_N_from_dev,{"registers":[0x27,0x26],"addr":imu_address}],
+            #"X_MAG":[self._bin2real,{"req":"X_ACC_BIN"}],
+            #"Y_MAG":[self._bin2real,{"req":"Y_ACC_BIN"}],
+            #"Z_MAG":[self._bin2real,{"req":"Z_ACC_BIN"}],
+            "X_MAG_BIN":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":mag_address}],
+            "Y_MAG_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":mag_address}],
+            "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
         }
 
     def set_acc_config(self,
@@ -107,9 +113,9 @@ class correctedIMU():
         range_bits = LSM6_GYRO_RANGE[range]
         reg_125 = reg_125%2
         if output_data_rate in LSM6_ODR_TABLE.keys():
-            self._acc_odr = output_data_rate
-        if range in LSM6_ACC_RANGE.keys():
-            self._acc_range = range
+            self._dps_odr = output_data_rate
+        if range in LSM6_GYRO_RANGE.keys():
+            self._dps_range = range
         self._send8_to_dev(odr_bits*16+range_bits*4+reg_125*2,0x11,self.imu_adr)#CTRL2_G
         self._send8_to_dev(0x00,0x16,self.imu_adr)#CTRL7_G
         pass
@@ -121,9 +127,9 @@ class correctedIMU():
             **(self.REQUESTS_REG[req][1]))) for req in data_req)
         return out
 
-    def acc_bin2real(self,req):# this goes down the rabbit hole and calls the other functions
+    def _bin2real(self,range,req):# this goes down the rabbit hole and calls the other functions
         raw = self.REQUESTS_REG[req][0](**(self.REQUESTS_REG[req][1]))
-        out = (raw/_2BYTE_MAX)*self._acc_range
+        out = (raw/_2BYTE_MAX)*range
         #print(self.)
         return(out)
 
