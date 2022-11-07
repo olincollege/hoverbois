@@ -161,8 +161,8 @@ class correctedIMU():
     def _bin2real(self,range,req):# this goes down the rabbit hole and calls the other functions
         raw = self.REQUESTS_REG[req][0](**(self.REQUESTS_REG[req][1]))
         out = (raw/_2BYTE_MAX)*range
-        if req in self.offsets.keys():
-            out = out + self.offsets[req]
+        if req in self._offsets.keys():
+            out = out + self._offsets[req]
         #print(self.)
         return(out)
 
