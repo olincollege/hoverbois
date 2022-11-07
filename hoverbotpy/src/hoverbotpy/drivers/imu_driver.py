@@ -42,7 +42,7 @@ LSM6_ODR_TABLE ={
 class correctedIMU():
     ''' this is the position corrected imu for com of object'''
     
-    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets=None):
+    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets={}):
         if offsets is None:
             self.offsets = {}
         else:
