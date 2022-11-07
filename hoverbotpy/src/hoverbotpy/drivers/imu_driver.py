@@ -86,6 +86,8 @@ class correctedIMU():
             "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
         }
         self.auto_cal_gyro()
+
+
     def auto_cal_gyro(self):
         '''auto cals the gyro part of the imu
             returns 0 if failed 1 if success'''
@@ -104,9 +106,9 @@ class correctedIMU():
                 ysample = y_data[-50:-1]
                 zsample = z_data[-50:-1]
                 if (abs(max(xsample)-min(xsample))<=15) and (abs(max(ysample)-min(ysample))<=15) and (abs(max(zsample)-min(zsample))<=15):
-                    self._offsets["X_DPS_BIN"] = round(sum(xsample)/len(xsample))
-                    self._offsets["Y_DPS_BIN"] = round(sum(ysample)/len(ysample))
-                    self._offsets["Z_DPS_BIN"] = round(sum(zsample)/len(zsample))
+                    self._offsets["X_DPS_BIN"] = -round(sum(xsample)/len(xsample))
+                    self._offsets["Y_DPS_BIN"] = -round(sum(ysample)/len(ysample))
+                    self._offsets["Z_DPS_BIN"] = -round(sum(zsample)/len(zsample))
                     return 1
             sleep(.02)
         return 0
