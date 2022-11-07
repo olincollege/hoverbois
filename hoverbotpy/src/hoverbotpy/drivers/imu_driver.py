@@ -164,6 +164,7 @@ class correctedIMU():
 if __name__ == "__main__":
     from time import sleep
     d = correctedIMU()
+    last  = d.get_data()
     while 1:
         data = d.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"])
         if  last == data:
