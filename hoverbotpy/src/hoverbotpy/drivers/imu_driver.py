@@ -104,9 +104,9 @@ class correctedIMU():
                 ysample = y_data[-50:-1]
                 zsample = z_data[-50:-1]
                 if (abs(max(xsample)-min(xsample))<=15) and (abs(max(ysample)-min(ysample))<=15) and (abs(max(zsample)-min(zsample))<=15):
-                    self.offsets["X_DPS_BIN"] = round(-sum(xsample)/len(xsample))
-                    self.offsets["Y_DPS_BIN"] = round(-sum(ysample)/len(ysample))
-                    self.offsets["Z_DPS_BIN"] = round(-sum(zsample)/len(zsample))
+                    self.offsets["X_DPS_BIN"] = round(sum(xsample)/len(xsample))
+                    self.offsets["Y_DPS_BIN"] = round(sum(ysample)/len(ysample))
+                    self.offsets["Z_DPS_BIN"] = round(sum(zsample)/len(zsample))
                     return 1
             sleep(.02)
         return 0
