@@ -168,7 +168,7 @@ if __name__ == "__main__":
     while 1:
         data = d.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"])
         if  last == data:
-            print()
+            print(data)
             sleep(.001)
         last = data
 
