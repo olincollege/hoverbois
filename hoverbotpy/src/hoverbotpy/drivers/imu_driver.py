@@ -104,6 +104,10 @@ class correctedIMU():
                     offset["Y_DPS_BIN"] = -sum(ysample)/len(ysample)
                     offset["Z_DPS_BIN"] = -sum(zsample)/len(zsample)
                     break
+                else:
+                    print(abs(max(xsample)-min(xsample))<=3)
+                    print(abs(max(ysample)-min(ysample))<=3)
+                    print(abs(max(zsample)-min(zsample))<=3)
             sleep(.05)
         return offset
 
