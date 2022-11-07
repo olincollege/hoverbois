@@ -51,9 +51,6 @@ class correctedIMU():
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
         self._CHANNEL = 1
-        self.set_acc_config()
-        self.set_gyro_config()
-        self.auto_cal_gyro()
         self.REQUESTS_REG = {
             #"X_POS":
             #"Y_POS":
@@ -86,6 +83,9 @@ class correctedIMU():
             "Y_MAG_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":mag_address}],
             "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
         }
+        self.set_acc_config()
+        self.set_gyro_config()
+        self.auto_cal_gyro()
     def auto_cal_gyro(self):
         '''auto cals the gyro part of the imu
             returns 0 if failed 1 if success'''
