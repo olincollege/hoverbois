@@ -50,7 +50,7 @@ class correctedIMU():
         self._CHANNEL = 1
         self.set_acc_config()
         self.set_gyro_config()
-
+        self.auto_cal_gyro()
         self.REQUESTS_REG = {
             #"X_POS":
             #"Y_POS":
@@ -158,6 +158,8 @@ class correctedIMU():
     def _bin2real(self,range,req):# this goes down the rabbit hole and calls the other functions
         raw = self.REQUESTS_REG[req][0](**(self.REQUESTS_REG[req][1]))
         out = (raw/_2BYTE_MAX)*range
+        if req in self.offsets.keys():
+            out = out + self.offsets[req]
         #print(self.)
         return(out)
 
