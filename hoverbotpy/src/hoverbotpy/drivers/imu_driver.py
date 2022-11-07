@@ -96,18 +96,14 @@ class correctedIMU():
             z_data.append(aqudata["Z_DPS_BIN"])
             count += 1
             if count>50:
-                xsample = x_data[-10:-1]
-                ysample = y_data[-10:-1]
-                zsample = z_data[-10:-1]
-                if (abs(max(xsample)-min(xsample))<=3) and (abs(max(ysample)-min(ysample))<=3) and (abs(max(zsample)-min(zsample))<=3):
+                xsample = x_data[-100:-1]
+                ysample = y_data[-100:-1]
+                zsample = z_data[-100:-1]
+                if (abs(max(xsample)-min(xsample))<=15) and (abs(max(ysample)-min(ysample))<=15) and (abs(max(zsample)-min(zsample))<=15):
                     offset["X_DPS_BIN"] = -sum(xsample)/len(xsample)
                     offset["Y_DPS_BIN"] = -sum(ysample)/len(ysample)
                     offset["Z_DPS_BIN"] = -sum(zsample)/len(zsample)
                     break
-                else:
-                    print(abs(max(xsample)-min(xsample)))
-                    print(abs(max(ysample)-min(ysample)))
-                    print(abs(max(zsample)-min(zsample)))
             sleep(.05)
         return offset
 
