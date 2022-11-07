@@ -89,7 +89,7 @@ class correctedIMU():
         y_data = []
         z_data = []
         offset={}
-        while(count<=500):
+        while(count<=5000):
             aqudata = self.get_data(["X_DPS_BIN","Y_DPS_BIN","Z_DPS_BIN"])
             x_data.append(aqudata["X_DPS_BIN"])
             y_data.append(aqudata["Y_DPS_BIN"])
