@@ -90,7 +90,7 @@ class correctedIMU():
             self._acc_odr = output_data_rate
         if range in LSM6_ACC_RANGE.keys():
             self._acc_range = range
-        print(hex((odr_bits*16)+(range_bits*4)+(reg_LPF_BW_SEL*2)+reg_BW0_XL))
+        #print(hex((odr_bits*16)+(range_bits*4)+(reg_LPF_BW_SEL*2)+reg_BW0_XL))
         self._send8_to_dev((odr_bits*16)+(range_bits*4)+(reg_LPF_BW_SEL*2)+reg_BW0_XL,0x10,self.imu_adr)#CTRL1_XL
         self._send8_to_dev(0x09,0x17,self.imu_adr)#CTRL8_XL
         pass
@@ -121,7 +121,7 @@ class correctedIMU():
             **(self.REQUESTS_REG[req][1]))) for req in data_req)
         return out
 
-    def acc_bin2real(self,req):
+    def acc_bin2real(self,req):# this goes down the rabbit hole and calls the other functions
         raw = self.REQUESTS_REG[req][0](**(self.REQUESTS_REG[req][1]))
         out = (raw/_2BYTE_MAX)*self._acc_range
         #print(self.)
@@ -130,16 +130,14 @@ class correctedIMU():
     def _req_N_from_dev(self,registers,addr,channel=None,*args):
         data = 0
         count =  len(registers)
-        for i, reg in enumerate(registers):
-            print(i)
+        for reg in registers:
             data = data * 256
             data = data + self._req8_from_dev(reg,addr,channel)
-            print(data)
         #end for
         if data > 2**((count*8)-1)-1:
             data = data - 2**(count*8)
-            print(data)
         #end if
+        print(data)
         return data
 
     def _req8_from_dev(self,register,addr,channel=None,*args):
@@ -168,7 +166,7 @@ if __name__ == "__main__":
     d = correctedIMU()
     while 1:
         print(d.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"]))
-        sleep(1)
+        sleep(.001)
 
 
 
