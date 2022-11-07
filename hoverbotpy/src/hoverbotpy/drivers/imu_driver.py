@@ -205,9 +205,6 @@ class correctedIMU():
 if __name__ == "__main__":
     from time import sleep
     d = correctedIMU()
-    print(d.auto_cal_gyro())
-    print(d._offsets)
-    sleep(10)
     #last  = d.get_data()
     while 1:
         print(d.get_data())
