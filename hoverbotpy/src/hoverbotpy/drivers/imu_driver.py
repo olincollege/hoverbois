@@ -82,6 +82,32 @@ class correctedIMU():
             "Y_MAG_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":mag_address}],
             "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
         }
+    def auto_cal_gyro(self):
+        '''auto cals the gyro part of the '''
+        count = 0
+        x_data = []
+        y_data = []
+        z_data = []
+        offset={}
+        while(count<=500):
+            aqudata = self.get_data(["X_DPS_BIN","Y_DPS_BIN","Z_DPS_BIN"])
+            x_data[count] = aqudata["X_DPS_BIN"]
+            y_data[count] = aqudata["Y_DPS_BIN"]
+            z_data[count] = aqudata["Z_DPS_BIN"]
+            count += 1
+            if count>50:
+                xsample = x_data[-50:-1]
+                ysample = y_data[-50:-1]
+                zsample = z_data[-50:-1]
+                if (abs(min(xsample)-max(xsample))<3) and (abs(min(ysample)-max(ysample))<3) and (abs(min(zsample)-max(zsample))<3):
+                    offset["X_DPS_BIN"] = -sum(xsample)/len(xsample)
+                    offset["Y_DPS_BIN"] = -sum(ysample)/len(ysample)
+                    offset["Z_DPS_BIN"] = -sum(zsample)/len(zsample)
+                    break
+        return offset
+
+
+
 
     def set_acc_config(self,
         output_data_rate=_DEFAULT_ACC_ODR,
@@ -170,6 +196,8 @@ class correctedIMU():
 if __name__ == "__main__":
     from time import sleep
     d = correctedIMU()
+    print(d.auto_cal_gyro())
+    sleep(10)
     last  = d.get_data()
     while 1:
         print(d.get_data())
