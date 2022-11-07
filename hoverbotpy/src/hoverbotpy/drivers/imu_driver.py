@@ -12,7 +12,7 @@ DEFAULT_REQUESTS = [
 _2BYTE_MAX  = 2**15
 
 _DEFAULT_GYRO_ODR = 104
-_DEFAULT_GYRO_RANGE = 1000
+_DEFAULT_GYRO_RANGE = 2000
 _DEFAULT_GYRO_FS_125 = 0
 _DEFAULT_ACC_ODR = 104
 _DEFAULT_ACC_RANGE = 2
@@ -91,7 +91,7 @@ class correctedIMU():
         if range in LSM6_ACC_RANGE.keys():
             self._acc_range = range
         print(hex((odr_bits*16)+(range_bits*4)+(reg_LPF_BW_SEL*2)+reg_BW0_XL))
-        self._send8_to_dev(odr_bits*16+range_bits*4+reg_LPF_BW_SEL*2+reg_BW0_XL,0x10,self.imu_adr)#CTRL1_XL
+        self._send8_to_dev((odr_bits*16)+(range_bits*4)+(reg_LPF_BW_SEL*2)+reg_BW0_XL,0x10,self.imu_adr)#CTRL1_XL
         self._send8_to_dev(0x09,0x17,self.imu_adr)#CTRL8_XL
         pass
 
