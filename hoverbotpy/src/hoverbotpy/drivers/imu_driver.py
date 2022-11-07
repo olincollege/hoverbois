@@ -90,7 +90,7 @@ class correctedIMU():
             self._acc_odr = output_data_rate
         if range in LSM6_ACC_RANGE.keys():
             self._acc_range = range
-        print(odr_bits*16+range_bits*4+reg_LPF_BW_SEL*2+reg_BW0_XL,hex)
+        print(hex((odr_bits*16)+(range_bits*4)+(reg_LPF_BW_SEL*2)+reg_BW0_XL))
         self._send8_to_dev(odr_bits*16+range_bits*4+reg_LPF_BW_SEL*2+reg_BW0_XL,0x10,self.imu_adr)#CTRL1_XL
         self._send8_to_dev(0x09,0x17,self.imu_adr)#CTRL8_XL
         pass
