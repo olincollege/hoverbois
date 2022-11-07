@@ -46,7 +46,7 @@ class correctedIMU():
         self.imu_adr = imu_address
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
-        self._CHANNEL = 1
+        self._CHANNEL = 0
         self.set_acc_config()
         self.set_gyro_config()
 
