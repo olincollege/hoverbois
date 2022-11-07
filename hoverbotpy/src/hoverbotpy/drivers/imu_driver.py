@@ -42,8 +42,11 @@ LSM6_ODR_TABLE ={
 class correctedIMU():
     ''' this is the position corrected imu for com of object'''
     
-    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets = {}):
-        self.offsets = offsets
+    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets=None):
+        if offsets is None:
+            self.offsets = {}
+        else:
+            self.offsets = offsets
         self.imu_adr = imu_address
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
