@@ -99,11 +99,12 @@ class correctedIMU():
                 xsample = x_data[-10:-1]
                 ysample = y_data[-10:-1]
                 zsample = z_data[-10:-1]
-                if (abs(min(xsample)-max(xsample))<3) and (abs(min(ysample)-max(ysample))<3) and (abs(min(zsample)-max(zsample))<3):
+                if (abs(max(xsample)-min(xsample))<=3) and (abs(max(ysample)-min(ysample))<=3) and (abs(max(zsample)-min(zsample))<=3):
                     offset["X_DPS_BIN"] = -sum(xsample)/len(xsample)
                     offset["Y_DPS_BIN"] = -sum(ysample)/len(ysample)
                     offset["Z_DPS_BIN"] = -sum(zsample)/len(zsample)
                     break
+            sleep(.05)
         return offset
 
 
