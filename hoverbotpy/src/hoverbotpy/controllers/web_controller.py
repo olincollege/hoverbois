@@ -21,9 +21,15 @@ TIMEOUT_TIME = .5  # IDK UNITS
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
+        global driver
         global last_hover
         print("hover click")
         last_hover = time()
+        if driver.hover>0:
+            driver.set_hover_speed(0)
+        else:
+            driver.set_hover_speed(5)
+        pass
 
 
 class Estop(tornado.web.RequestHandler):
@@ -47,7 +53,6 @@ class Forward(tornado.web.RequestHandler):
 class NotForward(tornado.web.RequestHandler):
     def get(self):
         global last_forward
-
         global driver
         driver.set_forward_speed(0)
         print("not forward click")
