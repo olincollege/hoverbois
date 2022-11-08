@@ -16,8 +16,6 @@ last_hover = 0
 last_forward = 0
 last_right = 0
 last_left = 0
-forward_speed = 0
-steer = 0
 TIMEOUT_TIME = .5  # IDK UNITS
 
 
@@ -31,10 +29,6 @@ class Hover(tornado.web.RequestHandler):
 class Estop(tornado.web.RequestHandler):
     def get(self):
         global driver
-        global steer
-        global forward_speed
-        steer = 0
-        forward_speed = 0
         driver.stop()
         print("ESTOP ESTOP ESTOP")
 
@@ -44,9 +38,7 @@ class Forward(tornado.web.RequestHandler):
         global last_forward
 
         global driver
-        global forward_speed
-        forward_speed = 60
-        driver.set_forward_speed(forward_speed)
+        driver.set_forward_speed(60)
         print("forward click")
         print(forward_speed)
         last_forward = time()
@@ -57,9 +49,7 @@ class NotForward(tornado.web.RequestHandler):
         global last_forward
 
         global driver
-        global forward_speed
-        forward_speed = 0
-        driver.set_forward_speed(forward_speed)
+        driver.set_forward_speed(0)
         print("forward click")
         print(forward_speed)
         last_forward = time()
@@ -69,9 +59,7 @@ class Reverse(tornado.web.RequestHandler):
     def get(self):
         global last_forward
         global driver
-        global forward_speed
-        forward_speed = 0
-        driver.set_forward_speed(forward_speed)
+        driver.set_forward_speed(0)
         print("rev click")
         print(forward_speed)
         last_forward = time()#'''
@@ -81,9 +69,7 @@ class Right(tornado.web.RequestHandler):
     def get(self):
         global last_right
         global driver
-        global steer
-        steer = -.75
-        driver.set_steering_angle(steer)
+        driver.set_steering_angle(-.75)
         print("right click")
         print(steer)
         last_right = time()
@@ -93,9 +79,7 @@ class NotRight(tornado.web.RequestHandler):
     def get(self):
         global last_right
         global driver
-        global steer
-        steer = 0
-        driver.set_steering_angle(steer)
+        driver.set_steering_angle(0)
         print("right click")
         print(steer)
         last_right = time()
@@ -104,9 +88,8 @@ class NotRight(tornado.web.RequestHandler):
 class Left(tornado.web.RequestHandler):
     def get(self):
         global last_left
-        global steer
-        steer = .75
-        driver.set_steering_angle(steer)
+        global driver
+        driver.set_steering_angle(.75)
         print("left click")
         print(steer)
         last_left = time()
@@ -115,9 +98,8 @@ class Left(tornado.web.RequestHandler):
 class NotLeft(tornado.web.RequestHandler):
     def get(self):
         global last_left
-        global steer
-        steer = 0
-        driver.set_steering_angle(steer)
+        global driver
+        driver.set_steering_angle(0)
         print("left click")
         print(steer)
         last_left = time()
@@ -175,6 +157,7 @@ class WatchdogThread(threading.Thread):
         self.counter = counter
 
     def run(self):
+
         print("watchdog thread started")
         running = True
         while running:
