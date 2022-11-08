@@ -28,7 +28,7 @@ class Hover(tornado.web.RequestHandler):
         if driver.hover>0:
             driver.set_hover_speed(0)
         else:
-            driver.set_hover_speed(5)
+            driver.set_hover_speed(20)
         pass
 
 
