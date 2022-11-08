@@ -51,9 +51,9 @@ class correctedIMU():
         self.mag_adr = mag_address
         self.pi = pigpio.pi()
         self._CHANNEL = 1
-        self.set_acc_config()
-        self.set_gyro_config()
-        self.REQUESTS_REG = {
+        self.set_acc_config()# NEEDS TO BE BEFORE THE REQUESTS REG
+        self.set_gyro_config()# NEEDS TO BE BEFORE THE REQUESTS REG
+        self.REQUESTS_REG = { # this is the dict of what each request needs for it
             #"X_POS":
             #"Y_POS":
             #"Z_POS":
@@ -85,7 +85,7 @@ class correctedIMU():
             "Y_MAG_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":mag_address}],
             "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
         }
-        self.auto_cal_gyro()
+        self.auto_cal_gyro()#cal the gyro needs to be after the requests reg
 
 
     def auto_cal_gyro(self):
@@ -154,6 +154,7 @@ class correctedIMU():
         pass
     
     def get_data(self,data_req = DEFAULT_REQUESTS):
+        """"""
         if  not isinstance(data_req,list):
             data_req = [data_req]
         out = dict((req, self.REQUESTS_REG[req][0](
