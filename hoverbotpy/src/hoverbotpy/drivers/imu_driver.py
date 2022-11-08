@@ -1,5 +1,6 @@
 import pigpio
 from threading import Thread, Lock
+from time import sleep
 
 DEFAULT_REQUESTS = [
     # "X_POS","Y_POS","Z_POS",
@@ -203,7 +204,6 @@ class CorrectedIMU():
 
 
 if __name__ == "__main__":
-    from time import sleep
     d = CorrectedIMU()
     #last  = d.get_data()
     while 1:
