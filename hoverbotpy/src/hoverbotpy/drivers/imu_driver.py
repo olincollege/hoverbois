@@ -8,7 +8,7 @@ DEFAULT_REQUESTS = [
     "X_ACC_RAW", "Y_ACC_RAW", "Z_ACC_RAW",
     # "X_DEG","Y_DEG","Z_DEG",
     "X_DPS", "Y_DPS", "Z_DPS",
-    # "X_MAG","Y_MAG","Z_MAG"
+    "X_MAG","Y_MAG","Z_MAG",
 ]
 _2BYTE_MAX = 2**15
 
@@ -44,10 +44,10 @@ LSM6_ODR_TABLE = {
 class CorrectedIMU():
     ''' this is the position corrected imu for com of object'''
 
-    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets={}):
-        # if offsets is None:
-        #    self.offsets = {}
-        # else:
+    def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets=None):
+        if offsets is None:
+            self.offsets = {}
+
         self._offsets = offsets
         self.imu_adr = imu_address
         self.mag_adr = mag_address
