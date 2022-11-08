@@ -45,8 +45,20 @@ class Forward(tornado.web.RequestHandler):
 
         global driver
         global forward_speed
-        if forward_speed <= 90:
-            forward_speed += 10
+        forward_speed = 60
+        driver.set_forward_speed(forward_speed)
+        print("forward click")
+        print(forward_speed)
+        last_forward = time()
+
+
+class NotForward(tornado.web.RequestHandler):
+    def get(self):
+        global last_forward
+
+        global driver
+        global forward_speed
+        forward_speed = 0
         driver.set_forward_speed(forward_speed)
         print("forward click")
         print(forward_speed)
@@ -58,12 +70,11 @@ class Reverse(tornado.web.RequestHandler):
         global last_forward
         global driver
         global forward_speed
-        if forward_speed >= 10:
-            forward_speed -= 10
+        forward_speed = 0
         driver.set_forward_speed(forward_speed)
         print("rev click")
         print(forward_speed)
-        last_forward = time()
+        last_forward = time()#'''
 
 
 class Right(tornado.web.RequestHandler):
@@ -71,8 +82,19 @@ class Right(tornado.web.RequestHandler):
         global last_right
         global driver
         global steer
-        if steer >= -.5:
-            steer -= .5
+        steer = -.75
+        driver.set_steering_angle(steer)
+        print("right click")
+        print(steer)
+        last_right = time()
+
+
+class NotRight(tornado.web.RequestHandler):
+    def get(self):
+        global last_right
+        global driver
+        global steer
+        steer = 0
         driver.set_steering_angle(steer)
         print("right click")
         print(steer)
@@ -83,8 +105,18 @@ class Left(tornado.web.RequestHandler):
     def get(self):
         global last_left
         global steer
-        if steer <= .5:
-            steer += .5
+        steer = .75
+        driver.set_steering_angle(steer)
+        print("left click")
+        print(steer)
+        last_left = time()
+
+
+class NotLeft(tornado.web.RequestHandler):
+    def get(self):
+        global last_left
+        global steer
+        steer = 0
         driver.set_steering_angle(steer)
         print("left click")
         print(steer)
@@ -148,10 +180,12 @@ class WatchdogThread(threading.Thread):
         while running:
             now = time()
             # print(now)
-            if ((last_forward + TIMEOUT_TIME) < now):
+            if ((last_forward + TIMEOUT_TIME) < now) and forward_speed == 0:
                 print("forward timeout")
-            if ((last_left + TIMEOUT_TIME) < now) or ((last_right + TIMEOUT_TIME) < now):
+                driver.set_forward_speed(0)
+            if ((last_left + TIMEOUT_TIME) < now) or ((last_right + TIMEOUT_TIME) < now)and steer == 0:
                 print("turn timeout")
+                driver.set_steering_angle(0)
 
 
 
