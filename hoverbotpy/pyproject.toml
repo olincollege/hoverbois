@@ -15,6 +15,7 @@ tornado = "^6.2"
 serial = "^0.0.97"
 numpy = "^1.23.4"
 pigpio = "^1.78"
+pyserial = "^3.5"
 
 
 [build-system]
