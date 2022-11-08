@@ -1,5 +1,4 @@
 import threading
-from distutils.log import debug
 from time import time
 from time import sleep
 import asyncio
@@ -7,17 +6,55 @@ import asyncio
 import tornado.web
 import tracemalloc
 
-from hoverbotpy.drivers.pi_pico_simple import SimpleFan
 from hoverbotpy.controllers.constants import PORT
+
+from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
+from hoverbotpy.drivers.threading_dummy import ThreadingDummy
+from hoverbotpy.drivers.pi_pico_simple import SimpleFan
+from hoverbotpy.drivers.pi_pico_pid import PIDCorrectedFan
 
 tracemalloc.start()
 
+TIMEOUT_TIME = .5  # IDK UNITS
+# Setup CLI arguments
+import argparse
+parser = argparse.ArgumentParser(
+    prog="WebController",
+    description="Web controller for PIE hovercraft.",
+    epilog="Written by Joseph Gilbert and Devlin Ih",
+)
+
+parser.add_argument(
+    "driver_type",
+    help=("Type of driver to use. Legal values:\n"
+          "  dummy, dummy_threading, pico, pico_pid"),
+)
+
+args = parser.parse_args()
+
+# Globals
+# Why are these needed?
 last_hover = 0
 last_forward = 0
 last_right = 0
 last_left = 0
-TIMEOUT_TIME = .5  # IDK UNITS
-driver = SimpleFan()
+
+# Wish we were using Python 3.10 for pattern matching.
+requested_driver = args.driver_type
+if requested_driver == "dummy":
+    driver = DummyHovercraftDriver()
+elif requested_driver == "threading_dummy":
+    driver = ThreadingDummy()
+    driver.run_loop()
+elif requested_driver == "pico":
+    driver = SimpleFan()
+elif requested_driver == "pico_pid":
+    driver = PIDCorrectedFan()
+    driver.run_loop()
+else:
+    import sys
+    print(f"Error: {requested_driver} is not a valid driver type.")
+    sys.exit(-1)
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
