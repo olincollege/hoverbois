@@ -183,7 +183,7 @@ class WatchdogThread(threading.Thread):
             if ((last_forward + TIMEOUT_TIME) < now) and forward_speed != 0:
                 print("forward timeout")
                 driver.set_forward_speed(0)
-            if ((last_left + TIMEOUT_TIME) < now) or ((last_right + TIMEOUT_TIME) < now)and steer != 0:
+            if (((last_left + TIMEOUT_TIME) < now) or ((last_right + TIMEOUT_TIME) < now))and steer != 0:
                 print("turn timeout")
                 driver.set_steering_angle(0)
 
