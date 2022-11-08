@@ -8,6 +8,7 @@ import tornado.web
 import tracemalloc
 
 from hoverbotpy.drivers.pi_pico_simple import SimpleFan
+from hoverbotpy.controllers.constants import PORT
 
 tracemalloc.start()
 
@@ -124,14 +125,14 @@ def make_app():  # might be better to use a websocket in future versions
 
 async def app_start():
     app = make_app()
-    app.listen(8888)
+    app.listen(PORT)
     await asyncio.Event().wait()
 
 
 async def web_app():
     print("web server start")
     app = make_app()
-    app.listen(8888)
+    app.listen(PORT)
 
 
 class WatchdogThread(threading.Thread):

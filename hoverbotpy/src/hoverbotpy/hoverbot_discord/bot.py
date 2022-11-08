@@ -9,6 +9,8 @@ import socket
 import discord
 from discord.ext import commands
 
+from hoverbotpy.controllers.constants import PORT
+
 # from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
 
 # Setup bot instance
@@ -30,7 +32,7 @@ async def ip(ctx):
         s.connect(('10.0.0.0', 0))
         ip = s.getsockname()[0]
 
-    await ctx.send(f"ip: `{ip}`\nlink: http://{ip}:8888")
+    await ctx.send(f"ip: `{ip}`\nlink: http://{ip}:{PORT}")
 
 
 @bot.command()
