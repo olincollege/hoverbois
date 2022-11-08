@@ -34,7 +34,7 @@ class SimpleFan(HovercraftDriver):
         '''sets the speed of the hover motor
         args:
             speed: a number of the speed of the motor(0 to 100)'''
-        self.hover = (speed/50)-1
+        self.hover = speed
         self.pico.write(bytes("h"+str(speed), 'utf-8'))
         pass
 
@@ -42,7 +42,7 @@ class SimpleFan(HovercraftDriver):
         '''sets the speed of the forward motor
         args:
             speed: a number of the speed of the motor(0 to 100)'''
-        self.forward = (speed/50)-1
+        self.forward = speed
         self.pico.write(bytes("f"+str(speed), 'utf-8'))
         pass
 
