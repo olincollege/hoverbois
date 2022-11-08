@@ -9,6 +9,8 @@ import socket
 import discord
 from discord.ext import commands
 
+from hoverbotpy.controllers.constants import PORT
+
 # from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
 
 # Setup bot instance
@@ -30,7 +32,7 @@ async def ip(ctx):
         s.connect(('10.0.0.0', 0))
         ip = s.getsockname()[0]
 
-    await ctx.send(f"ip: `{ip}`\nlink: http://{ip}:8888")
+    await ctx.send(f"ip: `{ip}`\nlink: http://{ip}:{PORT}")
 
 
 @bot.command()
@@ -65,10 +67,19 @@ def main():
     """
     Main loop
     """
-    # Get botkey from CLI arg (argparse is better but this works)
-    import sys
-    botkey = sys.argv[1]
-    bot.run(botkey)
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog="DiscordBot",
+        description="Discord bot to find IP of Raspberry Pi.",
+        epilog="Written by Devlin Ih"
+    )
+    parser.add_argument(
+        "botkey",
+        help="Discord bot token."
+    )
+    args = parser.parse_args()
+
+    bot.run(args.botkey)
 
 
 if __name__ == "__main__":

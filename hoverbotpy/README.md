@@ -104,6 +104,11 @@ You can also configure specific shorthands in `pyproject.toml` in the
 poetry run hoverbot-discord APIKEY
 ```
 
+To run the simple web controller:
+```
+poetry run web-controller-simple DRIVERTYPE
+```
+
 In `pyproject.toml`, the shortcut looks like this
 
 ```

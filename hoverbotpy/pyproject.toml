@@ -13,6 +13,8 @@ rpi-gpio = "^0.7.1"
 lgpio = "^0.0.0.2"
 tornado = "^6.2"
 serial = "^0.0.97"
+numpy = "^1.23.4"
+pigpio = "^1.78"
 
 
 [build-system]
@@ -21,3 +23,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 hoverbot-discord = "hoverbotpy.hoverbot_discord.bot:main"
+web-controller-simple = "hoverbotpy.controllers.web_controller_simple:main"
