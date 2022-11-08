@@ -65,10 +65,19 @@ def main():
     """
     Main loop
     """
-    # Get botkey from CLI arg (argparse is better but this works)
-    import sys
-    botkey = sys.argv[1]
-    bot.run(botkey)
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog="DiscordBot",
+        description="Discord bot to find IP of Raspberry Pi.",
+        epilog="Written by Devlin Ih"
+    )
+    parser.add_argument(
+        "botkey",
+        help="Discord bot token."
+    )
+    args = parser.parse_args()
+
+    bot.run(args.botkey)
 
 
 if __name__ == "__main__":
