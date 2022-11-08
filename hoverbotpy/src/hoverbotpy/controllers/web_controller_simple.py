@@ -2,8 +2,6 @@
 Module implementing simple web controller interface.
 """
 
-import argparse
-
 from ctypes import set_errno
 from time import time
 import asyncio
@@ -20,10 +18,11 @@ from hoverbotpy.drivers.pi_pico_pid import PIDCorrectedFan
 
 
 # Setup CLI arguments
+import argparse
 parser = argparse.ArgumentParser(
-    prog = "WebController",
-    description = "Web controller for PIE hovercraft.",
-    epilog = "hoverbois",
+    prog="WebController",
+    description="Web controller for PIE hovercraft.",
+    epilog="Written by Joseph Gilbert and Devlin Ih",
 )
 
 parser.add_argument(
@@ -120,6 +119,62 @@ class Left(tornado.web.RequestHandler):
         last_left = time()
 
 
+class DecreaseErr(tornado.web.RequestHandler):
+    def get(self):
+        global driver
+
+        try:
+            prop_err = driver.prop_err
+            if prop_err <= .1:
+                prop_err -= .1
+            driver.set_steering_angle(steer)
+            print(f"decrease prop_err: {prop_err}")
+        except:
+            print("This is not a PID controller.")
+
+
+class IncreaseErr(tornado.web.RequestHandler):
+    def get(self):
+        global driver
+
+        try:
+            prop_err = driver.prop_err
+            if prop_err <= .1:
+                prop_err += .1
+            driver.set_steering_angle(steer)
+            print(f"increase prop_err: {prop_err}")
+        except:
+            print("This is not a PID controller.")
+
+
+class DecreaseDdx(tornado.web.RequestHandler):
+    def get(self):
+        global driver
+
+        try:
+            prop_ddx = driver.prop_ddx
+            if prop_ddx <= .1:
+                prop_ddx -= .1
+            driver.set_steering_angle(steer)
+            print(f"decrease prop_ddx: {prop_ddx}")
+        except:
+            print("This is not a PID controller.")
+
+
+class IncreaseDdx(tornado.web.RequestHandler):
+    def get(self):
+        global driver
+
+        try:
+            prop_ddx = driver.prop_ddx
+            if prop_ddx <= .1:
+                prop_ddx += .1
+            driver.set_steering_angle(steer)
+            print(f"increase prop_ddx: {prop_ddx}")
+        except:
+            print("This is not a PID controller.")
+
+
 class Index(tornado.web.RequestHandler):
     def get(self):
         #self.write("Hello, world")
@@ -141,6 +196,13 @@ def make_app():
         (r"/a_pressed/", Left),
         (r"/d_pressed/", Right),
         #(r"/h_pressed/", HoverToggle),
+
+        # Manually calibrate PID controller
+
+        # DecreaseErr, IncreaseErr, DecreaseDdx, IncreaseDdx
+
+        # TODO: Make this work, I don't get the html stuff (I tried adding to
+        # the charlist).
     ], debug=True)
 
 # async def
