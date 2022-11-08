@@ -193,4 +193,4 @@ def calc_rudder_angle(angle_ref, angle_head, angle_vel,
     # PD control signal
     signal = prop_err * error + prop_ddt * angle_vel
     # Ensure it lies in legal range
-    return return max(-1, min(1, signal))
+    return max(-1, min(1, signal))
