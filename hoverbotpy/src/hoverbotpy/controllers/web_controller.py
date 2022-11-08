@@ -17,7 +17,7 @@ last_forward = 0
 last_right = 0
 last_left = 0
 TIMEOUT_TIME = .5  # IDK UNITS
-
+driver = SimpleFan()
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
