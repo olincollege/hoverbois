@@ -1,5 +1,9 @@
-# from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
-from hoverbotpy.drivers.pi_pico_simple import SimpleFan
+"""
+Module implementing simple web controller interface.
+"""
+
+import argparse
+
 from ctypes import set_errno
 from time import time
 import asyncio
@@ -9,17 +13,54 @@ import tracemalloc
 
 tracemalloc.start()
 
+from hoverbotpy.drivers.driver_dummy import DummyHovercraftDriver
+from hoverbotpy.drivers.threading_dummy import ThreadingDummy
+from hoverbotpy.drivers.pi_pico_simple import SimpleFan
+from hoverbotpy.drivers.pi_pico_pid import PIDCorrectedFan
+
+
+# Setup CLI arguments
+parser = argparse.ArgumentParser(
+    prog = "WebController",
+    description = "Web controller for PIE hovercraft.",
+    epilog = "hoverbois",
+)
+
+parser.add_argument(
+    "driver_type",
+    help=("Type of driver to use. Legal values:\n"
+          "  dummy, dummy_threading, pico, pico_pid"),
+)
+
+args = parser.parse_args()
+
+# Globals
+# Why are these needed?
 last_hover = 0
 last_forward = 0
 last_right = 0
 last_left = 0
-forward_speed = 0
-steer = 0
+
+# Wish we were using Python 3.10 for pattern matching.
+requested_driver = args.driver_type
+if requested_driver == "dummy":
+    driver = DummyHovercraftDriver()
+elif requested_driver == "threading_dummy":
+    driver = ThreadingDummy()
+    driver.run_loop()
+elif requested_driver == "pico":
+    driver = SimpleFan()
+elif requested_driver == "pico_pid":
+    driver = PIDCorrectedFan()
+    driver.run_loop()
+else:
+    import sys
+    print(f"Error: {requested_driver} is not a valid driver type.")
+    sys.exit(-1)
 
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
-        global last_hover
         print("hover click")
         last_hover = time()
 
@@ -27,10 +68,6 @@ class Hover(tornado.web.RequestHandler):
 class Estop(tornado.web.RequestHandler):
     def get(self):
         global driver
-        global steer
-        global forward_speed
-        steer = 0
-        forward_speed = 0
         driver.stop()
         print("ESTOP ESTOP ESTOP")
 
@@ -38,14 +75,12 @@ class Estop(tornado.web.RequestHandler):
 class Forward(tornado.web.RequestHandler):
     def get(self):
         global last_forward
-
         global driver
-        global forward_speed
+        forward_speed = driver.forward
         if forward_speed <= 90:
             forward_speed += 10
         driver.set_forward_speed(forward_speed)
-        print("forward click")
-        print(forward_speed)
+        print(f"forward click, forward speed: {forward_speed}")
         last_forward = time()
 
 
@@ -53,12 +88,11 @@ class Reverse(tornado.web.RequestHandler):
     def get(self):
         global last_forward
         global driver
-        global forward_speed
+        forward_speed = driver.forward
         if forward_speed >= 10:
             forward_speed -= 10
         driver.set_forward_speed(forward_speed)
-        print("rev click")
-        print(forward_speed)
+        print(f"reverse click, forward speed: {forward_speed}")
         last_forward = time()
 
 
@@ -66,24 +100,23 @@ class Right(tornado.web.RequestHandler):
     def get(self):
         global last_right
         global driver
-        global steer
+        steer = driver.steering
         if steer >= -.5:
             steer -= .5
         driver.set_steering_angle(steer)
-        print("right click")
-        print(steer)
+        print(f"right click, steer {steer}")
         last_right = time()
 
 
 class Left(tornado.web.RequestHandler):
     def get(self):
         global last_left
-        global steer
+        global driver
+        steer = driver.steering
         if steer <= .5:
             steer += .5
         driver.set_steering_angle(steer)
-        print("left click")
-        print(steer)
+        print(f"left click,  steer{steer}")
         last_left = time()
 
 
@@ -125,14 +158,11 @@ async def web_app():
     app.listen(8888)
 
 
-async def main():
-    await app_start()
-    # asyncio.create_task(app_start())
-    while (1):
-        print(last_forward)
+def main():
+    asyncio.run(app_start())
+    # while (1):
+    #     print(last_forward)
 
 if __name__ == "__main__":
-    # driver = DummyHovercraftDriver()
-    driver = SimpleFan()
-    asyncio.run(main())
-    # main()
+    # asyncio.run(main())
+    main()
