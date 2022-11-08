@@ -40,7 +40,7 @@ class Forward(tornado.web.RequestHandler):
         global driver
         driver.set_forward_speed(60)
         print("forward click")
-        print(forward_speed)
+        print(driver.forward)
         last_forward = time()
 
 
@@ -51,7 +51,7 @@ class NotForward(tornado.web.RequestHandler):
         global driver
         driver.set_forward_speed(0)
         print("forward click")
-        print(forward_speed)
+        print(driver.forward)
         last_forward = time()
 
 
@@ -61,7 +61,7 @@ class Reverse(tornado.web.RequestHandler):
         global driver
         driver.set_forward_speed(0)
         print("rev click")
-        print(forward_speed)
+        print(driver.forward)
         last_forward = time()#'''
 
 
@@ -71,7 +71,7 @@ class Right(tornado.web.RequestHandler):
         global driver
         driver.set_steering_angle(-.75)
         print("right click")
-        print(steer)
+        print(driver.steering)
         last_right = time()
 
 
@@ -81,7 +81,7 @@ class NotRight(tornado.web.RequestHandler):
         global driver
         driver.set_steering_angle(0)
         print("right click")
-        print(steer)
+        print(driver.steering)
         last_right = time()
 
 
@@ -91,7 +91,7 @@ class Left(tornado.web.RequestHandler):
         global driver
         driver.set_steering_angle(.75)
         print("left click")
-        print(steer)
+        print(driver.steering)
         last_left = time()
 
 
@@ -101,7 +101,7 @@ class NotLeft(tornado.web.RequestHandler):
         global driver
         driver.set_steering_angle(0)
         print("left click")
-        print(steer)
+        print(driver.steering)
         last_left = time()
 
 
@@ -163,10 +163,10 @@ class WatchdogThread(threading.Thread):
         while running:
             now = time()
             # print(now)
-            if ((last_forward + TIMEOUT_TIME) < now) and forward_speed != 0:
+            if ((last_forward + TIMEOUT_TIME) < now) and driver.forward != 0:
                 print("forward timeout")
                 driver.set_forward_speed(0)
-            if (((last_left + TIMEOUT_TIME) < now) or ((last_right + TIMEOUT_TIME) < now))and steer != 0:
+            if (((last_left + TIMEOUT_TIME) < now) or ((last_right + TIMEOUT_TIME) < now))and driver.steering != 0:
                 print("turn timeout")
                 driver.set_steering_angle(0)
 
