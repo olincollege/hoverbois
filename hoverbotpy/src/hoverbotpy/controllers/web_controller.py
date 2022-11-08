@@ -50,7 +50,7 @@ class NotForward(tornado.web.RequestHandler):
 
         global driver
         driver.set_forward_speed(0)
-        print("forward click")
+        print("not forward click")
         print(driver.forward)
         last_forward = time()
 
@@ -62,7 +62,7 @@ class Reverse(tornado.web.RequestHandler):
         driver.set_forward_speed(0)
         print("rev click")
         print(driver.forward)
-        last_forward = time()#'''
+        #last_forward = time()#'''
 
 
 class Right(tornado.web.RequestHandler):
@@ -80,7 +80,7 @@ class NotRight(tornado.web.RequestHandler):
         global last_right
         global driver
         driver.set_steering_angle(0)
-        print("right click")
+        print("not right click")
         print(driver.steering)
         last_right = time()
 
@@ -100,7 +100,7 @@ class NotLeft(tornado.web.RequestHandler):
         global last_left
         global driver
         driver.set_steering_angle(0)
-        print("left click")
+        print("not left click")
         print(driver.steering)
         last_left = time()
 
