@@ -39,7 +39,7 @@ LSM6_ODR_TABLE ={
     1.6:11
     }
 
-class correctedIMU():
+class CorrectedIMU():
     ''' this is the position corrected imu for com of object'''
     
     def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets={}):
@@ -204,7 +204,7 @@ class correctedIMU():
 
 if __name__ == "__main__":
     from time import sleep
-    d = correctedIMU()
+    d = CorrectedIMU()
     #last  = d.get_data()
     while 1:
         print(d.get_data())
