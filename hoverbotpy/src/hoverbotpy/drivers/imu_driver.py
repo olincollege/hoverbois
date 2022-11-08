@@ -8,7 +8,7 @@ DEFAULT_REQUESTS = [
     "X_ACC_RAW", "Y_ACC_RAW", "Z_ACC_RAW",
     # "X_DEG","Y_DEG","Z_DEG",
     "X_DPS", "Y_DPS", "Z_DPS",
-    "X_MAG","Y_MAG","Z_MAG",
+    # "X_MAG","Y_MAG","Z_MAG",
 ]
 _2BYTE_MAX = 2**15
 
@@ -80,9 +80,9 @@ class CorrectedIMU():
             "X_DPS_BIN": [self._req_N_from_dev, {"registers": [0x23, 0x22], "addr":imu_address}],
             "Y_DPS_BIN": [self._req_N_from_dev, {"registers": [0x25, 0x24], "addr":imu_address}],
             "Z_DPS_BIN": [self._req_N_from_dev, {"registers": [0x27, 0x26], "addr":imu_address}],
-            "X_MAG":[self._bin2real,{"req":"X_ACC_BIN"}],
-            "Y_MAG":[self._bin2real,{"req":"Y_ACC_BIN"}],
-            "Z_MAG":[self._bin2real,{"req":"Z_ACC_BIN"}],
+            # "X_MAG":[self._bin2real,{"req":"X_ACC_BIN"}],
+            # "Y_MAG":[self._bin2real,{"req":"Y_ACC_BIN"}],
+            # "Z_MAG":[self._bin2real,{"req":"Z_ACC_BIN"}],
             "X_MAG_BIN": [self._req_N_from_dev, {"registers": [0x29, 0x28], "addr":mag_address}],
             "Y_MAG_BIN": [self._req_N_from_dev, {"registers": [0x2B, 0x2A], "addr":mag_address}],
             "Z_MAG_BIN": [self._req_N_from_dev, {"registers": [0X2D, 0X2C], "addr":mag_address}],
