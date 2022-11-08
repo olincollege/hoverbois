@@ -6,7 +6,6 @@ provided steering angle.
 """
 
 from threading import Thread
-from time import sleep
 
 import numpy as np
 
