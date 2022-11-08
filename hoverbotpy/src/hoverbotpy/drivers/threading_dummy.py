@@ -20,6 +20,10 @@ class ThreadingDummy():
         self.forward = 0
         self.steering = 0
 
+        # PID params
+        self.prop_err = 1
+        self.prop_ddt = 1
+
         # Loop on another thread
         self.running = False
         self.process = Thread(target=self._pid_loop,
@@ -70,7 +74,7 @@ class ThreadingDummy():
         Args:
             proportion: Float to set proportion to.
         """
-        print(f"received {proportion}")
+        self.prop_err = proportion
 
     def set_prop_ddt(self, proportion):
         """
@@ -79,7 +83,7 @@ class ThreadingDummy():
         Args:
             proportion: Float to set proportion to.
         """
-        print(f"received {proportion}")
+        self.prop_ddt = proportion
 
     # PID loop on its own thread
     def _pid_loop(self):
