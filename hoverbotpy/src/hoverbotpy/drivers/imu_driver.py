@@ -46,7 +46,7 @@ class CorrectedIMU():
 
     def __init__(self, imu_address=0x6A, mag_address=0x1C, offsets=None):
         if offsets is None:
-            self.offsets = {}
+            offsets = {}
 
         self._offsets = offsets
         self.imu_adr = imu_address
