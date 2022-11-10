@@ -238,6 +238,8 @@ def make_app():
         # there will be no half a pressed with this code
         (r"/a_pressed/", Left),
         (r"/d_pressed/", Right),
+        (r"/a_released/", LeftRelease),
+        (r"/d_released/", RightRelease),
         (r"/h_pressed/", Hover),
         (r"/i_pressed/", IncreaseDdx),
         (r"/k_pressed/", DecreaseDdx),
