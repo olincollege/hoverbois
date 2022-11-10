@@ -133,7 +133,7 @@ class PIDCorrectedFan():
                 angle_head = self._get_north_vector()
                 angle_vel = float(self.imu.get_data(["Z_DPS"])["Z_DPS"])
 
-                rudder_angle = calc_rudder_angle(
+                rudder_angle = self.calc_rudder_angle(
                     self.angle_target, angle_head, angle_vel,
                     self.prop_err, self.prop_ddt
                 )
