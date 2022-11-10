@@ -65,7 +65,7 @@ class SimpleFan(HovercraftDriver):
         self.pico.write(bytes("s"+str(SERVO_MID), 'utf-8'))
         self.pico.write(bytes("h"+str(0), 'utf-8'))
         self.pico.write(bytes("f"+str(0), 'utf-8'))
-        #self.hover = 0
+        self.hover = 0
         self.forward = 0
         self.steering = 0
         # gp.cleanup()
