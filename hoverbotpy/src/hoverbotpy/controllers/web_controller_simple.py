@@ -66,7 +66,9 @@ class Hover(tornado.web.RequestHandler):
         global last_hover
         print("hover click")
         last_hover = time()
-        driver.set_hover_speed(min(80,driver.hover+5))
+        speed = driver.hover
+        speed = min(speed+5,40)
+        driver.set_hover_speed(speed)
         
         '''
         if driver.hover>0:
