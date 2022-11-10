@@ -209,7 +209,7 @@ def make_app():
         # there will be no half a pressed with this code
         (r"/a_pressed/", Left),
         (r"/d_pressed/", Right),
-        #(r"/h_pressed/", HoverToggle),
+        (r"/h_pressed/", Hover),
 
         # Manually calibrate PID controller
 
