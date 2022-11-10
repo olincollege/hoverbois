@@ -139,7 +139,7 @@ class DecreaseErr(tornado.web.RequestHandler):
 
         try:
             prop_err = driver.prop_err
-            if prop_err >= -1:
+            if prop_err >= -1.0:
                 prop_err -= .01
             driver.set_steering_angle(0)
             print(f"decrease prop_err: {prop_err}")
@@ -153,7 +153,7 @@ class IncreaseErr(tornado.web.RequestHandler):
 
         try:
             prop_err = driver.prop_err
-            if prop_err <= 1:
+            if prop_err <= 1.0:
                 prop_err += .01
             driver.set_steering_angle(0)
             print(f"increase prop_err: {prop_err}")
