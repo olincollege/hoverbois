@@ -166,11 +166,11 @@ class DecreaseDdx(tornado.web.RequestHandler):
         global driver
 
         try:
-            prop_ddx = driver.prop_ddx
-            if prop_ddx <= .1:
-                prop_ddx -= .1
+            prop_ddt = driver.prop_ddt
+            if prop_ddt <= .1:
+                prop_ddt -= .1
             #driver.set_steering_angle(steer)
-            print(f"decrease prop_ddx: {prop_ddx}")
+            print(f"decrease prop_ddt: {prop_ddt}")
         except:
             print("This is not a PID controller.")
 
@@ -180,11 +180,11 @@ class IncreaseDdx(tornado.web.RequestHandler):
         global driver
 
         try:
-            prop_ddx = driver.prop_ddx
+            prop_ddx = driver.prop_ddt
             if prop_ddx <= .1:
                 prop_ddx += .1
             #driver.set_steering_angle(steer)
-            print(f"increase prop_ddx: {prop_ddx}")
+            print(f"increase prop_ddto: {prop_ddx}")
         except:
             print("This is not a PID controller.")
 
