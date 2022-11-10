@@ -203,6 +203,7 @@ def make_app():
         (r"/hover/", Hover),
         (r"/0_pressed/", Estop),
         (r"/estop/", Estop),
+        (r"/ _pressed/", Estop),
         (r"/forward/", Forward),
         (r"/w_pressed/", Forward),
         (r"/s_pressed/", Reverse),
@@ -210,6 +211,10 @@ def make_app():
         (r"/a_pressed/", Left),
         (r"/d_pressed/", Right),
         (r"/h_pressed/", Hover),
+        (r"/i_pressed/", IncreaseDdx),
+        (r"/k_pressed/", DecreaseDdx),
+        (r"/o_pressed/", IncreaseErr),
+        (r"/l_pressed/", DecreaseErr),
 
         # Manually calibrate PID controller
 
