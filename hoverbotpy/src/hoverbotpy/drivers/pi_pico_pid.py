@@ -99,6 +99,7 @@ class PIDCorrectedFan():
         """Stop all motors except hover motor."""
         self.set_forward_speed(0)
         self.set_steering_angle(0)
+        self.set_hover_speed(0)
 
     # Additional public methods to set PID params in real time.
     def set_prop_err(self, proportion):
