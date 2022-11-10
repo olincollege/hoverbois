@@ -133,7 +133,7 @@ class PIDCorrectedFan():
                 angle_head = self._get_north_vector()
                 angle_vel = float(self.imu.get_data(["Z_DPS"])["Z_DPS"])
 
-                rudder_angle = self.calc_rudder_angle(
+                rudder_angle = calc_rudder_angle(
                     self.angle_target, angle_head, angle_vel,
                     self.prop_err, self.prop_ddt
                 )
@@ -158,7 +158,7 @@ class PIDCorrectedFan():
         self.process.join()
 
 
-def calc_rudder_angle(self, angle_ref, angle_head, angle_vel,
+def calc_rudder_angle(self, target_angle, angle_head, angle_vel,
                       prop_err, prop_ddt):
     """
     Calculate the rudder angle signal based on PD control loop.
@@ -183,11 +183,11 @@ def calc_rudder_angle(self, angle_ref, angle_head, angle_vel,
         A float between -1 and 1 representing the signal to send to the rudder.
     """
     # Direction from heading to target, sign of cross prod
-    direction = np.cross(angle_head, self.target_angle)[2]
+    direction = np.cross(angle_head, target_angle)[2]
     # Angle between two vectors
-    angle = np.arccos(np.dot(angle_head, self.target_angle) /
+    angle = np.arccos(np.dot(angle_head, target_angle) /
                       (np.linalg.norm(angle_head) *
-                       np.linalg.norm(self.target_angle)))
+                       np.linalg.norm(target_angle)))
     error = float(direction * angle) # Back to Python float
 
     # PD control signal
