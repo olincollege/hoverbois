@@ -139,8 +139,8 @@ class DecreaseErr(tornado.web.RequestHandler):
 
         try:
             prop_err = driver.prop_err
-            if prop_err <= .1:
-                prop_err -= .1
+            if prop_err >= -1:
+                prop_err -= .01
             driver.set_steering_angle(0)
             print(f"decrease prop_err: {prop_err}")
         except:
@@ -153,8 +153,8 @@ class IncreaseErr(tornado.web.RequestHandler):
 
         try:
             prop_err = driver.prop_err
-            if prop_err <= .1:
-                prop_err += .1
+            if prop_err <= 1:
+                prop_err += .01
             driver.set_steering_angle(0)
             print(f"increase prop_err: {prop_err}")
         except:
@@ -167,8 +167,8 @@ class DecreaseDdx(tornado.web.RequestHandler):
 
         try:
             prop_ddt = driver.prop_ddt
-            if prop_ddt <= .1:
-                prop_ddt -= .1
+            if prop_ddt >= -1:
+                prop_ddt -= .01
             #driver.set_steering_angle(steer)
             print(f"decrease prop_ddt: {prop_ddt}")
         except:
@@ -181,8 +181,8 @@ class IncreaseDdx(tornado.web.RequestHandler):
 
         try:
             prop_ddx = driver.prop_ddt
-            if prop_ddx <= .1:
-                prop_ddx += .1
+            if prop_ddx <= 1:
+                prop_ddx += .01
             #driver.set_steering_angle(steer)
             print(f"increase prop_ddto: {prop_ddx}")
         except:
