@@ -58,7 +58,7 @@ class PIDCorrectedFan():
         self.angle_target = self._get_north_vector()
 
         # Loop on another thread
-        self.running = False
+        self.running = True
         self.process = Thread(target=self._pid_loop,
                               daemon=True)
 
