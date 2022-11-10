@@ -141,7 +141,7 @@ class DecreaseErr(tornado.web.RequestHandler):
             prop_err = driver.prop_err
             if prop_err <= .1:
                 prop_err -= .1
-            driver.set_steering_angle(steer)
+            driver.set_steering_angle(0)
             print(f"decrease prop_err: {prop_err}")
         except:
             print("This is not a PID controller.")
@@ -155,7 +155,7 @@ class IncreaseErr(tornado.web.RequestHandler):
             prop_err = driver.prop_err
             if prop_err <= .1:
                 prop_err += .1
-            driver.set_steering_angle(steer)
+            driver.set_steering_angle(0)
             print(f"increase prop_err: {prop_err}")
         except:
             print("This is not a PID controller.")
