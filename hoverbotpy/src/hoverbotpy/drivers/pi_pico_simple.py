@@ -4,7 +4,7 @@ from time import sleep
 import serial
 
 PWM_FREQ = 15000
-SERVO_DIST = 85
+SERVO_DIST = 60
 SERVO_MID = 90
 
 
