@@ -62,8 +62,15 @@ else:
 
 class Hover(tornado.web.RequestHandler):
     def get(self):
+        global driver
+        global last_hover
         print("hover click")
         last_hover = time()
+        if driver.hover>0:
+            driver.set_hover_speed(0)
+        else:
+            driver.set_hover_speed(20)
+        pass
 
 
 class Estop(tornado.web.RequestHandler):
