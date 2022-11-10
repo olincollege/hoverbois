@@ -28,6 +28,8 @@ class SimpleFan(HovercraftDriver):
         self.set_steering_angle(1)
         sleep(0.3)
         self.set_steering_angle(0)
+        self.set_forward_speed(0)
+        self.set_hover_speed(0)
         pass
 
     def set_hover_speed(self, speed):
