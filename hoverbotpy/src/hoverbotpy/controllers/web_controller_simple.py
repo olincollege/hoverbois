@@ -90,8 +90,8 @@ class Forward(tornado.web.RequestHandler):
         global last_forward
         global driver
         forward_speed = driver.forward
-        if forward_speed <= 90:
-            forward_speed += 10
+        if forward_speed <= 40:
+            forward_speed += 5
         driver.set_forward_speed(forward_speed)
         print(f"forward click, forward speed: {forward_speed}")
         last_forward = time()
