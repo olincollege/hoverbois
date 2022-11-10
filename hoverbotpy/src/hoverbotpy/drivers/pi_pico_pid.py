@@ -131,7 +131,7 @@ class PIDCorrectedFan():
             # Fudge it a little in case float errors happen
             if -0.01 < self.steering < 0.01:
                 angle_head = self._get_north_vector()
-                angle_vel = float(self.imu.get_data(["Z_DPS"]))
+                angle_vel = float(self.imu.get_data(["Z_DPS"])["Z_DPS"])
 
                 rudder_angle = calc_rudder_angle(
                     self.angle_target, angle_head, angle_vel,
