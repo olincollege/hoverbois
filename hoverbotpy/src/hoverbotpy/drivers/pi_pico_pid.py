@@ -131,7 +131,7 @@ class PIDCorrectedFan():
         """
         while self.running:
             # Fudge it a little in case float errors happen
-            if -0.01 < self.steering < 0.01:
+            if -0.1 < self.steering < 0.1:
                 angle_head = self._get_north_vector()
                 angle_vel = float(self.imu.get_data(["Z_DPS"])["Z_DPS"])
 
