@@ -125,10 +125,9 @@ class RightRelease(tornado.web.RequestHandler):
     def get(self):
         global last_right
         global driver
-        #steer = driver.steering
-        #if steer >= -.5:
-        #    steer -= .5
-        driver.set_steering_angle(0)
+        steer = driver.steering
+        if steer < 0:
+            driver.set_steering_angle(0)
         print(f"right click, steer {0}")
         last_right = time()
 
@@ -149,10 +148,9 @@ class LeftRelease(tornado.web.RequestHandler):
     def get(self):
         global last_left
         global driver
-        #steer = driver.steering
-        #if steer <= .5:
-        #    steer += .5
-        driver.set_steering_angle(0)
+        steer = driver.steering
+        if steer > 0:
+            driver.set_steering_angle(0)
         print(f"left click,  steer{0}")
         last_left = time()
 
