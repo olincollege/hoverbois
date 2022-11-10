@@ -203,7 +203,7 @@ def make_app():
         (r"/hover/", Hover),
         (r"/0_pressed/", Estop),
         (r"/estop/", Estop),
-        (r"/ _pressed/", Estop),
+        (r"/%20_pressed/", Estop),
         (r"/forward/", Forward),
         (r"/w_pressed/", Forward),
         (r"/s_pressed/", Reverse),
