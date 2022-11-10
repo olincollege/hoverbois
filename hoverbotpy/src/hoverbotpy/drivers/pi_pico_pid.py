@@ -158,7 +158,7 @@ class PIDCorrectedFan():
         self.process.join()
 
 
-def calc_rudder_angle(self, target_angle, angle_head, angle_vel,
+def calc_rudder_angle(target_angle, angle_head, angle_vel,
                       prop_err, prop_ddt):
     """
     Calculate the rudder angle signal based on PD control loop.
