@@ -15,7 +15,7 @@ class SimpleFan(HovercraftDriver):
         self.pico = serial.Serial(
             port='/dev/ttyACM0', baudrate=115200, timeout=.1)
         #self.steer_motor = Servo(SERVOPIN)
-        #self.hover = 0
+        self.hover = 0
         self.forward = 0
         self.steering = 0
         sleep(0.1)
