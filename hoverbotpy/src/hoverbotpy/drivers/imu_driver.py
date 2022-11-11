@@ -222,19 +222,20 @@ if __name__ == "__main__":
     maxmagx = 0
     maxmagy = 0
     maxmagz = 0
-    minmagx = 0
-    minmagy = 0
-    minmagz = 0
+    minmagx = 100000
+    minmagy = 100000
+    minmagz = 100000
     while 1:
-        print(d.get_data())
-        sleep(.25)
-        maxmagx = max(d["X_MAG_BIN"],maxmagx)
-        maxmagy = max(d["Y_MAG_BIN"],maxmagy)
-        maxmagz = max(d["Z_MAG_BIN"],maxmagz)
-        minmagx = min(d["X_MAG_BIN"],maxmagx)
-        minmagy = min(d["Y_MAG_BIN"],maxmagy)
-        minmagz = min(d["Z_MAG_BIN"],maxmagz)
+        i = d.get_data()
+        #print(d.get_data())
+        maxmagx = max(i["X_MAG_BIN"],maxmagx)
+        maxmagy = max(i["Y_MAG_BIN"],maxmagy)
+        maxmagz = max(i["Z_MAG_BIN"],maxmagz)
+        minmagx = min(i["X_MAG_BIN"],minmagx)
+        minmagy = min(i["Y_MAG_BIN"],minmagy)
+        minmagz = min(i["Z_MAG_BIN"],minmagz)
         magx = (maxmagx + minmagx)/2
         magy = (maxmagy + minmagy)/2
         magz = (maxmagz + minmagz)/2
         print (f" x:{magx}, y:{magy}, z:{magz}")
+        sleep(.25)
