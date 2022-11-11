@@ -16,8 +16,8 @@ from hoverbotpy.drivers.imu_driver import CorrectedIMU
 
 # Constants representing default values to use for generating correction signal.
 # TODO: Find good values with calibration and testing
-DEFAULT_PROPORTION_ERR = -1
-DEFAULT_PROPORTION_DDT = -.01
+DEFAULT_PROPORTION_ERR = -0 #.1
+DEFAULT_PROPORTION_DDT = -.1
 DEFAULT_PROPORTION_ANGLE_TO_DPS = 1
 
 
