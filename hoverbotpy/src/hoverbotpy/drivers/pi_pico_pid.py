@@ -140,7 +140,7 @@ class PIDCorrectedFan():
 
                 rudder_angle = calc_rudder_angle(
                     self.angle_target, angle_head, angle_vel,
-                    self.prop_err, self.prop_ddt
+                    self.prop_err, self.prop_ddt,self.forward
                 )
                 self.pico.set_steering_angle(rudder_angle)
             else:
@@ -165,7 +165,7 @@ class PIDCorrectedFan():
 
 
 def calc_rudder_angle(target_angle, angle_head, angle_vel,
-                      prop_err, prop_ddt):
+                      prop_err, prop_ddt,airspeed):
     """
     Calculate the rudder angle signal based on PD control loop.
 
@@ -184,6 +184,7 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
             include in rudder angle signal.
         prop_ddt: Float representing proportion of angular velocity to include
             in rudder angle.
+        airspeed:  a number for 0 to 100 corresponding to the forward speed
 
     Returns:
         A float between -1 and 1 representing the signal to send to the rudder.
@@ -199,6 +200,6 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
     # PD control signal
     signal = (
         prop_err * error + 
-        prop_ddt * angle_vel)
+        prop_ddt * angle_vel*airspeed/20)
     # Ensure it lies in legal range
     return max(-1, min(1, signal))
