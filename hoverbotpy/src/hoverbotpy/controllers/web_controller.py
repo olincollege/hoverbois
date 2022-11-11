@@ -51,7 +51,7 @@ elif requested_driver == "pico":
 elif requested_driver == "pico_pid":
     driver = PIDCorrectedFan()
     driver.run_loop()
-else:
+else: 
     import sys
     print(f"Error: {requested_driver} is not a valid driver type.")
     sys.exit(-1)
