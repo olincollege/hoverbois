@@ -198,8 +198,12 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
     error = float(direction/np.abs(direction) * angle) # Back to Python float
     # print(f"dir:{direction:2f} angle: {angle:2f} error: {error:2f} ddt: {angle_vel}")
     # PD control signal
+    if abs(airspeed) > 0.001:
+        speed_prop = 1/(airspeed/20)
+    else:
+        speed_prop = 0
     signal = (
         prop_err * error + 
-        prop_ddt * angle_vel/(airspeed/20))
+        prop_ddt * angle_vel * speed_prop)
     # Ensure it lies in legal range
     return max(-1, min(1, signal))
