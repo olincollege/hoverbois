@@ -151,7 +151,21 @@ class CorrectedIMU():
                            2, 0x11, self.imu_adr)  # CTRL2_G
         self._send8_to_dev(0x00, 0x16, self.imu_adr)  # CTRL7_G
         pass
-    
+
+    def set_mag_config(self,
+                        ctrl_reg1 = 0b01111111,
+                        ctrl_reg2 = 0b00000000,
+                        ctrl_reg3 = 0b00000000,
+                        ctrl_reg4 = 0b00001100,
+                        ctrl_reg5 = 0b00000000,
+                        ):
+        self._send8_to_dev(ctrl_reg1, 0x20, self.mag_adr)
+        self._send8_to_dev(ctrl_reg2, 0x21, self.mag_adr)
+        self._send8_to_dev(ctrl_reg3, 0x22, self.mag_adr)
+        self._send8_to_dev(ctrl_reg4, 0x23, self.mag_adr)
+        self._send8_to_dev(ctrl_reg5, 0x24, self.mag_adr)
+        pass
+
     def get_data(self,data_req = DEFAULT_REQUESTS):
         """"""
         if  not isinstance(data_req,list):
