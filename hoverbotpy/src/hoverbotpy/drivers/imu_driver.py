@@ -55,6 +55,7 @@ class CorrectedIMU():
         self._CHANNEL = 1
         self.set_acc_config()# NEEDS TO BE BEFORE THE REQUESTS REG
         self.set_gyro_config()# NEEDS TO BE BEFORE THE REQUESTS REG
+        self.set_mag_config()
         self.REQUESTS_REG = { # this is the dict of what each request needs for it
             #"X_POS":
             #"Y_POS":
