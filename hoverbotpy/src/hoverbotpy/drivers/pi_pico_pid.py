@@ -208,6 +208,7 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
         speed_prop = 0
     signal = (
         prop_err * error + 
-        prop_ddt * angle_vel * speed_prop)
+        prop_ddt * angle_vel)
     # Ensure it lies in legal range
-    return max(-1, min(1, signal))
+    out = max(-1, min(1, signal))*max(1,speed_prop)
+    return out
