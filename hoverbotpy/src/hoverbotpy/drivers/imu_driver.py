@@ -8,7 +8,7 @@ DEFAULT_REQUESTS = [
     "X_ACC_RAW", "Y_ACC_RAW", "Z_ACC_RAW",
     # "X_DEG","Y_DEG","Z_DEG",
     "X_DPS", "Y_DPS", "Z_DPS",
-    # "X_MAG","Y_MAG","Z_MAG",
+    "X_MAG_BIN","Y_MAG_BIN","Z_MAG_BIN",
 ]
 _2BYTE_MAX = 2**15
 
@@ -219,6 +219,22 @@ class CorrectedIMU():
 if __name__ == "__main__":
     d = CorrectedIMU()
     #last  = d.get_data()
+    maxmagx = 0
+    maxmagy = 0
+    maxmagz = 0
+    minmagx = 0
+    minmagy = 0
+    minmagz = 0
     while 1:
         print(d.get_data())
         sleep(.25)
+        maxmagx = max(d["X_MAG_BIN"],maxmagx)
+        maxmagy = max(d["Y_MAG_BIN"],maxmagy)
+        maxmagz = max(d["Z_MAG_BIN"],maxmagz)
+        minmagx = min(d["X_MAG_BIN"],maxmagx)
+        minmagy = min(d["Y_MAG_BIN"],maxmagy)
+        minmagz = min(d["Z_MAG_BIN"],maxmagz)
+        magx = (maxmagx + minmagx)/2
+        magy = (maxmagy + minmagy)/2
+        magz = (maxmagz + minmagz)/2
+        print (f" x:{magx}, y:{magy}, z:{magz}")
