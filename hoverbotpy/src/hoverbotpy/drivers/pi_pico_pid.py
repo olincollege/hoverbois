@@ -195,7 +195,7 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
                       (np.linalg.norm(angle_head) *
                        np.linalg.norm(target_angle)))
     error = float(direction/np.abs(direction) * angle) # Back to Python float
-
+    print(f"dir:{direction} angle: {angle} error: {error}")
     # PD control signal
     signal = (
         prop_err * error + 
