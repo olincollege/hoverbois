@@ -67,7 +67,7 @@ class Hover(tornado.web.RequestHandler):
         print("hover click")
         last_hover = time()
         speed = driver.hover
-        speed = min(speed+5,40)
+        speed = min(speed+5,60)
         driver.set_hover_speed(speed)
         
         '''
@@ -90,7 +90,7 @@ class Forward(tornado.web.RequestHandler):
         global last_forward
         global driver
         forward_speed = driver.forward
-        if forward_speed <= 40:
+        if forward_speed <= 50:
             forward_speed += 5
         driver.set_forward_speed(forward_speed)
         print(f"forward click, forward speed: {forward_speed}")
