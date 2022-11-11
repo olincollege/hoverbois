@@ -144,7 +144,11 @@ class PIDCorrectedFan():
                 )
                 self.pico.set_steering_angle(rudder_angle)
             else:
-                self.pico.set_steering_angle(self.steering)
+                if abs(self.forward) > 0.001:
+                    speed_prop = 1/(self.forward/20)
+                else:
+                    speed_prop = 0
+                self.pico.set_steering_angle(self.steering*speed_prop)
 
     def _get_north_vector(self):
         """Return list representing vector pointing to magnetic north."""
