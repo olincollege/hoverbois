@@ -84,6 +84,9 @@ class CorrectedIMU():
             #"X_MAG":[self._bin2real,{"req":"X_ACC_BIN"}],
             #"Y_MAG":[self._bin2real,{"req":"Y_ACC_BIN"}],
             #"Z_MAG":[self._bin2real,{"req":"Z_ACC_BIN"}],
+            "X_MAG_RAW":[self.offset,{"req":"X_MAG_BIN","offset":-10247}], #x:10247.0, y:11916.0, z:-4224.0
+            "Y_MAG_RAW":[self.offset,{"req":"Y_MAG_BIN","offset":-11916}],
+            "Z_MAG_RAW":[self.offset,{"req":"Z_MAG_BIN","offset":4224}],
             "X_MAG_BIN":[self._req_N_from_dev,{"registers":[0x29,0x28],"addr":mag_address}],
             "Y_MAG_BIN":[self._req_N_from_dev,{"registers":[0x2B,0x2A],"addr":mag_address}],
             "Z_MAG_BIN":[self._req_N_from_dev,{"registers":[0X2D,0X2C],"addr":mag_address}],
@@ -183,6 +186,10 @@ class CorrectedIMU():
         # print(self.)
         return (out)
 
+    def offset(self,req,offset):
+        raw = self.REQUESTS_REG[req][0](**(self.REQUESTS_REG[req][1]))
+        return raw+offset
+
     def _req_N_from_dev(self, registers, addr, channel=None, *args):
         data = 0
         count = len(registers)
@@ -227,7 +234,7 @@ if __name__ == "__main__":
     minmagz = 100000
     while 1:
         i = d.get_data()
-        #print(d.get_data())
+        #print(i)
         maxmagx = max(i["X_MAG_BIN"],maxmagx)
         maxmagy = max(i["Y_MAG_BIN"],maxmagy)
         maxmagz = max(i["Z_MAG_BIN"],maxmagz)

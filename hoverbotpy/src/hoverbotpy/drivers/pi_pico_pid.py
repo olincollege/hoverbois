@@ -148,7 +148,7 @@ class PIDCorrectedFan():
 
     def _get_north_vector(self):
         """Return list representing vector pointing to magnetic north."""
-        data = self.imu.get_data(["X_MAG_BIN", "Y_MAG_BIN"])
+        data = self.imu.get_data(["X_MAG_RAW", "Y_MAG_RAW"])
         # 0 is for cross product later
         print(data)
         return [data["X_MAG_BIN"], data["Y_MAG_BIN"], 0]
