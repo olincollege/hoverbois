@@ -151,7 +151,7 @@ class PIDCorrectedFan():
         data = self.imu.get_data(["X_MAG_RAW", "Y_MAG_RAW"])
         # 0 is for cross product later
         print(data)
-        return [data["X_MAG_BIN"], data["Y_MAG_BIN"], 0]
+        return [data["X_MAG_RAW"], data["Y_MAG_RAW"], 0]
 
     def run_loop(self):
         """Start PID loop."""
