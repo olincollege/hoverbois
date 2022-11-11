@@ -16,8 +16,8 @@ from hoverbotpy.drivers.imu_driver import CorrectedIMU
 
 # Constants representing default values to use for generating correction signal.
 # TODO: Find good values with calibration and testing
-DEFAULT_PROPORTION_ERR = -.1
-DEFAULT_PROPORTION_DDT = -.1
+DEFAULT_PROPORTION_ERR = -1
+DEFAULT_PROPORTION_DDT = -.01
 DEFAULT_PROPORTION_ANGLE_TO_DPS = 1
 
 
@@ -195,7 +195,7 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
                       (np.linalg.norm(angle_head) *
                        np.linalg.norm(target_angle)))
     error = float(direction/np.abs(direction) * angle) # Back to Python float
-    print(f"dir:{direction:2f} angle: {angle:2f} error: {error:2f} ddt: {angle_vel}")
+    # print(f"dir:{direction:2f} angle: {angle:2f} error: {error:2f} ddt: {angle_vel}")
     # PD control signal
     signal = (
         prop_err * error + 

@@ -192,7 +192,7 @@ class DecreaseDdx(tornado.web.RequestHandler):
         try:
             prop_ddt = driver.prop_ddt
             if prop_ddt >= -1:
-                prop_ddt -= .01
+                prop_ddt -= .005
                 driver.set_prop_ddt(prop_ddt)
             #driver.set_steering_angle(steer)
             print(f"decrease prop_ddt: {prop_ddt}")
@@ -207,7 +207,7 @@ class IncreaseDdx(tornado.web.RequestHandler):
         try:
             prop_ddx = driver.prop_ddt
             if prop_ddx <= 1:
-                prop_ddx += .01
+                prop_ddx += .005
                 driver.set_prop_ddt(prop_ddx)
             #driver.set_steering_angle(steer)
             print(f"increase prop_ddt: {prop_ddx}")
