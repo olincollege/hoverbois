@@ -96,6 +96,7 @@ class PIDCorrectedFan():
         """
         if abs(self.steering - speed) > .05 and abs(speed)<.05:
             self.angle_target = self._get_north_vector()
+            print(f"New north vector is :{self.angle_target}")
         self.steering = speed
 
     def stop(self):
@@ -149,7 +150,6 @@ class PIDCorrectedFan():
         """Return list representing vector pointing to magnetic north."""
         data = self.imu.get_data(["X_MAG_BIN", "Y_MAG_BIN"])
         # 0 is for cross product later
-        print(f"New north vector is :{data}")
         return [data["X_MAG_BIN"], data["Y_MAG_BIN"], 0]
 
     def run_loop(self):
