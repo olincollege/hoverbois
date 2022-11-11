@@ -144,10 +144,10 @@ class PIDCorrectedFan():
                 )
                 self.pico.set_steering_angle(rudder_angle)
             else:
-                if abs(self.forward) > 0.001:
+                if abs(self.forward) > 20:
                     speed_prop = 1/(self.forward/20)
                 else:
-                    speed_prop = 0
+                    speed_prop = 1
                 self.pico.set_steering_angle(self.steering*speed_prop)
 
     def _get_north_vector(self):
@@ -202,13 +202,13 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
     error = float(direction/np.abs(direction) * angle) # Back to Python float
     # print(f"dir:{direction:2f} angle: {angle:2f} error: {error:2f} ddt: {angle_vel}")
     # PD control signal
-    if abs(airspeed) > 0.001:
+    if abs(airspeed) > 20:
         speed_prop = 1/(airspeed/20)
     else:
-        speed_prop = 0
+        speed_prop = 1
     signal = (
         prop_err * error + 
         prop_ddt * angle_vel)
     # Ensure it lies in legal range
-    out = max(-1, min(1, signal))*max(1,speed_prop)
+    out = max(-1, min(1, signal))*speed_prop
     return out
