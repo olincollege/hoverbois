@@ -120,8 +120,8 @@ class Right(tornado.web.RequestHandler):
         #steer = driver.steering
         #if steer >= -.5:
         #    steer -= .5
-        driver.set_steering_angle(-1)
-        print(f"right click, steer {-1}")
+        driver.set_steering_angle(-.8)
+        print(f"right click, steer {-.8}")
         last_right = time()
 
 
@@ -143,8 +143,8 @@ class Left(tornado.web.RequestHandler):
         #steer = driver.steering
         #if steer <= .5:
         #    steer += .5
-        driver.set_steering_angle(1)
-        print(f"left click,  steer{1}")
+        driver.set_steering_angle(.8)
+        print(f"left click,  steer{.8}")
         last_left = time()
 
 
