@@ -35,6 +35,10 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+# settings
+MAX_FORWARD_SPEED = 80
+MAX_HOVER_SPEED = 60
+
 # Globals
 # Why are these needed?
 last_hover = 0
@@ -67,7 +71,7 @@ class Hover(tornado.web.RequestHandler):
         print("hover click")
         last_hover = time()
         speed = driver.hover
-        speed = min(speed+5,60)
+        speed = min(speed+5,MAX_HOVER_SPEED)
         driver.set_hover_speed(speed)
         
         '''
@@ -90,7 +94,7 @@ class Forward(tornado.web.RequestHandler):
         global last_forward
         global driver
         forward_speed = driver.forward
-        if forward_speed <= 50:
+        if forward_speed <= MAX_FORWARD_SPEED:
             forward_speed += 5
         driver.set_forward_speed(forward_speed)
         print(f"forward click, forward speed: {forward_speed}")
@@ -102,8 +106,8 @@ class Reverse(tornado.web.RequestHandler):
         global last_forward
         global driver
         forward_speed = driver.forward
-        if forward_speed >= 10:
-            forward_speed -= 10
+        if forward_speed >= 5:
+            forward_speed = max(0, forward_speed-10)
         driver.set_forward_speed(forward_speed)
         print(f"reverse click, forward speed: {forward_speed}")
         last_forward = time()
@@ -116,8 +120,8 @@ class Right(tornado.web.RequestHandler):
         #steer = driver.steering
         #if steer >= -.5:
         #    steer -= .5
-        driver.set_steering_angle(-.8)
-        print(f"right click, steer {-.8}")
+        driver.set_steering_angle(-1)
+        print(f"right click, steer {-1}")
         last_right = time()
 
 
@@ -139,8 +143,8 @@ class Left(tornado.web.RequestHandler):
         #steer = driver.steering
         #if steer <= .5:
         #    steer += .5
-        driver.set_steering_angle(.8)
-        print(f"left click,  steer{.8}")
+        driver.set_steering_angle(1)
+        print(f"left click,  steer{1}")
         last_left = time()
 
 

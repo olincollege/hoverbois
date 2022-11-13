@@ -21,6 +21,7 @@ DEFAULT_PROPORTION_DDT = -.1
 DEFAULT_PROPORTION_ANGLE_TO_DPS = 1
 
 
+
 class PIDCorrectedFan():
     """
     Driver with PID control loop to correct angle.
