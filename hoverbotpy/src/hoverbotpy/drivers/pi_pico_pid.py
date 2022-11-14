@@ -111,6 +111,17 @@ class PIDCorrectedFan():
         self.set_steering_angle(0)
         self.set_hover_speed(0)
 
+    # public method to set up the turn rotaional speed at 100%
+    def set_turn_dps(self, dps_per_turn):
+        """
+        set the turn rate in relation to the steering angle(-1 to 1)
+        this input is the slope of the linear function of the steering angle
+
+        Args:
+            dps_per_turn: the degrees per second of a turn with steering value of 1
+        """
+        self.turn_dps = dps_per_turn
+
     # Additional public methods to set PID params in real time.
     def set_prop_err(self, proportion):
         """
