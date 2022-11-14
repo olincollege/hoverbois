@@ -139,7 +139,7 @@ class PIDCorrectedFan():
         time_now = time.time()
         data = self.imu.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"])
         out_str = f"time, {time_now},x_xl,{data['X_ACC_RAW']},y_xl,{data['Y_ACC_RAW']},z_xl,{data['Z_ACC_RAW']} \n"
-        with csv.writer(open(DATA_FILE_PREFIX+self.start_time.isoformat)) as w:
+        with csv.writer(open(DATA_FILE_PREFIX+str(self.start_time.isoformat))) as w:
             w.writerow(out_str)
         while self.running:
             # Fudge it a little in case float errors happen
