@@ -12,14 +12,16 @@ import numpy as np
 from hoverbotpy.drivers.driver_abc import HovercraftDriver
 from hoverbotpy.drivers.pi_pico_simple import SimpleFan
 from hoverbotpy.drivers.imu_driver import CorrectedIMU
-
+import csv
+from datetime import datetime
+import time
 
 # Constants representing default values to use for generating correction signal.
 # TODO: Find good values with calibration and testing
 DEFAULT_PROPORTION_ERR = -0 #.1
 DEFAULT_PROPORTION_DDT = -.1
 DEFAULT_PROPORTION_ANGLE_TO_DPS = 1
-
+DATA_FILE_PREFIX = "IMUDATA_HOVER_"
 
 
 class PIDCorrectedFan():
@@ -42,6 +44,7 @@ class PIDCorrectedFan():
     """
 
     def __init__(self):
+        self.start_time = datetime.now()
         # Hovercraft params
         self.hover = 0
         self.forward = 0
@@ -133,6 +136,11 @@ class PIDCorrectedFan():
         If the rudder angle is 0, try to maintain current direction. Else, set
         the rudder angle to its specified value.
         """
+        time_now = time.time()
+        data = self.imu.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"])
+        out_str = f"time, {time_now},x_xl,{data['X_ACC_RAW']},y_xl,{data['Y_ACC_RAW']},z_xl,{data['Z_ACC_RAW']} \n"
+        with csv.writer(open(DATA_FILE_PREFIX+self.start_time.isoformat)) as w:
+            w.writerow(out_str)
         while self.running:
             # Fudge it a little in case float errors happen
             if -0.1 < self.steering < 0.1:
