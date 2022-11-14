@@ -36,7 +36,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 # settings
-MAX_FORWARD_SPEED = 80
+MAX_FORWARD_SPEED = 60
 MAX_HOVER_SPEED = 60
 
 # Globals
