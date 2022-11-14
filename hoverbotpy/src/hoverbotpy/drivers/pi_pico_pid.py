@@ -21,6 +21,7 @@ import time
 DEFAULT_PROPORTION_ERR = -0 #.1
 DEFAULT_PROPORTION_DDT = -.1
 DEFAULT_PROPORTION_ANGLE_TO_DPS = 1
+DEFAULT_TURN_DPS = 270
 #DATA_FILE_PREFIX = "IMUDATA_HOVER_"
 
 
@@ -49,6 +50,7 @@ class PIDCorrectedFan():
         self.hover = 0
         self.forward = 0
         self.steering = 0
+        self.turn_dps = DEFAULT_TURN_DPS
 
         # The drivers within the driver
         self.pico = SimpleFan()
@@ -147,17 +149,14 @@ class PIDCorrectedFan():
                 angle_head = self._get_north_vector()
                 angle_vel = float(self.imu.get_data(["Z_DPS"])["Z_DPS"])
 
-                rudder_angle = calc_rudder_angle(
-                    self.angle_target, angle_head, angle_vel,
-                    self.prop_err, self.prop_ddt,self.forward
-                )
-                self.pico.set_steering_angle(rudder_angle)
-            else:
-                if abs(self.forward) > 20:
-                    speed_prop = 1/(self.forward/20)
-                else:
-                    speed_prop = 1
-                self.pico.set_steering_angle(self.steering*speed_prop)
+            goal_dps = self.steering*self.turn_dps
+
+            rudder_angle = calc_rudder_angle(
+                self.angle_target, angle_head, angle_vel,
+                self.prop_err, self.prop_ddt,self.forward,
+                goal_dps
+            )
+            self.pico.set_steering_angle(rudder_angle)
 
     def _get_north_vector(self):
         """Return list representing vector pointing to magnetic north."""
@@ -178,7 +177,7 @@ class PIDCorrectedFan():
 
 
 def calc_rudder_angle(target_angle, angle_head, angle_vel,
-                      prop_err, prop_ddt,airspeed):
+                      prop_err, prop_ddt, airspeed, goal_dps):
     """
     Calculate the rudder angle signal based on PD control loop.
 
@@ -198,6 +197,7 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
         prop_ddt: Float representing proportion of angular velocity to include
             in rudder angle.
         airspeed:  a number for 0 to 100 corresponding to the forward speed
+        goal_dps: the goal for the spin rate of the hovercraft in degrees per second
 
     Returns:
         A float between -1 and 1 representing the signal to send to the rudder.
@@ -209,7 +209,10 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
                       (np.linalg.norm(angle_head) *
                        np.linalg.norm(target_angle)))
     error = float(direction/np.abs(direction) * angle) # Back to Python float
-    # print(f"dir:{direction:2f} angle: {angle:2f} error: {error:2f} ddt: {angle_vel}")
+
+    # D error calcs
+    d_error = angle_vel - goal_dps
+
     # PD control signal
     if abs(airspeed) > 20:
         speed_prop = 1/(airspeed/20)
@@ -217,7 +220,7 @@ def calc_rudder_angle(target_angle, angle_head, angle_vel,
         speed_prop = 1
     signal = (
         prop_err * error + 
-        prop_ddt * angle_vel)
+        prop_ddt * d_error)
     # Ensure it lies in legal range
     out = max(-1, min(1, signal))*speed_prop
     return out
