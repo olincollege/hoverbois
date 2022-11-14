@@ -21,7 +21,7 @@ import time
 DEFAULT_PROPORTION_ERR = -0 #.1
 DEFAULT_PROPORTION_DDT = -.1
 DEFAULT_PROPORTION_ANGLE_TO_DPS = 1
-DATA_FILE_PREFIX = "IMUDATA_HOVER_"
+#DATA_FILE_PREFIX = "IMUDATA_HOVER_"
 
 
 class PIDCorrectedFan():
@@ -136,11 +136,11 @@ class PIDCorrectedFan():
         If the rudder angle is 0, try to maintain current direction. Else, set
         the rudder angle to its specified value.
         """
-        time_now = time.time()
-        data = self.imu.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"])
-        out_str = f"time, {time_now},x_xl,{data['X_ACC_RAW']},y_xl,{data['Y_ACC_RAW']},z_xl,{data['Z_ACC_RAW']} \n"
-        with csv.writer(open(DATA_FILE_PREFIX+str(self.start_time.isoformat))) as w:
-            w.writerow(out_str)
+        #time_now = time.time()
+        #data = self.imu.get_data(["X_ACC_RAW","Y_ACC_RAW","Z_ACC_RAW"])
+        #out_str = f"time, {time_now},x_xl,{data['X_ACC_RAW']},y_xl,{data['Y_ACC_RAW']},z_xl,{data['Z_ACC_RAW']} \n"
+        #with csv.writer(open(DATA_FILE_PREFIX+str(self.start_time.isoformat))) as w:
+        #    w.writerow(out_str)
         while self.running:
             # Fudge it a little in case float errors happen
             if -0.1 < self.steering < 0.1:
