@@ -1,2 +1,3 @@
-# hoverbois
-2022 pie project with William Skelly Devlin Ih Joseph Gilbert and Ethan Chen
+# Sprint 2
+
+State of codebase at end of sprint 2.
