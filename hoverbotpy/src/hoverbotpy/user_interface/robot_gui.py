@@ -228,7 +228,6 @@ def axis_deadzone(screen: pygame.surface.Surface,
         Tuple of two floats. First float is an offset to center joystick.
         Second float is the deadzone threshold.
     """
-    axis = 0
     num_axes = controller.get_numaxes()
     if num_axes == 0:
         print("Controller has no analog.")
@@ -278,8 +277,52 @@ def axis_deadzone(screen: pygame.surface.Surface,
                          width=40)
         for i in (-1, 1):
             pygame.draw.line(screen, COLORS["black"],
-                             (x_center+i*(deadzone*300), y_center-30), (x_center+i*(deadzone*300), y_center+30),
+                             (x_center+i*(deadzone*300), y_center-30),
+                             (x_center+i*(deadzone*300), y_center+30),
                              width=2)
+        pygame.display.flip()
+
+
+def pick_button(screen: pygame.surface.Surface,
+                controller: pygame.joystick.Joystick,
+                name: str) -> int:
+    """
+    Pick a button.
+
+    Args:
+        controllers: A list of pygame joystick.Joystick devices.
+        screen: A pygame surface to draw on.
+        name: The name of the action to display in instructions.
+
+    Returns:
+        An int representing the controller button pressed.
+    """
+    num_axes = controller.get_numaxes()
+    pygame.display.set_caption(f"Pick button for {name}")
+
+    button = 0
+
+    while True:
+        # Process Inputs
+        for i in range(controller.get_numbuttons()):
+            if controller.get_button(i) == True:
+                button = i
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                print("Goodbye")
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                action = get_select_input(event.key)
+                if action == "select":
+                    return button
+
+        # Redraw Screen
+        screen.fill(BACKGROUND)
+        instructions = (f"Press button to use for {name}.",
+                        f"Current button: {button}")
+        draw_instructions(screen, instructions)
         pygame.display.flip()
 
 
@@ -299,10 +342,16 @@ def main():
 
     clock = pygame.time.Clock()
 
+    # Setup controller
     controller_num = pick_controller(controllers, screen)
     controller = controllers[controller_num]
     axis = controller_axis(screen, controller)
     offset, deadzone = axis_deadzone(screen, controller, axis)
+    estop = pick_button(screen, controller, "ESTOP")
+    hover_plus = pick_button(screen, controller, "Increase Hover")
+    hover_minus = pick_button(screen, controller, "Decrease Hover")
+    throttle_plus = pick_button(screen, controller, "Increase Throttle")
+    throttle_minus = pick_button(screen, controller, "Decrease Throttle")
 
     while True:
         # Process Inputs
