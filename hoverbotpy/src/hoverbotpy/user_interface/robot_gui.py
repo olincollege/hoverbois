@@ -29,10 +29,83 @@ def print_controller_info(controller: pygame.joystick.Joystick):
     print(axis, button)
 
 
+def draw_instructions(screen: pygame.Surface, instructions: tuple[str]):
+    """
+    Draw instructions for controller setup wizard.
+
+    Args:
+        instructions: A tuple of strings.
+    """
+    x_center = screen.get_size()[0]/2
+
+    font = pygame.font.SysFont("freesansbold", 40)
+
+    for i in range(len(instructions)):
+        instruction = instructions[i]
+        text = font.render(instruction, True, COLORS["white"])
+        rect = text.get_rect()
+        rect.center = (x_center, 40+24*i)
+        screen.blit(text, rect)
+
+
+def get_select_input(key, special=None):
+    """
+    Figure out action to take for select menu.
+
+    Args:
+        key: A Pygame event for the keypress.
+        special: An optional dict containing special keybind action pairs.
+
+    Returns:
+        A string representing prev, next, select, or a special option. Returns
+        none if match is not found.
+    """
+    if special is None:
+        special = {}
+
+    default = {pygame.K_UP: "prev",
+               pygame.K_DOWN: "next",
+               pygame.K_LEFT: "prev",
+               pygame.K_RIGHT: "next",
+               pygame.K_k: "prev",  # Vim
+               pygame.K_j: "next",  # Vim
+               pygame.K_p: "prev",  # Emacs
+               pygame.K_n: "next",  # Emacs
+               pygame.K_RETURN: "select", }
+    keybinds = default | special  # Yay for Python 3.9!
+    return keybinds.get(key)
+
+
+def next_selection(value, num, action):
+    """
+    Function to make it easier to loop list circularly.
+
+    Args:
+        value: Current value of selection.
+        num: Number of total selections.
+        action: A string representing action to take, ("next", "prev").
+    """
+    # Cries in Python 3.9
+    next = value
+    if action == "prev":
+        next = value - 1
+        if next < 0:
+            return num - 1
+    elif action == "next":
+        next = value + 1
+        if next >= num:
+            return 0
+    return next
+
+
 def pick_controller(controllers: list[pygame.joystick.Joystick],
                     screen: pygame.Surface) -> int:
     """
     Prompt user to pick controller.
+
+    Args:
+        controllers: A list of pygame joystick.Joystick devices.
+        screen: A pygame surface to draw on.
 
     Returns:
         An int representing joystick ID in SDL. -1 means keyboard instead of
@@ -44,32 +117,12 @@ def pick_controller(controllers: list[pygame.joystick.Joystick],
 
     pygame.display.set_caption("Pick Controller")
 
-    font_large = pygame.font.SysFont("freesansbold", 50)
-    font_small = pygame.font.SysFont("freesansbold", 30)
-
-    instructions_str = ("Pick a controller using arrow keys.",
-                        "Press Enter to select.",
-                        "Press K to use keyboard.", )
-    instructions_font = []
-    instructions_rect = []
-    for i in range(len(instructions_str)):
-        instructions_font.append(font_small.render(instructions_str[i],
-                                                   True, COLORS["white"]))
-        instructions_rect.append(instructions_font[i].get_rect())
-        instructions_rect[i].center = (WIDTH/2, 40+20*i)
+    instructions = ("Pick a controller using arrow keys.",
+                    "Press Enter to select.",
+                    "Press K to use keyboard.", )
 
     controller = 0
-    # Perhaps these should be functions to call instead
-    keybinds = {pygame.K_UP: "prev",
-                pygame.K_DOWN: "next",
-                pygame.K_LEFT: "prev",
-                pygame.K_RIGHT: "next",
-                pygame.K_k: "prev",  # Vim
-                pygame.K_j: "next",  # Vim
-                pygame.K_p: "prev",  # Emacs
-                pygame.K_n: "next",  # Emacs
-                pygame.K_k: "keyboard",
-                pygame.K_RETURN: "select", }
+    font = pygame.font.SysFont("freesansbold", 30)
 
     while True:
         # Process Inputs
@@ -79,32 +132,85 @@ def pick_controller(controllers: list[pygame.joystick.Joystick],
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                action = keybinds.get(event.key)
-                # Cries in Python 3.9
-                if action == "prev":
-                    controller -= 1
-                    if controller < 0:
-                        controller = len(controllers) - 1
-                elif action == "next":
-                    controller += 1
-                    if controller >= len(controllers):
-                        controller = 0
-                elif action == "keyboard":
+                action = get_select_input(event.key, {pygame.K_k: "keyboard"})
+                controller = next_selection(controller,
+                                            len(controllers),
+                                            action)
+                if action == "keyboard":
                     return -1
-                elif action == "select":
+                if action == "select":
                     return controller
 
-            selected = font_large.render(controllers[controller].get_name(),
-                                         True,
-                                         COLORS["white"])
+            selected = font.render(controllers[controller].get_name(),
+                                   True,
+                                   COLORS["white"])
             selected_rect = selected.get_rect()
             selected_rect.center = (WIDTH/2, HEIGHT/2)
 
         # Redraw Screen
         screen.fill(BACKGROUND)
-        for i in range(len(instructions_font)):
-            screen.blit(instructions_font[i], instructions_rect[i])
+        draw_instructions(screen, instructions)
         screen.blit(selected, selected_rect)
+        pygame.display.flip()
+
+
+def controller_axis(screen: pygame.surface.Surface,
+                    controller: pygame.joystick.Joystick):
+    """
+    Configure which axis to use for controller.
+
+    Args:
+        controllers: A list of pygame joystick.Joystick devices.
+        screen: A pygame surface to draw on.
+
+    Returns:
+        Number representing axis to use for analog control. If no axis, return
+        -1.
+    """
+    axis = 0
+    num_axes = controller.get_numaxes()
+    if num_axes == 0:
+        print("Controller has no analog.")
+        return -1
+
+    x_center = screen.get_size()[0]/2
+    pygame.display.set_caption("Select Controller Axis")
+
+    instructions = ("Play with your controller's joysticks.",
+                    "Pick an axis to use for steering.",
+                    "Use arrow keys.",
+                    "Press Enter to select.")
+
+    while True:
+        # Process Inputs
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                print("Goodbye")
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                action = get_select_input(event.key)
+                axis = next_selection(axis,
+                                      num_axes,
+                                      action)
+                if action == "select":
+                    return axis
+
+        # Redraw Screen
+        screen.fill(BACKGROUND)
+        draw_instructions(screen, instructions)
+        for i in range(num_axes):
+            y = 150 + 30*i
+            reading = controller.get_axis(i) * 100
+            color = COLORS["white"]
+            if i == axis:
+                color = COLORS["blue"]
+            pygame.draw.line(screen, color,
+                             (x_center, y+12), (x_center+reading, y+12),
+                             width=15)
+            pygame.draw.line(screen, COLORS["black"],
+                             (x_center, y), (x_center, y+24),
+                             width=2)
         pygame.display.flip()
 
 
@@ -124,7 +230,9 @@ def main():
 
     clock = pygame.time.Clock()
 
-    pick_controller(controllers, screen)
+    controller_num = pick_controller(controllers, screen)
+    controller = controllers[controller_num]
+    controller_axis(screen, controller)
 
     while True:
         # Process Inputs
