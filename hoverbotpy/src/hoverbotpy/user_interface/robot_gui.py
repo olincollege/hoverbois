@@ -155,7 +155,7 @@ def pick_controller(controllers: list[pygame.joystick.Joystick],
 
 
 def controller_axis(screen: pygame.surface.Surface,
-                    controller: pygame.joystick.Joystick):
+                    controller: pygame.joystick.Joystick) -> int:
     """
     Configure which axis to use for controller.
 
@@ -164,8 +164,7 @@ def controller_axis(screen: pygame.surface.Surface,
         screen: A pygame surface to draw on.
 
     Returns:
-        Number representing axis to use for analog control. If no axis, return
-        -1.
+        Int representing axis to use for analog control. If no axis, return -1.
     """
     axis = 0
     num_axes = controller.get_numaxes()
@@ -214,6 +213,76 @@ def controller_axis(screen: pygame.surface.Surface,
         pygame.display.flip()
 
 
+def axis_deadzone(screen: pygame.surface.Surface,
+                  controller: pygame.joystick.Joystick,
+                  axis: int) -> float:
+    """
+    Configure axis deadzone and center.
+
+    Args:
+        controllers: A list of pygame joystick.Joystick devices.
+        screen: A pygame surface to draw on.
+        axis: An int representing the axis number to use.
+
+    Returns:
+        Tuple of two floats. First float is an offset to center joystick.
+        Second float is the deadzone threshold.
+    """
+    axis = 0
+    num_axes = controller.get_numaxes()
+    if num_axes == 0:
+        print("Controller has no analog.")
+        return -1
+
+    x_center = screen.get_size()[0]/2
+    y_center = screen.get_size()[1]/2
+    pygame.display.set_caption("Set axis deadzone")
+
+    instructions = ("Recenter axis and set deadzone.",
+                    "Press space to center axis.",
+                    "Use arrow keys to adjust deadzone.",
+                    "Press Enter to select.")
+
+    offset = 0
+    deadzone = 0
+
+    while True:
+        # Process Inputs
+        reading = controller.get_axis(axis)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                print("Goodbye")
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                action = get_select_input(event.key,
+                                          special={pygame.K_SPACE: "center"})
+                # Cries in 3.9 instead of 3.10
+                if action == "select":
+                    return offset, deadzone
+                if action == "center":
+                    offset = reading
+                if action == "prev":
+                    deadzone -= 0.005
+                if action == "next":
+                    deadzone += 0.005
+                deadzone = max(0, deadzone)
+
+        adjusted = reading - offset
+        # Redraw Screen
+        screen.fill(BACKGROUND)
+        draw_instructions(screen, instructions)
+        pygame.draw.line(screen, COLORS["white"],
+                         (x_center, y_center), (x_center+adjusted*300, y_center),
+                         width=40)
+        for i in (-1, 1):
+            pygame.draw.line(screen, COLORS["black"],
+                             (x_center+i*(deadzone*300), y_center-30), (x_center+i*(deadzone*300), y_center+30),
+                             width=2)
+        pygame.display.flip()
+
+
 def main():
     pygame.init()
 
@@ -232,7 +301,8 @@ def main():
 
     controller_num = pick_controller(controllers, screen)
     controller = controllers[controller_num]
-    controller_axis(screen, controller)
+    axis = controller_axis(screen, controller)
+    offset, deadzone = axis_deadzone(screen, controller, axis)
 
     while True:
         # Process Inputs
