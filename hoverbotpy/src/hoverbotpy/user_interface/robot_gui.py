@@ -1,6 +1,10 @@
 import sys
 import pygame
 
+# Constants to tweak when testing physical robot
+MAX_HOVER = 40
+MAX_THROTTLE = 40
+
 # Useful constants
 COLORS = {"black": (0, 0, 0),
           "white": (255, 255, 255),
@@ -85,7 +89,7 @@ def next_selection(value, num, action):
         num: Number of total selections.
         action: A string representing action to take, ("next", "prev").
     """
-    # Cries in Python 3.9
+    # Cries in Python < 3.10
     next = value
     if action == "prev":
         next = value - 1
@@ -257,7 +261,7 @@ def axis_deadzone(screen: pygame.surface.Surface,
             if event.type == pygame.KEYDOWN:
                 action = get_select_input(event.key,
                                           special={pygame.K_SPACE: "center"})
-                # Cries in 3.9 instead of 3.10
+                # Cries in Python < 3.10
                 if action == "select":
                     return offset, deadzone
                 if action == "center":
@@ -321,49 +325,152 @@ def pick_button(screen: pygame.surface.Surface,
         # Redraw Screen
         screen.fill(BACKGROUND)
         instructions = (f"Press button to use for {name}.",
+                        "Press Enter to confirm.",
                         f"Current button: {button}")
         draw_instructions(screen, instructions)
         pygame.display.flip()
 
 
+def read_buttons(controller: pygame.joystick.Joystick) -> list[bool]:
+    """
+    Read all buttons from a controller.
+
+    Args:
+        controller: A pygame joystick.Joystick object.
+
+    Returns:
+        A list of bools.
+    """
+    return [controller.get_button(i)
+            for i in range(controller.get_numbuttons())]
+
+
+def calculate_button_state(prev: list[bool], curr: list[bool]) -> list[str]:
+    """
+    Calculate whether every button is unpressed, pressed, held, or released.
+
+    Lists MUST be of equal length.
+
+    Because an A press actually has three parts to it. It's the pressing that
+    we want.
+
+    Args:
+        prev: A list of bools representing binary state of buttons last read.
+        curr: A list of bools representing binary state of buttons this read.
+
+    Returns:
+        A list of strings, where the strings are "unpressed", "pressed", "held",
+        or "released".
+    """
+    def find_state(prev, curr):
+        # Cries in Python < 3.10
+        if prev == False and curr == True:
+            return "pressed"
+        if prev == True and curr == False:
+            return "released"
+        if curr == True:
+            return "held"
+        return "unpressed"
+    return [find_state(prev[x], curr[x]) for x in range(len(prev))]
+
+
 def main():
+    robot_state = {"hover"       : 0,
+                   "throttle"    : 0,
+                   "angular_vel" : 0, }
+
+    def estop(): # TODO: make this send a special thing instead
+        for key in robot_state.keys():
+            robot_state[key] = 0
+        # TODO: send_to_radio(message)
+        print("ESTOP")
+
+
+    def hover_plus():
+        # TODO: send_to_radio(message)
+        robot_state["hover"] = min(MAX_HOVER, robot_state["hover"]+5)
+
+    def hover_minus():
+        # TODO: send_to_radio(message)
+        robot_state["hover"] = max(0, robot_state["hover"]-5)
+
+    def throttle_plus():
+        # TODO: send_to_radio(message)
+        robot_state["throttle"] = min(MAX_THROTTLE, robot_state["throttle"]+5)
+
+    def throttle_minus():
+        # TODO: send_to_radio(message)
+        robot_state["throttle"] = max(0, robot_state["throttle"]-5)
+
+    # Setup pygame
     pygame.init()
+    pygame.font.init()
 
     # Setup controllers
     pygame.joystick.init()
     controllers = [pygame.joystick.Joystick(x)
                    for x in range(pygame.joystick.get_count())]
 
-    # Setup text
-    pygame.font.init()
-
     # Setup canvas
     screen = pygame.display.set_mode(SIZE)
-
-    clock = pygame.time.Clock()
+    # Commented out because limiting framerate doesn't matter for us.
+    # clock = pygame.time.Clock()
 
     # Setup controller
     controller_num = pick_controller(controllers, screen)
     controller = controllers[controller_num]
     axis = controller_axis(screen, controller)
     offset, deadzone = axis_deadzone(screen, controller, axis)
-    estop = pick_button(screen, controller, "ESTOP")
-    hover_plus = pick_button(screen, controller, "Increase Hover")
-    hover_minus = pick_button(screen, controller, "Decrease Hover")
-    throttle_plus = pick_button(screen, controller, "Increase Throttle")
-    throttle_minus = pick_button(screen, controller, "Decrease Throttle")
+
+    angular_vel_scalar = 100 # TODO: This should probably be configurable during runtime
+
+    button_map = {
+        # button num : ("state", action_func)
+        pick_button(screen, controller, "ESTOP")             : ("pressed", estop),
+        pick_button(screen, controller, "Increase Hover")    : ("pressed", hover_plus),
+        pick_button(screen, controller, "Decrease Hover")    : ("pressed", hover_minus),
+        pick_button(screen, controller, "Increase Throttle") : ("pressed", throttle_plus),
+        pick_button(screen, controller, "Decrease Throttle") : ("pressed", throttle_minus),
+    }
+
+    # Initialize these to ensure they are same size and exist
+    pygame.display.set_caption("Drive Robot")
+    buttons_prev = read_buttons(controller)
+    buttons_curr = read_buttons(controller)
 
     while True:
-        # Process Inputs
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
 
+        # Read Inputs
+        buttons_prev  = buttons_curr
+        buttons_curr  = read_buttons(controller)
+        buttons_state = calculate_button_state(buttons_prev, buttons_curr)
+        axis_raw  = controller.get_axis(axis)
+
+        axis_processed = axis_raw - offset
+        if abs(axis_processed) < deadzone:
+            axis_processed = 0
+
+        # Process Inputs
+        for button_num, action in button_map.items(): # Button map
+            if buttons_state[button_num] == action[0]:
+                action[1]()
+
+        robot_state["angular_vel"] = int(angular_vel_scalar * axis_processed)
+        # TODO: send_to_radio(message)
+
+        hud_text = []
+        for x,y in robot_state.items():
+            hud_text.append(f"{x}")
+            hud_text.append(f"{y}")
+            hud_text.append("")
+
         # Redraw Screen
         screen.fill(BACKGROUND)
-
+        draw_instructions(screen, hud_text)
         pygame.display.flip()
-        clock.tick(60)
 
 
 if __name__ == "__main__":
