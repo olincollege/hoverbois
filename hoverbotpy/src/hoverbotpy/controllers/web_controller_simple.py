@@ -225,7 +225,7 @@ class Drive(tornado.web.RequestHandler):
         self.set_header("Content-Type", "text/plain")
         # driver.set_hover_speed    (self.get_argument("hover"))
         # driver.set_forward_speed  (self.get_argument("throttle"))
-        driver.set_steering_angle (self.get_argument("rudder_angle"))
+        driver.set_steering_angle (float(self.get_argument("rudder_angle")))
         print(self.get_argument("rudder_angle"))
         # self.get_argument("angular_vel")
         self.write("Received Message")
