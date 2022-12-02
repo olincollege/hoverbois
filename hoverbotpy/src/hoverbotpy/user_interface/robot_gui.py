@@ -512,7 +512,7 @@ def main():
                 action[1]()
 
         robot_state["angular_vel"]  = int(angular_vel_scalar * axis_processed)
-        robot_state["rudder_angle"] = axis_processed
+        robot_state["rudder_angle"] = -axis_processed
         # TODO: send_to_radio(message)
 
         hud_text = []
