@@ -1,5 +1,32 @@
 import sys
 import pygame
+import requests
+
+from threading import Thread
+from time import sleep
+
+from hoverbotpy.controllers.constants import PORT
+
+# Setup CLI arguments
+import argparse
+parser = argparse.ArgumentParser(
+    prog="RobotGUI",
+    description="Pygame user interface for hovercraft.",
+    epilog="Written Devlin Ih",
+)
+parser.add_argument(
+    "--ip",
+    required=False,
+    help=("IP address of hovercraft as string.\n"
+          "    If not passed, web thread is not started."),
+)
+parser.add_argument(
+    "--delay",
+    required=False,
+    default=1/15,
+    help="Delay to wait after sending data to robot in seconds.",
+)
+args = parser.parse_args()
 
 # Constants to tweak when testing physical robot
 MAX_HOVER = 40
@@ -15,6 +42,22 @@ COLORS = {"black": (0, 0, 0),
 BACKGROUND = COLORS["gray_mid"]
 
 SIZE = WIDTH, HEIGHT = 640, 480
+
+
+def send_data_web(robot_state, delay, ip):
+    """
+    Daemon to send robot state over the web.
+
+    Args:
+        robot_state: A dictionary representing the robot state.
+        delay: A number representing a delay to make between requests.
+        ip: A string representing the IP of the hovercraft.
+    """
+    url = "http://" + str(ip) + ":" + str(PORT) + "/drive/"
+    while True:
+        requests.post(url, data=robot_state)
+        sleep(delay)
+
 
 
 def print_controller_info(controller: pygame.joystick.Joystick):
@@ -375,9 +418,11 @@ def calculate_button_state(prev: list[bool], curr: list[bool]) -> list[str]:
 
 
 def main():
-    robot_state = {"hover"       : 0,
-                   "throttle"    : 0,
-                   "angular_vel" : 0, }
+    robot_state = {"hover"        : 0,
+                   "throttle"     : 0,
+                   "angular_vel"  : 0, # Fly by wire mode
+                   "rudder_angle" : 0, # Direct mode
+                   }
 
     def estop(): # TODO: make this send a special thing instead
         for key in robot_state.keys():
@@ -438,6 +483,13 @@ def main():
     buttons_prev = read_buttons(controller)
     buttons_curr = read_buttons(controller)
 
+    # Run connection via web or radio if arg is passed
+    if args.ip:
+        web_connection = Thread(target=send_data_web,
+                                args=[robot_state, args.delay, args.ip],
+                                daemon=True)
+        web_connection.start()
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -459,7 +511,8 @@ def main():
             if buttons_state[button_num] == action[0]:
                 action[1]()
 
-        robot_state["angular_vel"] = int(angular_vel_scalar * axis_processed)
+        robot_state["angular_vel"]  = int(angular_vel_scalar * axis_processed)
+        robot_state["rudder_angle"] = axis_processed
         # TODO: send_to_radio(message)
 
         hud_text = []
