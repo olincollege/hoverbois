@@ -219,6 +219,17 @@ class IncreaseDdx(tornado.web.RequestHandler):
             print("This is not a PID controller.")
 
 
+class Drive(tornado.web.RequestHandler):
+    def post(self):
+        global driver
+        self.set_header("Content-Type", "text/plain")
+        driver.set_hover_speed    (self.get_argument("hover"))
+        driver.set_forward_speed  (self.get_argument("throttle"))
+        driver.set_steering_angle (self.get_argument("rudder_angle"))
+        # self.get_argument("angular_vel")
+        self.write("Received Message")
+
+
 class Index(tornado.web.RequestHandler):
     def get(self):
         #self.write("Hello, world")
@@ -248,12 +259,8 @@ def make_app():
         (r"/o_pressed/", IncreaseErr),
         (r"/l_pressed/", DecreaseErr),
 
-        # Manually calibrate PID controller
-
-        # DecreaseErr, IncreaseErr, DecreaseDdx, IncreaseDdx
-
-        # TODO: Make this work, I don't get the html stuff (I tried adding to
-        # the charlist).
+        # Option to receive data as JSON pack
+        (r"/drive/", Drive),
     ], debug=True)
 
 # async def
