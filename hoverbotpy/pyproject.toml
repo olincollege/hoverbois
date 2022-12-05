@@ -17,6 +17,7 @@ pigpio = "^1.78"
 pyserial = "^3.5"
 pygame = "^2.1.2"
 requests = "^2.28.1"
+evdev = "^1.6.0"
 
 
 [build-system]
