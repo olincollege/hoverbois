@@ -42,7 +42,8 @@ def axis_moved(event, axis, driver):
         <= axis_relative
             <= axis["center"]+axis["deadzone"]):
         axis_relative = 0
-    driver.set_steering_angle(axis_relative)
+    rudder = min(1, max(-1, axis_relative/1024))
+    driver.set_steering_angle(rudder)
 
 
 def recenter(axis):
@@ -118,7 +119,7 @@ def main():
         from hoverbotpy.drivers.pi_pico_simple import SimpleFan
         driver = SimpleFan()
     elif driver_type == "pico_pid":
-        from hoverbotpy.drivers.pi_pico_pid import PIDCorrectedFan
+        from hoverbotpy.drivers.pi_pico_wspid import PIDCorrectedFan
         driver = PIDCorrectedFan()
         driver.run_loop()
     else:
