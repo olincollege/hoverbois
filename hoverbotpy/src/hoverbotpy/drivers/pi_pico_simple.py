@@ -4,8 +4,8 @@ from time import sleep
 import serial
 
 PWM_FREQ = 15000
-SERVO_DIST = 60
-SERVO_MID = 90
+SERVO_DIST = 80
+SERVO_MID = 100
 
 
 class SimpleFan(HovercraftDriver):
