@@ -13,7 +13,8 @@ class SimpleFan(HovercraftDriver):
     ''''''
 
     def __init__(self):
-        self.pico = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+        # self.pico = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+        self.pico = JankPico(port="/dev/ttyACM0")
         #self.steer_motor = Servo(SERVOPIN)
         self.pico.flush()
         self.pico.flushInput()
@@ -37,7 +38,7 @@ class SimpleFan(HovercraftDriver):
             speed: a number of the speed of the motor(0 to 100)'''
         self.hover = speed
         self.pico.write(bytes("h"+str(speed), 'utf-8'))
-        self.pico.readline() # Ensure pico has finished.
+        # self.pico.readline() # Ensure pico has finished.
         pass
 
     def set_forward_speed(self, speed):
@@ -46,7 +47,7 @@ class SimpleFan(HovercraftDriver):
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = speed
         self.pico.write(bytes("f"+str(speed), 'utf-8'))
-        self.pico.readline() # Ensure pico has finished.
+        # self.pico.readline() # Ensure pico has finished.
         pass
 
     def set_steering_angle(self, angle):
@@ -57,7 +58,7 @@ class SimpleFan(HovercraftDriver):
         # self.steer_motor.value=angle
         self.steering = angle
         self.pico.write(bytes("s"+str(int(angle*SERVO_DIST+SERVO_MID)), 'utf-8'))
-        self.pico.readline() # Ensure pico has finished.
+        # self.pico.readline() # Ensure pico has finished.
         pass
 
     def stop(self):
@@ -77,9 +78,10 @@ class SimpleFan(HovercraftDriver):
         pass
 
 
-class jank_serial():
-    def __init__(self):
+class JankPico():
+    def __init__(self, port=None):
+        self.port = port
         
     def write(self bytes):
         string = bytes.decode("utf-8") 
-        os.system("echo fuck me lmao")
+        os.system("echo " + string " > " + self.port)
