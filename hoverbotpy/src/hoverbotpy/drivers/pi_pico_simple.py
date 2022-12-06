@@ -84,4 +84,4 @@ class JankPico():
         
     def write(self, bytes):
         string = bytes.decode("utf-8") 
-        os.system("echo " + string " > " + self.port)
+        os.system("echo " + string + " > " + self.port)
