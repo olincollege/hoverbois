@@ -2,6 +2,7 @@ from hoverbotpy.drivers.driver_abc import HovercraftDriver
 from hoverbotpy.drivers.pin_defs import *
 from time import sleep
 import serial
+import os
 
 PWM_FREQ = 15000
 SERVO_DIST = 80
@@ -12,21 +13,19 @@ class SimpleFan(HovercraftDriver):
     ''''''
 
     def __init__(self):
-        self.pico = serial.Serial(
-            port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+        self.pico = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
         #self.steer_motor = Servo(SERVOPIN)
+        self.pico.flush()
+        self.pico.flushInput()
+        self.pico.flushOutput()
         self.hover = 0
         self.forward = 0
         self.steering = 0
-        sleep(0.1)
+        sleep(1)
         self.set_steering_angle(-1)  # wig wag the servo to show its been started up
-        sleep(0.3)
+        sleep(0.5)
         self.set_steering_angle(1)
-        sleep(0.3)
-        self.set_steering_angle(-1)
-        sleep(0.3)
-        self.set_steering_angle(1)
-        sleep(0.3)
+        sleep(0.5)
         self.set_steering_angle(0)
         self.set_forward_speed(0)
         self.set_hover_speed(0)
@@ -66,13 +65,21 @@ class SimpleFan(HovercraftDriver):
         # self.forward_motor.detach()
         # self.hover_motor.detach()
         self.pico.write(bytes("s"+str(SERVO_MID), 'utf-8'))
-        self.pico.readline() # Ensure pico has finished.
+        #self.pico.readline() # Ensure pico has finished.
         self.pico.write(bytes("h"+str(0), 'utf-8'))
-        self.pico.readline() # Ensure pico has finished.
+        #self.pico.readline() # Ensure pico has finished.
         self.pico.write(bytes("f"+str(0), 'utf-8'))
-        self.pico.readline() # Ensure pico has finished.
+        #self.pico.readline() # Ensure pico has finished.
         self.hover = 0
         self.forward = 0
         self.steering = 0
         # gp.cleanup()
         pass
+
+
+class jank_serial():
+    def __init__(self):
+        
+    def write(self bytes):
+        string = bytes.decode("utf-8") 
+        os.system("echo fuck me lmao")
