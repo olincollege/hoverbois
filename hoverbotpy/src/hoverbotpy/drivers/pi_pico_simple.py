@@ -55,7 +55,7 @@ class SimpleFan(HovercraftDriver):
         #self.steering = angle
         # self.steer_motor.value=angle
         self.steering = angle
-        self.pico.write(bytes("s"+str(angle*SERVO_DIST+SERVO_MID), 'utf-8'))
+        self.pico.write(bytes("s"+str(int(angle*SERVO_DIST+SERVO_MID)), 'utf-8'))
         pass
 
     def stop(self):
