@@ -2,6 +2,7 @@
 Module implementing control with a bluetooth gamepad.
 """
 
+from threading import Thread
 from evdev import list_devices, InputDevice, ecodes
 
 FAN_INCREMENT = 5
@@ -27,7 +28,7 @@ def find_controller():
     sys.exit(-1)
 
 
-def axis_moved(event, axis, driver):
+def axis_moved(event, robot_state):
     """
     Function to call when axis moved event.
 
@@ -35,61 +36,76 @@ def axis_moved(event, axis, driver):
         event: Evdev event.
         kwargs: Dictionary of kwargs.
     """
-    axis["value"] = event.value
+    robot_state["value"] = event.value
     # Turn the reading from 0 to STICK_MAX from -1 to 1.
-    axis_relative = axis["value"] - axis["center"]
-    if (axis["center"]-axis["deadzone"]
+    axis_relative = robot_state["value"] - robot_state["center"]
+    if (robot_state["center"]-robot_state["deadzone"]
         <= axis_relative
-            <= axis["center"]+axis["deadzone"]):
+            <= robot_state["center"]+robot_state["deadzone"]):
         axis_relative = 0
     rudder = min(1, max(-1, axis_relative/1024))
-    driver.set_steering_angle(rudder)
+    robot_state["rudder"] = rudder
 
 
-def recenter(axis):
+def recenter(robot_state):
     """
     Takes last reading of joystick and sets it as the center.
     """
-    axis["center"] = axis["value"]
-    print(axis["center"])
+    robot_state["center"] = robot_state["value"]
+    print(robot_state["center"])
 
 
-def hover_plus(driver):
+def hover_plus(robot_state):
     """
     Change speed of hover by FAN_INCREMENT.
     """
-    speed = min(100, driver.hover+FAN_INCREMENT)
-    driver.set_hover_speed(speed)
+    speed = min(100, robot_state["hover"]+FAN_INCREMENT)
+    robot_state["hover"] = speed
 
 
-def hover_minus(driver):
+def hover_minus(robot_state):
     """
     Change speed of hover by FAN_INCREMENT.
     """
-    speed = max(0, driver.hover-FAN_INCREMENT)
-    driver.set_hover_speed(speed)
+    speed = max(0, robot_state["hover"]-FAN_INCREMENT)
+    robot_state["hover"] = speed
 
 
-def throttle_plus(driver):
+def throttle_plus(robot_state):
     """
     Change speed of fan by FAN_INCREMENT.
     """
-    speed = min(100, driver.forward+FAN_INCREMENT)
-    driver.set_forward_speed(speed)
+    speed = min(100, robot_state["throttle"]+FAN_INCREMENT)
+    robot_state["throttle"] = speed
 
 
-def throttle_minus(driver):
+def throttle_minus(robot_state):
     """
     Change speed of fan by FAN_INCREMENT.
     """
-    speed = max(0, driver.forward-FAN_INCREMENT)
-    driver.set_forward_speed(speed)
+    speed = max(0, robot_state["throttle"]-FAN_INCREMENT)
+    robot_state["throttle"] = speed
 
 
-def estop(driver):
+def estop(robot_state):
     """
-    Run estop
+    Stop throttle fan.
     """
+    robot_state["throttle"] = 0
+
+
+def driver_loop(robot_state, driver):
+    """
+    Thread to send robot state to driver.
+
+    Args:
+        robot_state: Dictionary representing state of robot.
+        driver: Robot driver.
+    """
+    while robot_state["running"]:
+        driver.set_steering_angle (robot_state["rudder"])
+        driver.set_forward_speed  (robot_state["throttle"])
+        driver.set_hover_speed    (robot_state["hover"])
     driver.stop()
 
 
@@ -129,31 +145,49 @@ def main():
 
     # Global state
     device = find_controller()
-    axis = {
-        "center": 0,
-        "value": 0,
-        "deadzone": 100,  # Hardcoded for now
+    robot_state = {
+        "running"  : True,
+        "center"   : 0,
+        "value"    : 0,
+        "deadzone" : 100,  # Hardcoded for now
+        "hover"    : 0,
+        "throttle" : 0,
+        "rudder"   : 0,
     }
 
     # Button map
     button_map = {
-        ecodes.BTN_SELECT: (recenter, axis),
-        ecodes.BTN_EAST: (estop, driver),
-        ecodes.BTN_TL2: (hover_plus, driver),
-        ecodes.BTN_TL: (hover_minus, driver),
-        ecodes.BTN_TR2: (throttle_plus, driver),
-        ecodes.BTN_TR: (throttle_minus, driver),
+        ecodes.BTN_SELECT : (recenter,       robot_state),
+        ecodes.BTN_EAST   : (estop,          robot_state),
+        ecodes.BTN_TL2    : (hover_plus,     robot_state),
+        ecodes.BTN_TL     : (hover_minus,    robot_state),
+        ecodes.BTN_TR2    : (throttle_plus,  robot_state),
+        ecodes.BTN_TR     : (throttle_minus, robot_state),
     }
+
+    # Start driver thread
+    driver_thread = Thread(target = driver_loop,
+                           args   = [robot_state, driver],
+                           daemon = True, )
+    driver_thread.start()
 
     for event in device.read_loop():
         if event.type == ecodes.EV_KEY:
+            # Hardcode exit as start button
+            if event.code == ecodes.BTN_START:
+                robot_state["running"] = False
+                driver_thread.join()
+                import sys
+                print("Goodbye")
+                sys.exit()
+
             action = button_map.get(event.code)
             if action and event.value == 1:
                 action[0](action[1])
 
         # Hardcode the joystick axis because it needs to be done by tomorrow
         if event.type == ecodes.EV_ABS and event.code == ecodes.ABS_X:
-            axis_moved(event, axis, driver)
+            axis_moved(event, robot_state)
 
 
 if __name__ == "__main__":
