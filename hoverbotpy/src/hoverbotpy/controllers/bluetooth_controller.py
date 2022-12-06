@@ -88,11 +88,19 @@ def throttle_minus(robot_state):
     robot_state["throttle"] = speed
 
 
-def estop(robot_state):
+def estop_water(robot_state):
     """
     Stop throttle fan.
     """
     robot_state["throttle"] = 0
+
+
+def estop_land(robot_state):
+    """
+    Stop all fans
+    """
+    robot_state["throttle"] = 0
+    robot_state["hover"]    = 0
 
 
 def driver_loop(robot_state, driver):
@@ -160,7 +168,8 @@ def main():
     # Button map
     button_map = {
         ecodes.BTN_SELECT : (recenter,       robot_state),
-        ecodes.BTN_EAST   : (estop,          robot_state),
+        ecodes.BTN_EAST   : (estop_water,    robot_state),
+        ecodes.BTN_SOUTH  : (estop_land,     robot_state),
         ecodes.BTN_TL2    : (hover_plus,     robot_state),
         ecodes.BTN_TL     : (hover_minus,    robot_state),
         ecodes.BTN_TR2    : (throttle_plus,  robot_state),
