@@ -3,6 +3,7 @@ Module implementing control with a bluetooth gamepad.
 """
 
 from threading import Thread
+from time import sleep
 from evdev import list_devices, InputDevice, ecodes
 
 FAN_INCREMENT = 5
@@ -106,6 +107,7 @@ def driver_loop(robot_state, driver):
         driver.set_steering_angle (robot_state["rudder"])
         driver.set_forward_speed  (robot_state["throttle"])
         driver.set_hover_speed    (robot_state["hover"])
+        sleep(0.5)
     driver.stop()
 
 
