@@ -82,6 +82,6 @@ class JankPico():
     def __init__(self, port=None):
         self.port = port
         
-    def write(self bytes):
+    def write(self, bytes):
         string = bytes.decode("utf-8") 
         os.system("echo " + string " > " + self.port)
