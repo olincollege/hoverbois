@@ -38,6 +38,7 @@ class SimpleFan(HovercraftDriver):
             speed: a number of the speed of the motor(0 to 100)'''
         self.hover = speed
         self.pico.write(bytes("h"+str(speed), 'utf-8'))
+        self.pico.readline() # Ensure pico has finished.
         pass
 
     def set_forward_speed(self, speed):
@@ -46,6 +47,7 @@ class SimpleFan(HovercraftDriver):
             speed: a number of the speed of the motor(0 to 100)'''
         self.forward = speed
         self.pico.write(bytes("f"+str(speed), 'utf-8'))
+        self.pico.readline() # Ensure pico has finished.
         pass
 
     def set_steering_angle(self, angle):
@@ -56,6 +58,7 @@ class SimpleFan(HovercraftDriver):
         # self.steer_motor.value=angle
         self.steering = angle
         self.pico.write(bytes("s"+str(angle*SERVO_DIST+SERVO_MID), 'utf-8'))
+        self.pico.readline() # Ensure pico has finished.
         pass
 
     def stop(self):
@@ -63,8 +66,11 @@ class SimpleFan(HovercraftDriver):
         # self.forward_motor.detach()
         # self.hover_motor.detach()
         self.pico.write(bytes("s"+str(SERVO_MID), 'utf-8'))
+        self.pico.readline() # Ensure pico has finished.
         self.pico.write(bytes("h"+str(0), 'utf-8'))
+        self.pico.readline() # Ensure pico has finished.
         self.pico.write(bytes("f"+str(0), 'utf-8'))
+        self.pico.readline() # Ensure pico has finished.
         self.hover = 0
         self.forward = 0
         self.steering = 0
