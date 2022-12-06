@@ -145,7 +145,7 @@ def main():
         from hoverbotpy.drivers.pi_pico_simple import SimpleFan
         driver = SimpleFan()
     elif driver_type == "pico_pid":
-        from hoverbotpy.drivers.pi_pico_wspid import PIDCorrectedFan
+        from hoverbotpy.drivers.pi_pico_pid import PIDCorrectedFan
         driver = PIDCorrectedFan()
         driver.run_loop()
     else:
