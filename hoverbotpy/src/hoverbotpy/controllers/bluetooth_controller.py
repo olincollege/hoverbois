@@ -44,7 +44,7 @@ def axis_moved(event, robot_state):
         <= axis_relative
             <= robot_state["center"]+robot_state["deadzone"]):
         axis_relative = 0
-    rudder = min(1, max(-1, axis_relative/1024))
+    rudder = -min(1, max(-1, axis_relative/1024))
     robot_state["rudder"] = rudder
 
 
