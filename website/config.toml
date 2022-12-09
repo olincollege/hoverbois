@@ -5,7 +5,7 @@ theme = "hugo-theme-monochrome"
 
 [params]
 # navbar_title = "Hoverbois"
-footer = "Copyright © 2022 Devlin Ih, Joseph Gilbert, William Skelly, Ethan Chen"
+footer = "Copyright © 2022 Ethan Chen, Joseph Gilbert, Devlin Ih, William Skelly"
 enable_toc = false
 
 [params.list_layout]

@@ -9,6 +9,10 @@ menu:
 
 {{< img "images/team-photo.jpg" "Team photo" >}}
 
+## Ethan Chen
+
+## Joseph Gilbert
+
 ## Devlin Ih
 
 {{< bio "images/devlin-ih.jpg" "Photo of Devlin Ih">}}
@@ -19,11 +23,7 @@ Linux applications, cycling, cooking, and baking. His learning goals for this
 project were to learn about multidisciplinary systems and to improve teaming
 soft skills.
 
-## Joseph Gilbert
-
 ## William Skelly
 TODO: Insert photo
 
 **William Skelly** is a member of the class of 2025 studying mechanical engineering. He loves building free flight model airplanes, cold-water SCUBA diving, and sailing. His learning goals for this project included improving collaborative CAD skills, working on a multidisciplinary team, and gaining experience with designing an aquatic vehicle.
-
-## Ethan Chen
