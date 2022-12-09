@@ -7,7 +7,7 @@ menu:
 
 # About the Team
 
-TODO: Fill with bios and insert team photo
+{{< img "images/team-photo.jpg" "Team photo" >}}
 
 ## Devlin Ih
 
