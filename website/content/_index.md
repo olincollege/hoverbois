@@ -13,13 +13,25 @@ needs)
 
 Delete this section for final submission
 
+## Shortcodes
+
+Hugo has a system called shortcodes that allow you to define new syntax to
+generate HTML snippets into your document with a nicer syntax. To call a
+shortcode (either a custom or a builtin one), surround with the characters
+\{\{\< shortcode arg1 arg2 arg... argN \>\}\}. You will see examples later that
+don't have backslashes to escape the shortcode from running.
+
 ## Images
 
-![Image alt text](/pie-2022-03/hoverbois/test.png)
+Place your images in the `/assets/images/` directory of the site. To insert the
+image, call one of the short codes I've created, either `bio` for a bio image
+(crops and scales to 200x200) or `img` (scales to 800xN) for a normal image.
 
-Images can be placed in the `static` folder of the website. Typically you could
-reference with just `/image.png`, however, due to the baseurl, you specify
-`/pie-2022-03/hoverbois/image.png`.
+{{< bio "images/test.png" "alt text for bio image" >}}
+
+A bio image
+
+{{< img "images/test.png" "alt text for img image" >}}
 
 ## Links
 

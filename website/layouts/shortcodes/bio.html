@@ -1,0 +1,5 @@
+{{ $src := resources.GetMatch (.Get 0) }}
+{{ $bio := $src.Fill "200x200" }}
+{{ $alt := .Get 1 }}
+
+<img src="{{ $bio.RelPermalink }}" alt="{{ $alt }}">
