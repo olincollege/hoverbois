@@ -1,3 +1,23 @@
 baseURL = "https://olincollege.github.io/pie-2022-03/hoverbois/"
 languageCode = "en-us"
 title = "Hoverbois"
+theme = "hugo-theme-monochrome"
+
+[params]
+# navbar_title = "Hoverbois"
+footer = "Copyright © 2022 Devlin Ih, Joseph Gilbert, William Skelly, Ethan Chen"
+enable_toc = false
+
+[params.list_layout]
+enable_group_by_year = false # default: true
+enable_show_date = false # default: true
+enable_pagination = false # default: false
+
+
+# Navbar items that are not linked to content on page
+[[menu.navbar]]
+identifier = "github"
+name = "GitHub"
+title = "GitHub"
+url = "https://github.com/olincollege/hoverbois"
+weight = 100
