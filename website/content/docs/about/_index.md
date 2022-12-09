@@ -11,6 +11,14 @@ menu:
 
 ## Devlin Ih
 
+{{< bio "images/devlin-ih.jpg" "Photo of Devlin Ih">}}
+
+**Devlin Ih** is a member of the class of 2025 studying electrical and computer
+engineering. He enjoys programming (particularly Lisp and Python), configuring
+Linux applications, cycling, cooking, and baking. His learning goals for this
+project were to learn about multidisciplinary systems and to improve teaming
+soft skills.
+
 ## Joseph Gilbert
 
 ## William Skelly
