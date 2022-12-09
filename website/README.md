@@ -16,6 +16,7 @@ follows:
 | `config.toml`                       | Main configuration file for the website |
 | `content/_index.md`                 | Front page                              |
 | `content/docs/PAGE_TITLE/_index.md` | Website pages                           |
+| `assets/images/`                    | Directory for storing images            |
 
 ## Testing Changes Locally
 
