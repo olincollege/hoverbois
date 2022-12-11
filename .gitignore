@@ -131,3 +131,4 @@ dmypy.json
 /website/resources/
 /website/.hugo_build.lock
 /website/public/
+/website/assets/jsconfig.json
