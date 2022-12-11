@@ -24,7 +24,7 @@ TODO: Review estimated items
 | Wire Grommet    | 2        | $5.8       | [You Do It](https://www.youdoitelectronics.com/)                                                           |                                                        |
 | Toggle Boot     | 1        | $1.85      | [You Do It](https://www.youdoitelectronics.com/)                                                           |                                                        |
 | Foam Tape Roll  | 1        | $5.99      | [You Do It](https://www.youdoitelectronics.com/)                                                           |                                                        |
-| Plenum Sheet    | 1        | $4.99      | Michaels                                                                                                   |                                                        |
+| CoroPlast Sheet | 1        | $4.99      | Michaels                                                                                                   |                                                        |
 | USB Radio       | 1        | $38.99     | Amazon (link please)                                                                                       | Each unit is a 2 pack                                  |
 | Waterproof Box  | 1        | $15.19     | Amazon (link please)                                                                                       |                                                        |
 
