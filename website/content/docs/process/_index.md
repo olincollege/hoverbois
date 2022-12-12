@@ -18,7 +18,7 @@ The factors we identified included:
 
 # Sprint 1
 
-[INSERT IMAGE OF SPRINT 1]
+{{<img "/images/Sprint1.jpg" "Photo of sprint 1 prototype">}}
 
 **Our goal for Sprint 1 was to create a fan powered kart that was controlled via a rudder.** We knew that in order to accomplish this, we would need to gain familiarity with the electrical system for fan-powered vehicles, estabilsh our software architecture to control a low-friction vehicle via rudder, and develop a workflow to collboratively CAD and manufacture an air propelled vehicle. 
 
@@ -28,11 +28,11 @@ The factors we identified included:
 
 **Software Progress** from this sprint included creating the website backend for controlling the vehicle over wifi, implementing a Discord bot to communicate the IP address for autostarting, and creating the framework of having two onboard micro-computers: a Raspberri Pi and a Pi Pico. The Pi runs the high level software, and the Pico runs the low level motor controll. Software lessons learned from this sprint included **[WHAT DID WE LEARN?]**
 
-**Primary Outcome** of this sprint was that we eliminated fan propulsion and rudder control as complete unknowns. By applying the lessons from this sprint to our next sprint, we were able to make improvements to existing systems based on experience and introduce the element of hover without simultaneous risk factors. In addition to overcoming technical challenges, our team used this sprint to hone our soft skills and establish practices for how best to work with each other for the rest of the semester. One of the outcomes of these discussions was to estabilsh a rotating Project Manage position for the next two sprints.
+**Primary Outcome** of this sprint was that we eliminated fan propulsion and rudder control as complete unknowns. By applying the lessons from this sprint to our next sprint, we were able to make improvements to existing systems based on experience and introduce the element of hover without simultaneous risk factors. In addition to overcoming technical challenges, our team used this sprint to hone our soft skills and establish practices for how best to work with each other for the rest of the semester. One of the outcomes of these discussions was to estabilsh a rotating Project Manager position for the next two sprints.
 
 # Sprint 2
 
-[INSERT IMAGE OF SPRINT 2]
+{{<img "/images/Sprint2.png" "Photo of sprint 2 prototype">}}
 
 **Our goal for Sprint 2 was to create a remote controlled terrestrial hovercraft with inertial PID correction for straight-line autonomy.** We knew that in order to accomplish this, we would need to implement the high-performance electrical propulsion system we ordered during Sprint 1, develop software to correct for inherant instbility based on inertial sensor input, and create a hover system and chassis that matched weight with power and could sustain hover.
 
@@ -46,7 +46,7 @@ The factors we identified included:
 
 # Sprint 3
 
-[INSERT IMAGE OF SPRINT 3]
+{{<img "/images/IMG_20221205_210056_032.jpg" "Photo of sprint 3 prototype">}}
 
 **Our goal for Sprint 3 was to make an amphibious hovercraft capable of operating in both terrestial and aquatic environments.** We knew that the main technical risks for this sprint were around the element of water, including: capsizing, sinking, water shorting electronics, loss of communications while on the water, and loss of controll while on the water. We made special care to target this sprint towards managing those risks.
 
