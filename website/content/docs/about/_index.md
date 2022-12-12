@@ -29,6 +29,7 @@ project were to learn about multidisciplinary systems and to improve teaming
 soft skills.
 
 ## William Skelly
-TODO: Insert photo
+
+{{< bio "images/Skelly_Profile.jpg" "Photo of William SKelly">}}
 
 **William Skelly** is a member of the class of 2025 studying mechanical engineering. He loves building free flight model airplanes, cold-water SCUBA diving, and sailing. His learning goals for this project included improving collaborative CAD skills, working on a multidisciplinary team, and gaining experience with designing an aquatic vehicle.

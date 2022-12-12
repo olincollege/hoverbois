@@ -60,7 +60,7 @@ def hover_plus(robot_state):
     """
     Change speed of hover by FAN_INCREMENT.
     """
-    speed = min(60, robot_state["hover"]+FAN_INCREMENT)
+    speed = min(80, robot_state["hover"]+FAN_INCREMENT)
     robot_state["hover"] = speed
 
 
