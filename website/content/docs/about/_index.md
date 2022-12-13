@@ -11,6 +11,10 @@ menu:
 
 ## Ethan Chen
 
+{{< bio "images/Ethan_Chen.jpg" "Photo of Ethan Chen">}}
+
+**Ethan Chen** is a member of the class of 2025 studying mechanical engineering. He has a passion for aerospace, particularly rockets, robotics, and ultimate frisbee. His learning goals for this project focused on the mechanical design process, specifically, rapid and robust design and efficient manufacturing and assembly.
+
 ## Joseph Gilbert 
 TODO: Insert photo
 
