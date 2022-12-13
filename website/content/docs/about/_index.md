@@ -11,7 +11,12 @@ menu:
 
 ## Ethan Chen
 
-## Joseph Gilbert
+## Joseph Gilbert 
+TODO: Insert photo
+
+**Joseph Gilbert** is a member of the class of 2025 studying electrical and computer
+engineering. He enjoys volunteering at the local railroad museum in Alna, Maine, as a trainman. His learning goals for this project were to
+work more efficiently with other engineers on complex project and gain some Project Management experience.
 
 ## Devlin Ih
 

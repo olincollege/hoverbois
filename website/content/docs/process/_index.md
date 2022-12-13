@@ -18,7 +18,7 @@ The factors we identified included:
 
 # Sprint 1
 
-[INSERT IMAGE OF SPRINT 1]
+{{<img "/images/Sprint1.jpg" "Photo of sprint 1 prototype">}}
 
 **Our goal for Sprint 1 was to create a fan powered kart that was controlled via a rudder.** We knew that in order to accomplish this, we would need to gain familiarity with the electrical system for fan-powered vehicles, estabilsh our software architecture to control a low-friction vehicle via rudder, and develop a workflow to collboratively CAD and manufacture an air propelled vehicle. 
 
@@ -26,13 +26,13 @@ The factors we identified included:
 
 **Electrical Progress** from this sprint included gaining familiarity with the drivers and motor controller, and speccing and ordering the high-performance electrical components of the final propusion system for use in Sprint 2 and Sprint 3. Lessons learned from this sprint in the electrical domain included **[WHAT DID WE LEARN?]**
 
-**Software Progress** from this sprint included creating the website backend for controlling the vehicle over wifi, implementing a Discord bot to communicate the IP address for autostarting, and creating the framework of having two onboard micro-computers: a Raspberri Pi and a Pi Pico. The Pi runs the high level software, and the Pico runs the low level motor controll. Software lessons learned from this sprint included **[WHAT DID WE LEARN?]**
+**Software Progress** from this sprint included creating the website backend for controlling the vehicle over wifi, implementing a Discord bot to communicate the IP address for autostarting, and creating the framework of having two onboard micro-computers: a Raspberri Pi and a Pi Pico. The Pi runs the high level software, and the Pico runs the low level motor controll. Software lessons learned from this sprint included the importance of codebase organization and code readability.
 
-**Primary Outcome** of this sprint was that we eliminated fan propulsion and rudder control as complete unknowns. By applying the lessons from this sprint to our next sprint, we were able to make improvements to existing systems based on experience and introduce the element of hover without simultaneous risk factors. In addition to overcoming technical challenges, our team used this sprint to hone our soft skills and establish practices for how best to work with each other for the rest of the semester. One of the outcomes of these discussions was to estabilsh a rotating Project Manage position for the next two sprints.
+**Primary Outcome** of this sprint was that we eliminated fan propulsion and rudder control as complete unknowns. By applying the lessons from this sprint to our next sprint, we were able to make improvements to existing systems based on experience and introduce the element of hover without simultaneous risk factors. In addition to overcoming technical challenges, our team used this sprint to hone our soft skills and establish practices for how best to work with each other for the rest of the semester. One of the outcomes of these discussions was to estabilsh a rotating Project Manager position for the next two sprints.
 
 # Sprint 2
 
-[INSERT IMAGE OF SPRINT 2]
+{{<img "/images/Sprint2.png" "Photo of sprint 2 prototype">}}
 
 **Our goal for Sprint 2 was to create a remote controlled terrestrial hovercraft with inertial PID correction for straight-line autonomy.** We knew that in order to accomplish this, we would need to implement the high-performance electrical propulsion system we ordered during Sprint 1, develop software to correct for inherant instbility based on inertial sensor input, and create a hover system and chassis that matched weight with power and could sustain hover.
 
@@ -46,7 +46,7 @@ The factors we identified included:
 
 # Sprint 3
 
-[INSERT IMAGE OF SPRINT 3]
+{{<img "/images/IMG_20221205_210056_032.jpg" "Photo of sprint 3 prototype">}}
 
 **Our goal for Sprint 3 was to make an amphibious hovercraft capable of operating in both terrestial and aquatic environments.** We knew that the main technical risks for this sprint were around the element of water, including: capsizing, sinking, water shorting electronics, loss of communications while on the water, and loss of controll while on the water. We made special care to target this sprint towards managing those risks.
 
@@ -54,6 +54,6 @@ The factors we identified included:
 
 **Electical Progress** from this sprint was centered around adapting the electrical system so that as many components as possible could fit into the waterproof electronics bay. We were able to redesign the system such that the only electronics outside the enclosure were the brushless lift and thrust motors and the servo motor. All electrical connections between the inside and the outside of the enclosure are via three multi-conductor cables, which gain access to the box via COTS waterproof pass-thrus. We also implemented a new communication system **[DID WE? WHAT SYSTEM? MORE DETAILS]**.
 
-**Software Progress** from this sprint was centered around critical improvements to the control system. The first overhaul was the implementation of analog pilot input via an ergonomic controller. We found the previous sprint that digitial turn inputs made the vehicle difficult to control, which would present a risk when operating on water. The new analog control interface lets the pilot give continuous turn input for smooth control ameanable to an aquatic environment. The second major upgrade was switching from wifi to bluetooth for communication. Loss of communication on land during Sprint 2 was an inconvenience, but loss of communication on the water would be catastrophic. The new communication also implemented a novel bug fix that decreased latency from several seconds to **[WHAT IS THE NEW LATENCY]**. We also upgraded to a full fly-by-wire control system that uses IMU data and a PID loop to hold the vehicle's angular turn rate at a setpoint dictated by the continuous input of the pilot.
+**Software Progress** from this sprint was centered around critical improvements to the control system. The first overhaul was the implementation of analog pilot input via an ergonomic controller. We found the previous sprint that digitial turn inputs made the vehicle difficult to control, which would present a risk when operating on water. The new analog control interface lets the pilot give continuous turn input for smooth control ameanable to an aquatic environment. The second major upgrade was switching from wifi to bluetooth for communication. Loss of communication on land during Sprint 2 was an inconvenience, but loss of communication on the water would be catastrophic. The new communication also implemented a novel bug fix that decreased latency from several seconds to unnoticeable levels. We also upgraded to a full fly-by-wire control system that uses IMU data and a PID loop to hold the vehicle's angular turn rate at a setpoint dictated by the continuous input of the pilot.
 
 **Primary Outcome** of this sprint was that we conquered the challenge of making our vehicle fit for the aquatic environment. We conducted sucsessful on-water and terrestrial tests to demonstrate true amphibious capability. The *Waterstrider* design at this point reached a state that was ready for demo day. Our rotating project manager system was again a sucess, and we also had sucess adjusting our expectations of eachothers work commitments to be more flexible for a less tense teaming experience.
