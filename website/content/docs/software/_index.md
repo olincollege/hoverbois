@@ -92,6 +92,14 @@ This is the state of the `main` branch.
   port. Unfortunately, using this method sometimes results in glitchy behavior
   if the motor state is updated too frequently, making the PID driver unusable.
 
+## Discord Bot
+
+We needed to obtain the Raspberry Pi's local IP address to access the Raspberry
+Pi over ssh and to control over http. Considering how our team already
+communicated over Discord, we opted to write a Discord bot that would print the
+Pi's IP to the chat. We also wrote a systemd unit file to start the Discord bot
+on the Pi's boot. This bot served its purpose for the entirety of the project.
+
 ## Firmware {#firmware}
 
 The motors were driven by a Raspberry Pi Pico microcontroller (see
