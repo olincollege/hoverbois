@@ -16,6 +16,8 @@ The factors we identified included:
 - Hover ability
 - Aquatic environmental factors
 
+{{< youtube QIKaYoYOuRQ >}}
+
 # Sprint 1
 
 {{<img "/images/Sprint1.jpg" "Photo of sprint 1 prototype">}}
