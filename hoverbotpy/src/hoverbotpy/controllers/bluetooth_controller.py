@@ -76,7 +76,7 @@ def throttle_plus(robot_state):
     """
     Change speed of fan by FAN_INCREMENT.
     """
-    speed = min(25, robot_state["throttle"]+FAN_INCREMENT)
+    speed = min(35, robot_state["throttle"]+FAN_INCREMENT)
     robot_state["throttle"] = speed
 
 
