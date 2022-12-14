@@ -105,9 +105,12 @@ on the Pi's boot. This bot served its purpose for the entirety of the project.
 The motors were driven by a Raspberry Pi Pico microcontroller (see
 [electrical]({{< ref "docs/electrical" >}}) for details).
 
-The firmware reads the Pi Pico's serial buffer, parsing for commands. Commands
-tell the Pico to update the speed of the motors and the angle of the rudder
-servo.
+The firmware reads the Pi Pico's serial buffer, parsing for commands in a
+gcode-like format. Commands tell the Pico to update the speed of the motors and
+the angle of the rudder servo. For some reason, the Pico read each command
+twice, always once with an argument of zero. We solved this issue with a unique
+bug fix: read a command twice before an action, and pick the higher value of
+the two. This ensured that each operation was not immediately undone.
 
 The firmware was the least changed part of the project across the design
 sprints.
