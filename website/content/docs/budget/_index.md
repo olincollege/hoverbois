@@ -5,8 +5,6 @@ menu:
     weight: 60
 ---
 
-TODO: Review estimated items
-
 # Budget Breakdown
 
 ## Purchased Items
