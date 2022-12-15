@@ -16,7 +16,8 @@ menu:
 **Ethan Chen** is a member of the class of 2025 studying mechanical engineering. He has a passion for aerospace, particularly rockets, robotics, and ultimate frisbee. His learning goals for this project focused on the mechanical design process, specifically, rapid and robust design and efficient manufacturing and assembly.
 
 ## Joseph Gilbert 
-TODO: Insert photo
+
+{{< bio "images/jgilbert.jpg" "Photo of Joseph Gilbert" >}}
 
 **Joseph Gilbert** is a member of the class of 2025 studying electrical and computer
 engineering. He enjoys volunteering at the local railroad museum in Alna, Maine, as a trainman. His learning goals for this project were to
