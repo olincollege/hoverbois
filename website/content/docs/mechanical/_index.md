@@ -7,10 +7,9 @@ menu:
 
 "A detailed description of your mechanical design (CAD images/renderings are appropriate) and any necessary analysis."
 
-TODO:
-@William: Add CAD .Zip file
+# CAD File
 
-"AMPHIBIOUS"
+Click [here](/pie-2022-03/hoverbois/PIE-Hovercraft.zip) to download the CAD files for our project.
 
 # Summary
 
