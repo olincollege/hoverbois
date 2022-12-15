@@ -92,6 +92,8 @@ This is the state of the `main` branch.
   port. Unfortunately, using this method sometimes results in glitchy behavior
   if the motor state is updated too frequently, making the PID driver unusable.
 
+{{< img "images/robot-gui.gif" "GIF animation of Pygame robot gui." >}}
+
 ## Discord Bot
 
 We needed to obtain the Raspberry Pi's local IP address to access the Raspberry
