@@ -5,8 +5,6 @@ menu:
     weight: 40
 ---
 
-TODO: Insert circuit schematics, photos, descriptions
-
 # Electrical System
 
 We designed the electrical system to integrate as easily with the software
@@ -20,11 +18,11 @@ design found in Sprint 3 as tightly integrated with the [Mechanical]({{< ref
 
 ## Power Delivery
 
-We powered the hovercraft with a 4S LiPo battery. We used a DC DC Buck
-converter to step down the voltage from 14.8V to 5V. This was used to power the
-Raspberry Pi over USB, which was used to power everything else. The only
-components operated directly from the battery's voltage were the ESCs and
-motors.
+We powered the hovercraft with a 4S LiPo battery, although it can take anything
+between a 3S and a 5S. We used a DC DC Buck converter to step down the voltage
+to 5V. This was used to power the Raspberry Pi over USB, which was used to
+power everything else. The only components operated directly from the battery's
+voltage were the ESCs.
 
 ## Computer
 
@@ -52,8 +50,8 @@ power from the ESCs.
 
 ## Servo
 
-We controlled the rudder with a hobby servo servo. This was powered from the Pi
-Pico and controlled via a PWM signal.
+We controlled the rudder with a hobby servo servo. This was powered the Pico's
+VBUS (5V) connector. It was controlled via a 3.3V PWM signal.
 
 ## Peripherals
 
@@ -64,12 +62,12 @@ side.
 
 We purchased a GPS/GLONASS unit from
 [Adafruit](https://www.adafruit.com/product/5440) as well. This would have
-talked to the Raspberry Pi over SPI. Unfortunately, we never got to integrating
-the GPS.
+talked to the Raspberry Pi over UART. Unfortunately, we never got to
+integrating the GPS.
 
 ## Radio
 
-Lastly, we purchased a set of cheap USB radios from Amazon. We would have
+Lastly, we purchased a set of cheap USB LoRa module from Amazon. We would have
 attached one unit to the Raspberry Pi and the other unit to a laptop running a
-user interface. Unfortunately, one of the radio units fried itself. The lesson
-we learned was to never cheap out on your electronics.
+user interface. Unfortunately, one of the units fried itself. The lesson we
+learned was to never cheap out on your electronics.
