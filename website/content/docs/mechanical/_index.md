@@ -8,8 +8,6 @@ menu:
 "A detailed description of your mechanical design (CAD images/renderings are appropriate) and any necessary analysis."
 
 TODO:
-@ethan: Fill in outrigger section and  waterproof box section; add stuff about pass-throughs for waterproof box
-CAD diagrams, descriptions
 @William: Add CAD .Zip file
 
 "AMPHIBIOUS"
@@ -85,23 +83,15 @@ The superstructed is designed to leverage CNC lasercutter technology by utilizin
 
 ## Outriggers
 
-TODO:
-- Redudant design
-- Positive flotation
-- Don't touch water
-- Since outriggers don't touch ground, they don't interfere with ground operations, so we maintain true amphibious capability
-- Foam (mention that it's a pool noodle?)
+{{<img "images/IMG_20221205_210111_780.jpg" "Photo of outriggers">}}
+To provide positive buoyancy at all times to the hovercraft and to prevent the hovercraft from flipping, pool noodle outriggers were built to provide security on the water. The outriggers are mounted into the foam using a series of six laser-cut plywood holders, three on each side of the hovercraft. Three mounts on each side ensure reliable and stable floatation, even if a few fail. The mounts were designed to hold the foam pool noodles about 3 inches from the edge of the inflated skirt. The holes were cut to the size of the pool noodles to ensure a tight fit, and the pool noodles would not slip out, ensuring there was security for stability on the water. In addition, the design of plywood mounts was built so that the outriggers don’t touch the ground when on land. This guarantees true amphibious capabilities as the outriggers would only be used on water.
 
 ## Waterproof Electronics Enclosure
 
-To protect the electronics from the aquatic environment, even in the event of a capsize, all electronics except for actuators are inside a waterproof enclosure. The electronics bay primarily consists of a COTS waterproof enclosure **[insert waterproof rating]** that utilizes a gasket seal. 
+{{<img "images/IMG_20221206_001353_526.jpg" "Photo of Inside waterbox">}}
+To protect the electronics from the aquatic environment, even in the event of a capsize, all electronics except for actuators are inside a waterproof enclosure. The electronics bay primarily consists of a COTS waterproof enclosure that has a waterproof rating of IP65 and utilizes a gasket seal. 
 
-TODO:
-- Items inside box
-- Estop mounting
-- Pass-thru mounting
-- Only 3 cables outside box
-
+Inside the box are the motor ESCs, LiPo battery, 9 Axis IMU, and GPS module. All of these items are critical to the functionality of hovercraft. These electronics are all connected inside the box and to the actuators through three COTS pass-thrus. Only three cables exit the box, and the pass-thurs tightly sinch around the cables. In addition, there is an Estop mounted to the top of the box so the hovercraft actuators can be switched off mechanically.
 # Waterproofing
 
 Waterproofing all hardware was a central aspect of the design methodology. We painted all wood parts and sprayed them with clear water-proof sealer. We were throughtful to eliminate all water-vunerable materials by use of waterproof substitude materials such as acrylic and Coroplast. We also waterproofed the servo motor by plasti-dipping it. The choice of brushless motors meant that we could leave them uncoated without introducing a vunerability in our use case of a freshwater environment.
