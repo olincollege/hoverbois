@@ -5,7 +5,7 @@ menu:
     weight: 30
 ---
 
-# CAD File
+# CAD Files
 
 Click [here](/pie-2022-03/hoverbois/PIE-Hovercraft.zip) to download the CAD files for our project.
 
