@@ -5,8 +5,6 @@ menu:
     weight: 20
 ---
 
-TODO: Put all our photos and videos
-
 # Media Gallery
 
 # Videos:

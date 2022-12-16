@@ -3,14 +3,6 @@ title: Front Page
 type: docs
 ---
 
-TODO: Review sections written by other people (MechEs review
-Software/Electrical, ECEs review Mechanical)
-
-TODO: Fill gallery with more photos and videos
-
-TODO: Replace duplicate photos on front page and about us (need to get more of
-the team photos)
-
 # Project Summary
 
 Our goal was to build a semi-autonomous, amphibious hovercraft around the theme
