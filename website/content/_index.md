@@ -11,8 +11,6 @@ TODO: Fill gallery with more photos and videos
 TODO: Replace duplicate photos on front page and about us (need to get more of
 the team photos)
 
-TODO: `cad.zip`
-
 # Project Summary
 
 Our goal was to build a semi-autonomous, amphibious hovercraft around the theme
