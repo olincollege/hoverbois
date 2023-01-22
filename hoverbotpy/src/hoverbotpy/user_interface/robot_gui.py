@@ -510,7 +510,7 @@ def main():
                                 daemon=True)
         web_connection.start()
     if args.lora:
-        lora_connection= Thread(target=send_data_web,
+        lora_connection= Thread(target=send_data_lora,
                                 args=[robot_state, args.delay, args.lora],#lora is lora module port
                                 daemon=True)
         lora_connection.start()
