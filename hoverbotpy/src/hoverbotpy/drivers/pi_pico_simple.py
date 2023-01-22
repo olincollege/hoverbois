@@ -12,9 +12,9 @@ SERVO_MID = 100
 class SimpleFan(HovercraftDriver):
     ''''''
 
-    def __init__(self):
+    def __init__(self,port):
         # self.pico = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
-        self.pico = JankPico(port="/dev/ttyACM0")
+        self.pico = JankPico(port=port)
         #self.steer_motor = Servo(SERVOPIN)
         # self.pico.flush()
         # self.pico.flushInput()

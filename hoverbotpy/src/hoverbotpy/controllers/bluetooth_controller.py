@@ -143,10 +143,10 @@ def main():
         driver.run_loop()
     elif driver_type == "pico":
         from hoverbotpy.drivers.pi_pico_simple import SimpleFan
-        driver = SimpleFan()
+        driver = SimpleFan("/dev/ttyACM1")
     elif driver_type == "pico_pid":
         from hoverbotpy.drivers.pi_pico_pid import PIDCorrectedFan
-        driver = PIDCorrectedFan()
+        driver = PIDCorrectedFan("/dev/ttyACM1")
         driver.run_loop()
     else:
         import sys

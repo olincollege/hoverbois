@@ -43,7 +43,7 @@ class PIDCorrectedFan():
         process: Thread containing PID process.
     """
 
-    def __init__(self):
+    def __init__(self,port):
         self.start_time = datetime.now()
         # Hovercraft params
         self.hover = 0
@@ -51,7 +51,7 @@ class PIDCorrectedFan():
         self.steering = 0
 
         # The drivers within the driver
-        self.pico = SimpleFan()
+        self.pico = SimpleFan(port)
         self.imu = CorrectedIMU()
 
         # PID Loop

@@ -1,6 +1,7 @@
 import sys
 import pygame
 import requests
+import os
 
 from threading import Thread
 from time import sleep
@@ -19,6 +20,12 @@ parser.add_argument(
     required=False,
     help=("IP address of hovercraft as string.\n"
           "    If not passed, web thread is not started."),
+)
+parser.add_argument(
+    "--lora",
+    required=False,
+    help=("port of the lora transmitter of hovercraft as string.\n"
+          "    If not passed, cli thread is not started."),
 )
 parser.add_argument(
     "--delay",
@@ -56,6 +63,19 @@ def send_data_web(robot_state, delay, ip):
     url = "http://" + str(ip) + ":" + str(PORT) + "/drive/"
     while True:
         requests.post(url, data=robot_state)
+        sleep(delay)
+
+def send_data_lora(robot_state,delay, port):
+    """
+    Daemon to send robot state over the web.
+
+    Args:
+        robot_state: A dictionary representing the robot state.
+        delay: A number representing a delay to make between requests.
+        ip: A string representing the IP of the hovercraft.
+    """
+    while True:
+        os.system("echo '" + f"h{robot_state['hover']}, f{robot_state['throttle']}, s{robot_state['rudder']}\n" + "' > " + port)
         sleep(delay)
 
 
@@ -489,6 +509,11 @@ def main():
                                 args=[robot_state, args.delay, args.ip],
                                 daemon=True)
         web_connection.start()
+    if args.lora:
+        lora_connection= Thread(target=send_data_web,
+                                args=[robot_state, args.delay, args.lora],#lora is lora module port
+                                daemon=True)
+        lora_connection.start()
 
     while True:
         for event in pygame.event.get():

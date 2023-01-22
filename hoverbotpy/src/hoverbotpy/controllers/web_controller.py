@@ -47,9 +47,9 @@ elif requested_driver == "threading_dummy":
     driver = ThreadingDummy()
     driver.run_loop()
 elif requested_driver == "pico":
-    driver = SimpleFan()
+    driver = SimpleFan("/dev/ttyACM1")
 elif requested_driver == "pico_pid":
-    driver = PIDCorrectedFan()
+    driver = PIDCorrectedFan("/dev/ttyACM1")
     driver.run_loop()
 else: 
     import sys
