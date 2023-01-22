@@ -75,7 +75,7 @@ def send_data_lora(robot_state,delay, port):
         ip: A string representing the IP of the hovercraft.
     """
     while True:
-        os.system("echo '" + f"h{robot_state['hover']}, f{robot_state['throttle']}, s{robot_state['rudder']}\n" + "' > " + port)
+        os.system("echo '" + f"h{robot_state['hover']}, f{robot_state['throttle']}, s{robot_state['rudder_angle']}\n" + "' > " + port)
         sleep(delay)
 
 
