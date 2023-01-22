@@ -8,16 +8,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 discord-py = "^2.0.1"
-gpiozero = "^1.6.2"
-rpi-gpio = "^0.7.1"
-lgpio = "^0.0.0.2"
 tornado = "^6.2"
 numpy = "^1.23.4"
-pigpio = "^1.78"
 pyserial = "^3.5"
 pygame = "^2.1.2"
 requests = "^2.28.1"
-evdev = "^1.6.0"
+evdev = {version="^1.6.0", optional=true}
+gpiozero = {version="^1.6.2", optional=true}
+rpi-gpio = {version="^0.7.1", optional=true}
+lgpio = {version="^0.0.0.2", optional=true}
+pigpio = {version="^1.78", optional=true}
 
 
 [build-system]
@@ -29,3 +29,4 @@ hoverbot-discord = "hoverbotpy.hoverbot_discord.bot:main"
 web-controller-simple = "hoverbotpy.controllers.web_controller_simple:main"
 robot-gui = "hoverbotpy.user_interface.robot_gui:main"
 bluetooth-controller = "hoverbotpy.controllers.bluetooth_controller:main"
+lora-cli = "hoverbotpy.controllers.cli_controller:main"
